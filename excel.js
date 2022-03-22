@@ -2,7 +2,11 @@ const xlsx = require( "xlsx" );
 var fs = require('fs');
 const { fileURLToPath } = require("url");
 
-let file_name = 'PlutoTV_4월편성_CC_220322.xlsx';
+let file_name = '솔박스_202204.xlsx';
+ 
+// samsung smartTV ==1
+// PlutoTV ==2
+let n=3;
 
 let read_excel = (file_name) =>
 {
@@ -43,8 +47,24 @@ let duplication_eliminate = (json) =>
     return json_unique;
 }
 
+//read every resolution from the excel file
+let read_resolution = (json) =>
+{
+    let resolution=[];
+    for(j in json[0])
+    {   
+        if( !isNaN(parseInt(j.slice(0,-1))) && (j.slice(-1)==='p') )    
+        {
+            resolution.push(j);
+        }            
+    }
+    return resolution;
+}
+
 let write_json = (json) =>
 {
+    let resolution = read_resolution(json);
+
    let templete =
     {
         "server_id": "manager_1234",
@@ -66,31 +86,31 @@ let write_json = (json) =>
                 "streams": 
                 [
                     {
-                        "adaptive_id": "1080p",
+                        "adaptive_id": resolution[0] ,
                         "urls": [
                         ""
                         ]
                     },
                     {
-                        "adaptive_id": "720p",
+                        "adaptive_id": resolution[1],
                         "urls": [
                             ""
                         ]
                     },
                     {
-                        "adaptive_id": "480p",
+                        "adaptive_id": resolution[2],
                         "urls": [
                             ""
                         ]
                     },
                     {
-                        "adaptive_id": "360p",
+                        "adaptive_id": resolution[3],
                         "urls": [
                             ""
                         ]
                     },
                     {
-                        "adaptive_id": "240p",
+                        "adaptive_id": resolution[4],
                         "urls": [
                             ""
                         ]
@@ -99,8 +119,6 @@ let write_json = (json) =>
             }
         }
     }
-
-
     
     let templete_caption =
     {
@@ -123,31 +141,31 @@ let write_json = (json) =>
                 "streams": 
                 [
                     {
-                        "adaptive_id": "1080p",
+                        "adaptive_id": resolution[0],
                         "urls": [
                         ""
                         ]
                     },
                     {
-                        "adaptive_id": "720p",
+                        "adaptive_id": resolution[1],
                         "urls": [
                             ""
                         ]
                     },
                     {
-                        "adaptive_id": "480p",
+                        "adaptive_id": resolution[2],
                         "urls": [
                             ""
                         ]
                     },
                     {
-                        "adaptive_id": "360p",
+                        "adaptive_id": resolution[3],
                         "urls": [
                             ""
                         ]
                     },
                     {
-                        "adaptive_id": "240p",
+                        "adaptive_id": resolution[4],
                         "urls": [
                             ""
                         ]
@@ -158,7 +176,7 @@ let write_json = (json) =>
                         "lang": "eng",
                         "variant": true,
                         "urls": [
-                          "http://Y2pjb2Nvc3N0Z0BjamVubXN0b3I6MjU1MmM1MjVhOWRkMTUzNTcwNjFiZTIzMTcyMzRlNjU=@cjcocosstg.x-cdn.com/dav/CLIP/COCOS/CAPTION/B120214099/e7835546-1245-49d5-9941-4750b76c156d.srt"
+                          ""
                         ]
                       }
                 ]
@@ -166,38 +184,38 @@ let write_json = (json) =>
         }
     }
 
+    let base_url="http://Y2pjb2Nvc3N0Z0BjamVubXN0b3I6MjU1MmM1MjVhOWRkMTUzNTcwNjFiZTIzMTcyMzRlNjU=@cjcocosstg.x-cdn.com/dav";
     for (let i=0;i<json.length;i++)
     {
-        let test =json[i]['Caption Path'];
-        if (json[i]['Caption Path'] == undefined)
+        if (json[i]['Caption Path'] === undefined)
         {
-            templete.channel.id = json[i].id;
-            templete.channel.input.streams[0].urls = ["http://Y2pjb2Nvc3N0Z0BjamVubXN0b3I6MjU1MmM1MjVhOWRkMTUzNTcwNjFiZTIzMTcyMzRlNjU=@cjcocosstg.x-cdn.com/dav" + json[i]['1080p'] ];
-            templete.channel.input.streams[1].urls = ["http://Y2pjb2Nvc3N0Z0BjamVubXN0b3I6MjU1MmM1MjVhOWRkMTUzNTcwNjFiZTIzMTcyMzRlNjU=@cjcocosstg.x-cdn.com/dav" + json[i]['720p'] ];
-            templete.channel.input.streams[2].urls = ["http://Y2pjb2Nvc3N0Z0BjamVubXN0b3I6MjU1MmM1MjVhOWRkMTUzNTcwNjFiZTIzMTcyMzRlNjU=@cjcocosstg.x-cdn.com/dav" + json[i]['480p'] ];
-            templete.channel.input.streams[3].urls = ["http://Y2pjb2Nvc3N0Z0BjamVubXN0b3I6MjU1MmM1MjVhOWRkMTUzNTcwNjFiZTIzMTcyMzRlNjU=@cjcocosstg.x-cdn.com/dav" + json[i]['360p'] ];
-            templete.channel.input.streams[4].urls = ["http://Y2pjb2Nvc3N0Z0BjamVubXN0b3I6MjU1MmM1MjVhOWRkMTUzNTcwNjFiZTIzMTcyMzRlNjU=@cjcocosstg.x-cdn.com/dav" + json[i]['240p'] ];
+            templete.channel.id = "cocos_program_" + json[i].id;
+          
+            for(let j=0;j<resolution.length;j++)
+            {
+                templete.channel.input.streams[j].urls = [base_url + json[i][resolution[j]] ];
+            }
 
-            let file_name = templete.channel.id + '.json';  
+            let file_name = json[i].id + '.json';  
             let file_json = JSON.stringify(templete, null, "\t");
-                fs.writeFile( './json/' + file_name, file_json , function(err) 
+            fs.writeFile( './json/' + file_name, file_json , function(err) 
+            {
+                if (err) 
                 {
-                    if (err) 
-                    {
-                        console.log(err);
-                    }
-                });
+                    console.log(err);
+                }
+            });
         }else
         {
-            templete_caption.channel.id = json[i].id;
-            templete_caption.channel.input.streams[0].urls = ["http://Y2pjb2Nvc3N0Z0BjamVubXN0b3I6MjU1MmM1MjVhOWRkMTUzNTcwNjFiZTIzMTcyMzRlNjU=@cjcocosstg.x-cdn.com/dav" + json[i]['1080p'] ];
-            templete_caption.channel.input.streams[1].urls = ["http://Y2pjb2Nvc3N0Z0BjamVubXN0b3I6MjU1MmM1MjVhOWRkMTUzNTcwNjFiZTIzMTcyMzRlNjU=@cjcocosstg.x-cdn.com/dav" + json[i]['720p'] ];
-            templete_caption.channel.input.streams[2].urls = ["http://Y2pjb2Nvc3N0Z0BjamVubXN0b3I6MjU1MmM1MjVhOWRkMTUzNTcwNjFiZTIzMTcyMzRlNjU=@cjcocosstg.x-cdn.com/dav" + json[i]['480p'] ];
-            templete_caption.channel.input.streams[3].urls = ["http://Y2pjb2Nvc3N0Z0BjamVubXN0b3I6MjU1MmM1MjVhOWRkMTUzNTcwNjFiZTIzMTcyMzRlNjU=@cjcocosstg.x-cdn.com/dav" + json[i]['360p'] ];
-            templete_caption.channel.input.streams[4].urls = ["http://Y2pjb2Nvc3N0Z0BjamVubXN0b3I6MjU1MmM1MjVhOWRkMTUzNTcwNjFiZTIzMTcyMzRlNjU=@cjcocosstg.x-cdn.com/dav" + json[i]['240p'] ];
-            templete_caption.channel.input.streams[5].urls = ["http://Y2pjb2Nvc3N0Z0BjamVubXN0b3I6MjU1MmM1MjVhOWRkMTUzNTcwNjFiZTIzMTcyMzRlNjU=@cjcocosstg.x-cdn.com/dav" + json[i]['Caption Path'] ];
+            templete_caption.channel.id = "cocos_program_" + json[i].id;
 
-            let file_name = templete_caption.channel.id + '.json';  
+            for(let j=0;j<resolution.length;j++)
+            {
+                templete_caption.channel.input.streams[j].urls = [base_url + json[i][resolution[j]] ];
+            }
+             templete_caption.channel.input.streams[5].urls = [base_url + json[i]['Caption Path'] ];
+
+            let file_name = json[i].id + '.json';  
             let file_json = JSON.stringify(templete_caption, null, "\t");
             fs.writeFile( './json/' + file_name, file_json , function(err) 
             {
@@ -210,7 +228,20 @@ let write_json = (json) =>
     }
 }
 
+let samsung_smartTV = (json)=>
+{
+    for (let i=0;i<json.length;i++)
+    {
+             let a = json[i].id.split('_');
+             json[i].id = json[i].id.slice(0, -( a[a.length-1].length +1) );
+    }
+    return json;
+}
 
 let json = read_excel(file_name);
 json = duplication_eliminate(json);
+if(n==1)
+{
+   json = samsung_smartTV(json);
+}
 write_json(json);
