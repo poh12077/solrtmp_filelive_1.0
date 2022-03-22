@@ -6,11 +6,11 @@ let file_name = 'test.xlsx';
  
 // samsung smartTV ==1
 let n=3;
+excel = xlsx.readFile( file_name );
 
-let read_excel = (file_name) =>
+let read_excel = (i) =>
 {
-    const excel = xlsx.readFile( file_name );
-    const sheet_name = excel.SheetNames[0];          
+    const sheet_name = excel.SheetNames[i];          
     const sheet_data = excel.Sheets[sheet_name];     
     
     // let json = xlsx.utils.sheet_to_json( sheet_data, { defval : "" } );
@@ -355,10 +355,14 @@ let samsung_smartTV = (json)=>
     return json;
 }
 
-let json = read_excel(file_name);
-json = duplication_eliminate(json);
-if(n==1)
+let json;
+for(let i=0;i<excel.SheetNames.length;i++)
 {
-   json = samsung_smartTV(json);
+    json = read_excel(i);
+    json = duplication_eliminate(json);
+    if(n==1)
+    {
+      json = samsung_smartTV(json);
+    }
+    write_json(json);
 }
-write_json(json);
