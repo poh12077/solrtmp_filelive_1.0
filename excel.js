@@ -2,10 +2,10 @@ const xlsx = require( "xlsx" );
 var fs = require('fs');
 const { fileURLToPath } = require("url");
 
-let file_name = 'test.xlsx';
+let file_name = '삼성스마트TV_국내_4월_202204.xlsx';
  
 // samsung smartTV ==1
-let n=3;
+let n=1;
 excel = xlsx.readFile( file_name );
 
 let read_excel = (i) =>
@@ -21,9 +21,13 @@ let read_excel = (i) =>
 let duplication_eliminate = (json) =>
 {
     let id_set=[];
-    for (let i =1;i<json.length;i++)
+    for (let i=0;i<json.length;i++)
     {
-        id_set.push(json[i].id);  
+        let test = json[i].id; 
+        if(json[i].id !== undefined)
+        {
+            id_set.push(json[i].id);  
+        }
     }
     let set= new Set(id_set);
     id_set = [...set];
