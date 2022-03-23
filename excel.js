@@ -2,10 +2,11 @@ const xlsx = require( "xlsx" );
 var fs = require('fs');
 const { fileURLToPath } = require("url");
 
-let file_name = '삼성스마트TV_국내_4월_202204.xlsx';
+let file_name = 'PlutoTV_4월편성_CC_220322.xlsx';
  
 // samsung smartTV ==1
-let n=1;
+// pluto 1080p ==2
+let n=2;
 excel = xlsx.readFile( file_name );
 
 let read_excel = (i) =>
@@ -23,7 +24,6 @@ let duplication_eliminate = (json) =>
     let id_set=[];
     for (let i=0;i<json.length;i++)
     {
-        let test = json[i].id; 
         if(json[i].id !== undefined)
         {
             id_set.push(json[i].id);  
@@ -208,7 +208,7 @@ let write_json = (json) =>
                 "streams": 
                 [
                     {
-                        "adaptive_id": resolution[0] ,
+                        "adaptive_id": '1080p' ,
                         "urls": [
                         ""
                         ]
@@ -239,7 +239,7 @@ let write_json = (json) =>
                 "streams": 
                 [
                     {
-                        "adaptive_id": resolution[0],
+                        "adaptive_id": '1080p' ,
                         "urls": [
                         ""
                         ]
@@ -260,7 +260,7 @@ let write_json = (json) =>
 
     let base_url="http://Y2pjb2Nvc3N0Z0BjamVubXN0b3I6MjU1MmM1MjVhOWRkMTUzNTcwNjFiZTIzMTcyMzRlNjU=@cjcocosstg.x-cdn.com/dav";
     
-    if(resolution.length!=1)
+    if(n!=2)
     {
         for (let i=0;i<json.length;i++)
         {
@@ -303,7 +303,8 @@ let write_json = (json) =>
                 });
             }
         }
-    }else
+    }
+    else
     {
         for (let i=0;i<json.length;i++)
         {
@@ -311,10 +312,12 @@ let write_json = (json) =>
             {
                 templete_pluto_1080p.channel.id = "cocos_program_" + json[i].id;
             
-                for(let j=0;j<resolution.length;j++)
-                {
-                    templete_pluto_1080p.channel.input.streams[j].urls = [base_url + json[i][resolution[j]] ];
-                }
+                // for(let j=0;j<resolution.length;j++)
+                // {
+                //     templete_pluto_1080p.channel.input.streams[j].urls = [base_url + json[i][resolution[j]] ];
+                // }
+
+                    templete_pluto_1080p.channel.input.streams[0].urls = [base_url + json[i]['1080p'] ];
 
                 let file_name = json[i].id + '.json';  
                 let file_json = JSON.stringify(templete_pluto_1080p, null, "\t");
@@ -329,11 +332,14 @@ let write_json = (json) =>
             {
                 templete_caption_pluto_1080p.channel.id = "cocos_program_" + json[i].id;
 
-                for(let j=0;j<resolution.length;j++)
-                {
-                    templete_caption_pluto_1080p.channel.input.streams[j].urls = [base_url + json[i][resolution[j]] ];
-                }
-                templete_caption_pluto_1080p.channel.input.streams[5].urls = [base_url + json[i]['Caption Path'] ];
+                // for(let j=0;j<resolution.length;j++)
+                // {
+                //     templete_caption_pluto_1080p.channel.input.streams[j].urls = [base_url + json[i][resolution[j]] ];
+                // }
+
+                    templete_caption_pluto_1080p.channel.input.streams[0].urls = [base_url + json[i]['1080p'] ];
+
+                templete_caption_pluto_1080p.channel.input.streams[1].urls = [base_url + json[i]['Caption Path'] ];
 
                 let file_name = json[i].id + '.json';  
                 let file_json = JSON.stringify(templete_caption_pluto_1080p, null, "\t");
@@ -353,8 +359,11 @@ let samsung_smartTV = (json)=>
 {
     for (let i=0;i<json.length;i++)
     {
+        if(json[i].id !== undefined)
+        {
              let a = json[i].id.split('_');
              json[i].id = json[i].id.slice(0, -( a[a.length-1].length +1) );
+        }
     }
     return json;
 }
@@ -366,7 +375,40 @@ for(let i=0;i<excel.SheetNames.length;i++)
     json = duplication_eliminate(json);
     if(n==1)
     {
-      json = samsung_smartTV(json);
+            json = samsung_smartTV(json);
     }
+   // json = duplication_eliminate(json);
+
+    // {
+    //     //test
+    //     let id_set=[];
+    //     for (let i=0;i<json.length;i++)
+    //     {
+    //         if(json[i].id !== undefined)
+    //         {
+    //             id_set.push(json[i].id);  
+    //         }
+    //     }
+
+    //     x=id_set;
+    //     n=0;
+
+    //     for(let i=0;i<x.length;i++)
+    //     {
+    //         for (let j=0;j<x.length;j++)
+    //         {
+    //             if(x[i]==x[j])
+    //             {
+    //                 n++;
+    //                 if(n>1)
+    //                 {
+    //                     console.log(x[i] + ' ' + x[j] );
+    //                 }
+    //             }
+    //         }   
+    //         n=0;
+    //     }
+    // }
+
     write_json(json);
 }
