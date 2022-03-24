@@ -1,7 +1,7 @@
 const xlsx = require( "xlsx" );
 var fs = require('fs');
 
-let file_name = 'PlutoTV_4월편성_CC_220322.xlsx';
+let file_name = 'test.xlsx';
 
 excel = xlsx.readFile( file_name );
 
@@ -14,14 +14,24 @@ let read_excel = (i) =>
     let json = xlsx.utils.sheet_to_json( sheet_data );
     return json;
 }
+
 let json;
+
 json = read_excel(0);
 let n = 1;
 let time_converter = (x) =>
 {
+  try
+  {
     y=x.split(':');
     time = ( parseInt(y[0])*3600 + parseInt(y[1])*60 + parseInt(y[2]) ) *1000 ;
     return time;
+  }
+  catch(err)
+  {
+    console.log(err);
+    return x;
+  }
 }
 
 
@@ -150,12 +160,54 @@ for (let i=0;i<json.length;i++)
 {
     if(json[i]['Ad Point 1']!=undefined)
     {
+
+      if (n==1)
+      {
+        let video =
+        {
+           "start_date": "20220323T15:00:00",
+            "id": "schid_" + n.toString() + "_1" ,
+            "ch_id": "cocos_program_" + json[i].id,
+            "range": 
+            {
+              "start": 0,
+              "end": time_converter(json[i]['Ad Point 1']),
+            }
+        }
+        schedule.channel.schedule.list.push(video);
+      }
+      else
+      {
+        let video =
+        {
+            "id": "schid_" + n.toString() + "_1" ,
+            "ch_id": "cocos_program_" + json[i].id,
+            "range": 
+            {
+              "start": 0,
+              "end": time_converter(json[i]['Ad Point 1']),
+            }
+        }
+        schedule.channel.schedule.list.push(video);
+      }
+
+      let advertisement =
+      {
+          "id": "schid_ad_" + n.toString() + "_1" ,
+          "ch_id": "cocos_ad_60s_20210528_2mbps",
+          "range": 
+          {
+                  "start": 0,
+                  "end": 60000
+          }
+      }
+      schedule.channel.schedule.list.push(advertisement);
+
       for (let j=1;j<5;j++)
       {
           let video =
             {
-              // "start_date": "20220323T15:00:00",
-                "id": "schid_" + n.toString() + "_" + j.toString(),
+                "id": "schid_" + n.toString() + "_" + (j+1).toString(),
                 "ch_id": "cocos_program_" + json[i].id,
                 "range": 
                 {
@@ -165,7 +217,7 @@ for (let i=0;i<json.length;i++)
             }
           let advertisement =
             {
-                "id": "schid_ad_" + n.toString() + "_" + j.toString(),
+                "id": "schid_ad_" + n.toString() + "_" + (j+1).toString(),
                 "ch_id": "cocos_ad_60s_20210528_2mbps",
                 "range": 
                 {
@@ -177,10 +229,9 @@ for (let i=0;i<json.length;i++)
               schedule.channel.schedule.list.push(advertisement);
         }
 
-      let video =
+          video =
           {
-            // "start_date": "20220323T15:00:00",
-              "id": "schid_" + n.toString() + "_5" ,
+              "id": "schid_" + n.toString() + "_6" ,
               "ch_id": "cocos_program_" + json[i].id,
               "range": 
               {
@@ -188,18 +239,8 @@ for (let i=0;i<json.length;i++)
                 "end": json[i]['__EMPTY'],
               }
           }
-      let advertisement =
-        {
-            "id": "schid_ad_" + n.toString() + "_5",
-            "ch_id": "cocos_ad_60s_20210528_2mbps",
-            "range": 
-            {
-                    "start": 0,
-                    "end": 60000
-            }
-        }
+    
           schedule.channel.schedule.list.push(video);
-          schedule.channel.schedule.list.push(advertisement);
           n++;
     }
 }
