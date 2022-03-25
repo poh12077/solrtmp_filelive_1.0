@@ -1,7 +1,7 @@
 const xlsx = require( "xlsx" );
 var fs = require('fs');
 
-let file_name = 'PlutoTV_4월편성_CC_220322.xlsx';
+let file_name = '삼성스마트TV_국내_4월_202204.xlsx';
 
 excel = xlsx.readFile( file_name );
 
@@ -158,7 +158,7 @@ schedule =
 
 for (let i=0;i<json.length;i++)
 {
-    if(json[i]['Ad Point 1']!=undefined)
+    if(json[i]['id']!=undefined)
     {
 
       if (n==1)
@@ -171,7 +171,7 @@ for (let i=0;i<json.length;i++)
             "range": 
             {
               "start": 0,
-              "end": time_converter(json[i]['Ad Point 1']),
+              "end": 600000
             }
         }
         schedule.channel.schedule.list.push(video);
@@ -185,7 +185,7 @@ for (let i=0;i<json.length;i++)
             "range": 
             {
               "start": 0,
-              "end": time_converter(json[i]['Ad Point 1']),
+              "end": 600000
             }
         }
         schedule.channel.schedule.list.push(video);
@@ -203,16 +203,24 @@ for (let i=0;i<json.length;i++)
       }
       schedule.channel.schedule.list.push(advertisement);
 
-      for (let j=1;j<5;j++)
+      let m;
+      for (let j=1;j>0;j++)
       {
+          let test = json['__EMPTY'];
+          if(json[i]['__EMPTY'] < 600000*(j+1) )
+          { 
+              m=j;
+              break;
+          }
+
           let video =
             {
                 "id": "schid_" + n.toString() + "_" + (j+1).toString(),
                 "ch_id": "cocos_program_" + json[i].id,
                 "range": 
                 {
-                  "start": time_converter(json[i]['Ad Point '+ j.toString()]) ,
-                  "end": time_converter(json[i]['Ad Point ' + (j+1).toString()]),
+                  "start":  600000*j,
+                  "end":  6000000*(j+1) 
                 }
             }
           let advertisement =
@@ -231,11 +239,11 @@ for (let i=0;i<json.length;i++)
 
           video =
           {
-              "id": "schid_" + n.toString() + "_6" ,
+              "id": "schid_" + n.toString() + "_" + (m-1).toString() ,
               "ch_id": "cocos_program_" + json[i].id,
               "range": 
               {
-                "start": time_converter(json[i]['Ad Point 5']),
+                "start": 600000*m,
                 "end": json[i]['__EMPTY'],
               }
           }
@@ -245,7 +253,7 @@ for (let i=0;i<json.length;i++)
     }
 }
 
-file_name = '202204_' +'PlutoTV_4월편성_CC_220322' + '.json';  
+file_name = '202204_' +'삼성스마트TV_국내_4월_202204' + '.json';  
 let file_json = JSON.stringify(schedule, null, "\t");
 fs.writeFile( './json/' + file_name, file_json , function(err) 
 {
