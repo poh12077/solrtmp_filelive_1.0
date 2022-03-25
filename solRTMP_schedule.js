@@ -21,18 +21,37 @@ json = read_excel(0);
 let n = 1;
 let time_converter = (x) =>
 {
-  try
+  if(typeof(x)=='string')
   {
     y=x.split(':');
     time = ( parseInt(y[0])*3600 + parseInt(y[1])*60 + parseInt(y[2]) ) *1000 ;
     return time;
   }
-  catch(err)
+  else if (typeof(x)=='number')
   {
-    console.log(err);
+    return x;
+  }
+  else
+  {
+    console.log('time is wired');
     return x;
   }
 }
+
+// let time_converter = (x) =>
+// {
+//   try
+//   {
+//     y=x.split(':');
+//     time = ( parseInt(y[0])*3600 + parseInt(y[1])*60 + parseInt(y[2]) ) *1000 ;
+//     return time;
+//   }
+//   catch(err)
+//   {
+//     console.log(err);
+//     return x;
+//   }
+// }
 
 
 schedule =
