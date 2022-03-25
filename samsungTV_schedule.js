@@ -1,8 +1,12 @@
 const xlsx = require( "xlsx" );
 var fs = require('fs');
 
-let file_name = '삼성스마트TV_국내_4월_202204.xlsx';
+let file_name = '북미삼성TV(4월)_220322.xlsx';
 
+//samsungTV_domestic =1
+//samsungTV_northern_america =2
+//plutoTV =3
+let num=2;
 excel = xlsx.readFile( file_name );
 
 let read_excel = (i) =>
@@ -42,127 +46,125 @@ let samsung_smartTV = (json)=>
     return json;
 }
 
-let write_json = (json,k) =>
+let write_json_samsungTV_domestic = (json,k) =>
 {
 
   let n=1;
-  let schedule =
-    {
-        "server_id": "manager_1234",
-        "command": "ch_add",
-        "channel": {
-          "id": "ch_id",
-          "version": "v1",
-          "category": "live",
-          "input": {
-            "type": "schedule",
-            "socket_timeout": 3,
-            "reconnect_timeout": 60,
-            "streams": [
-              {
-                "adaptive_id": "1080p",
-                "variant": true,
-                "urls": [
-                  "file:///stg/solrtmp/file/default_1080p.mp4"
-                ]
-              },
-              {
-                "adaptive_id": "720p",
-                "variant": true,
-                "urls": [
-                  "file:///stg/solrtmp/file/default_720p.mp4"
-                ]
-              },
-              {
-                "adaptive_id": "480p",
-                "variant": true,
-                "urls": [
-                  "file:///stg/solrtmp/file/default_480p.mp4"
-                ]
-              },
-              {
-                "adaptive_id": "360p",
-                "variant": true,
-                "urls": [
-                  "file:///stg/solrtmp/file/default_360p.mp4"
-                ]
-              },
-              {
-                "adaptive_id": "270p",
-                "variant": true,
-                "urls": [
-                  "file:///stg/solrtmp/file/default_270p.mp4"
-                ]
-              }
-            ]
-          },
-          "schedule": 
+
+  let schedule=
+  {
+    "server_id": "manager_1234",
+    "command": "ch_add",
+    "channel": {
+      "id": "ch_id",
+      "version": "v1",
+      "category": "live",
+      "input": {
+        "type": "schedule",
+        "socket_timeout": 3,
+        "reconnect_timeout": 60,
+        "streams": [
           {
-            "loop": true,
-            "sync_timeout": 2,
-            "range_start_by": "front",
-            "auto_adaptive_mapping": "media",
-            "list": 
-            [
-            
+            "adaptive_id": "1080p",
+            "variant": true,
+            "urls": [
+              "file:///stg/solrtmp/file/default_1080p.mp4"
             ]
           },
-          "output": {
-            "base_dir": "%r/%s",
-            "clear_when_finish": true,
-            "segment_opt": {
-              "playlist_chunk_count": 10,
-              "max_chunk_count": 30,
-              "duration_time": 6,
-              "align_by_src": true
-            },
-            "variant": {
-              "memory_caching": false,
-              "sort_order": "bandwidth",
-              "item": {
-                "codec": true,
-                "bandwidth": true,
-                "resolution": true,
-                "framerate": true,
-                "sar": false,
-                "samplerate": false,
-                "channel": false,
-                "lang": true
-              },
-              "output_path": [
-                {
-                  "o_type": "gateway_m3u8",
-                  "combine": "%f/playlist.m3u8"
-                },
-                {
-                  "o_type": "mpd",
-                  "combine": "%f/manifest.mpd"
-                }
-              ]
-            },
-            "hls": {
-              "ad_marker": "scte35enh",
-              "memory_caching": false,
-              "start_sequence_num": 0,
-              "hls_version": 3,
-              "output_path": [
-                {
-                  "o_type": "m3u8",
-                  "combine": "%f/%a/chunklist.m3u8"
-                },
-                {
-                  "o_type": "gateway_m3u8",
-                  "combine": "%f/%a/playlist.m3u8"
-                },
-                {
-                  "o_type": "ts_segment",
-                  "combine": "%f/%a/segment_%n.ts"
-                }
-              ]
-            }
+          {
+            "adaptive_id": "720p",
+            "variant": true,
+            "urls": [
+              "file:///stg/solrtmp/file/default_720p.mp4"
+            ]
+          },
+          {
+            "adaptive_id": "480p",
+            "variant": true,
+            "urls": [
+              "file:///stg/solrtmp/file/default_480p.mp4"
+            ]
+          },
+          {
+            "adaptive_id": "360p",
+            "variant": true,
+            "urls": [
+              "file:///stg/solrtmp/file/default_360p.mp4"
+            ]
+          },
+          {
+            "adaptive_id": "270p",
+            "variant": true,
+            "urls": [
+              "file:///stg/solrtmp/file/default_270p.mp4"
+            ]
           }
+        ]
+      },
+      "schedule": {
+        "loop": true,
+        "sync_timeout": 2,
+        "range_start_by": "front",
+        "auto_adaptive_mapping": "media",
+        "list": [
+        ]
+      },
+      "output": {
+        "base_dir": "%r/%s",
+        "clear_when_finish": true,
+        "segment_opt": {
+          "playlist_chunk_count": 10,
+          "max_chunk_count": 30,
+          "duration_time": 6,
+          "align_by_src": true
+        },
+        "variant": {
+          "memory_caching": false,
+          "sort_order": "bandwidth",
+          "item": {
+            "codec": true,
+            "bandwidth": true,
+            "resolution": true,
+            "framerate": true,
+            "sar": false,
+            "samplerate": false,
+            "channel": false,
+            "lang": true
+          },
+          "output_path": [
+            {
+              "o_type": "gateway_m3u8",
+              "combine": "%f/playlist.m3u8"
+            },
+            {
+              "o_type": "mpd",
+              "combine": "%f/manifest.mpd"
+            }
+          ]
+        },
+        "hls": {
+          "ad_marker": "scte35enh",
+          "memory_caching": false,
+          "start_sequence_num": 0,
+          "hls_version": 3,
+          "output_path": [
+            {
+              "o_type": "m3u8",
+              "combine": "%f/%a/chunklist.m3u8"
+            },
+            {
+              "o_type": "gateway_m3u8",
+              "combine": "%f/%a/playlist.m3u8"
+            },
+            {
+              "o_type": "ts_segment",
+              "combine": "%f/%a/segment_%n.ts"
+            }
+          ]
         }
+      }
     }
+  }
 
   for (let i=0;i<json.length;i++)
   {
@@ -233,7 +235,7 @@ let write_json = (json,k) =>
           let advertisement =
               {
                   "id": "schid_ad_" + n.toString() + "_" + (j+1).toString(),
-                  "ch_id": "cocos_ad_60s_20210528_2mbps",
+                  "ch_id": "cocos_ad_60s_20210528_2mbps", 
                   "range": 
                   {
                           "start": 0,
@@ -261,7 +263,7 @@ let write_json = (json,k) =>
   }
 
   n=1;
-  file_name = '202204_' +'삼성스마트TV_국내_4월_202204_' + k.toString() + '.json';  
+  file_name = '202204_' + file_name + k.toString() + '.json';  
   let file_json = JSON.stringify(schedule, null, "\t");
   fs.writeFile( './json/' + file_name, file_json , function(err) 
   {
@@ -272,121 +274,252 @@ let write_json = (json,k) =>
   });
 }
 
+let write_json_samsungTV_northern_america = (json,k) =>
+{
+
+  let n=1;
+
+  let schedule=
+  {
+    "server_id": "manager_1234",
+    "command": "ch_add",
+    "channel": {
+      "id": "ch_id",
+      "version": "v1",
+      "category": "live",
+      "input": {
+        "type": "schedule",
+        "socket_timeout": 3,
+        "reconnect_timeout": 60,
+        "streams": [
+          {
+            "adaptive_id": "1080p",
+            "variant": true,
+            "urls": [
+              "file:///stg/solrtmp/file/default_1080p.mp4"
+            ]
+          },
+          {
+            "adaptive_id": "720p",
+            "variant": true,
+            "urls": [
+              "file:///stg/solrtmp/file/default_720p.mp4"
+            ]
+          },
+          {
+            "adaptive_id": "480p",
+            "variant": true,
+            "urls": [
+              "file:///stg/solrtmp/file/default_480p.mp4"
+            ]
+          },
+          {
+            "adaptive_id": "360p",
+            "variant": true,
+            "urls": [
+              "file:///stg/solrtmp/file/default_360p.mp4"
+            ]
+          },
+          {
+            "adaptive_id": "270p",
+            "variant": true,
+            "urls": [
+              "file:///stg/solrtmp/file/default_270p.mp4"
+            ]
+          }
+        ]
+      },
+      "schedule": {
+        "loop": true,
+        "sync_timeout": 2,
+        "range_start_by": "front",
+        "auto_adaptive_mapping": "media",
+        "list": [
+        ]
+      },
+      "output": {
+        "base_dir": "%r/%s",
+        "clear_when_finish": true,
+        "segment_opt": {
+          "playlist_chunk_count": 10,
+          "max_chunk_count": 30,
+          "duration_time": 6,
+          "align_by_src": true
+        },
+        "variant": {
+          "memory_caching": false,
+          "sort_order": "bandwidth",
+          "item": {
+            "codec": true,
+            "bandwidth": true,
+            "resolution": true,
+            "framerate": true,
+            "sar": false,
+            "samplerate": false,
+            "channel": false,
+            "lang": true
+          },
+          "output_path": [
+            {
+              "o_type": "gateway_m3u8",
+              "combine": "%f/playlist.m3u8"
+            },
+            {
+              "o_type": "mpd",
+              "combine": "%f/manifest.mpd"
+            }
+          ]
+        },
+        "hls": {
+          "ad_marker": "scte35enh",
+          "memory_caching": false,
+          "start_sequence_num": 0,
+          "hls_version": 3,
+          "output_path": [
+            {
+              "o_type": "m3u8",
+              "combine": "%f/%a/chunklist.m3u8"
+            },
+            {
+              "o_type": "gateway_m3u8",
+              "combine": "%f/%a/playlist.m3u8"
+            },
+            {
+              "o_type": "ts_segment",
+              "combine": "%f/%a/segment_%n.ts"
+            }
+          ]
+        }
+      }
+    }
+  }
+
+  for (let i=0;i<json.length;i++)
+  {
+      if(json[i]['id']!=undefined)
+      {
+
+      if (n==1)
+      {
+          let video =
+          {
+          "start_date": "20220323T15:00:00",
+              "id": "schid_" + n.toString() + "_1" ,
+              "ch_id": "cocos_program_" + json[i].id,
+              "range": 
+              {
+              "start": 0,
+              "end": 900000
+              }
+          }
+          schedule.channel.schedule.list.push(video);
+      }
+      else
+      {
+          let video =
+          {
+              "id": "schid_" + n.toString() + "_1" ,
+              "ch_id": "cocos_program_" + json[i].id,
+              "range": 
+              {
+              "start": 0,
+              "end": 900000
+              }
+          }
+          schedule.channel.schedule.list.push(video);
+      }
+
+      let advertisement =
+      {
+          "id": "schid_ad_" + n.toString() + "_1" ,
+          "ch_id": "cocos_ad_60s_us",
+          "range": 
+          {
+                  "start": 0,
+                  "end": 60000
+          }
+      }
+      schedule.channel.schedule.list.push(advertisement);
+
+      let m;
+      for (let j=1;j>0;j++)
+      {
+          if(json[i]['__EMPTY'] < 900000*(j+1) )
+          { 
+              m=j;
+              break;
+          }
+
+          let video =
+              {
+                  "id": "schid_" + n.toString() + "_" + (j+1).toString(),
+                  "ch_id": "cocos_program_" + json[i].id,
+                  "range": 
+                  {
+                  "start":  900000*j,
+                  "end":  9000000*(j+1) 
+                  }
+              }
+          let advertisement =
+              {
+                  "id": "schid_ad_" + n.toString() + "_" + (j+1).toString(),
+                  "ch_id": "cocos_ad_60s_us", 
+                  "range": 
+                  {
+                          "start": 0,
+                          "end": 60000
+                  }
+              }
+              schedule.channel.schedule.list.push(video);
+              schedule.channel.schedule.list.push(advertisement);
+          }
+
+          video =
+          {
+              "id": "schid_" + n.toString() + "_" + (m+1).toString() ,
+              "ch_id": "cocos_program_" + json[i].id,
+              "range": 
+              {
+                  "start": 900000*m,
+                  "end": json[i]['__EMPTY'],
+              }
+          }
+      
+          schedule.channel.schedule.list.push(video);
+          n++;
+      }
+  }
+
+  n=1;
+  file_name = '202204_' + file_name + '.json';  
+  let file_json = JSON.stringify(schedule, null, "\t");
+  fs.writeFile( './json/' + file_name, file_json , function(err) 
+  {
+      if (err) 
+      {
+          console.log(err);
+      }
+  });
+}
+
+
 let json;
 
 for(let k=0;k<excel.SheetNames.length;k++)
 {
-    
     json = read_excel(k);
     json = samsung_smartTV(json);
     
-    write_json(json,k);
+    if(num==1)
+    {
+      write_json_samsungTV_domestic(json,k);
+    }
+    else if(num==2)
+    {
+      write_json_samsungTV_northern_america(json);
+    }
+    else if (num==3)
+    {
 
-    // for (let i=0;i<json.length;i++)
-    // {
-    //     if(json[i]['id']!=undefined)
-    //     {
-
-    //     if (n==1)
-    //     {
-    //         let video =
-    //         {
-    //         "start_date": "20220323T15:00:00",
-    //             "id": "schid_" + n.toString() + "_1" ,
-    //             "ch_id": "cocos_program_" + json[i].id,
-    //             "range": 
-    //             {
-    //             "start": 0,
-    //             "end": 600000
-    //             }
-    //         }
-    //         schedule.channel.schedule.list.push(video);
-    //     }
-    //     else
-    //     {
-    //         let video =
-    //         {
-    //             "id": "schid_" + n.toString() + "_1" ,
-    //             "ch_id": "cocos_program_" + json[i].id,
-    //             "range": 
-    //             {
-    //             "start": 0,
-    //             "end": 600000
-    //             }
-    //         }
-    //         schedule.channel.schedule.list.push(video);
-    //     }
-
-    //     let advertisement =
-    //     {
-    //         "id": "schid_ad_" + n.toString() + "_1" ,
-    //         "ch_id": "cocos_ad_60s_20210528_2mbps",
-    //         "range": 
-    //         {
-    //                 "start": 0,
-    //                 "end": 60000
-    //         }
-    //     }
-    //     schedule.channel.schedule.list.push(advertisement);
-
-    //     let m;
-    //     for (let j=1;j>0;j++)
-    //     {
-    //         if(json[i]['__EMPTY'] < 600000*(j+1) )
-    //         { 
-    //             m=j;
-    //             break;
-    //         }
-
-    //         let video =
-    //             {
-    //                 "id": "schid_" + n.toString() + "_" + (j+1).toString(),
-    //                 "ch_id": "cocos_program_" + json[i].id,
-    //                 "range": 
-    //                 {
-    //                 "start":  600000*j,
-    //                 "end":  6000000*(j+1) 
-    //                 }
-    //             }
-    //         let advertisement =
-    //             {
-    //                 "id": "schid_ad_" + n.toString() + "_" + (j+1).toString(),
-    //                 "ch_id": "cocos_ad_60s_20210528_2mbps",
-    //                 "range": 
-    //                 {
-    //                         "start": 0,
-    //                         "end": 60000
-    //                 }
-    //             }
-    //             schedule.channel.schedule.list.push(video);
-    //             schedule.channel.schedule.list.push(advertisement);
-    //         }
-
-    //         video =
-    //         {
-    //             "id": "schid_" + n.toString() + "_" + (m+1).toString() ,
-    //             "ch_id": "cocos_program_" + json[i].id,
-    //             "range": 
-    //             {
-    //                 "start": 600000*m,
-    //                 "end": json[i]['__EMPTY'],
-    //             }
-    //         }
-        
-    //         schedule.channel.schedule.list.push(video);
-    //         n++;
-    //     }
-    // }
-
-    // n=1;
-    // file_name = '202204_' +'삼성스마트TV_국내_4월_202204_' + k.toString() + '.json';  
-    // let file_json = JSON.stringify(schedule, null, "\t");
-    // fs.writeFile( './json/' + file_name, file_json , function(err) 
-    // {
-    //     if (err) 
-    //     {
-    //         console.log(err);
-    //     }
-    // });
-
+    }
 }

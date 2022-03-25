@@ -64,6 +64,28 @@ let read_resolution = (json) =>
     return resolution;
 }
 
+let duplication_check = (array) =>
+{
+    x=array;
+    n=0;
+
+    for(let i=0;i<x.length;i++)
+    {
+        for (let j=0;j<x.length;j++)
+        {
+            if(x[i]==x[j])
+            {
+                n++;
+                if(n>1)
+                {
+                    console.log(x[i] + ' ' + x[j] );
+                }
+            }
+        }   
+        n=0;
+    }
+}
+
 let write_json = (json) =>
 {
     let resolution = read_resolution(json);
@@ -378,37 +400,6 @@ for(let i=0;i<excel.SheetNames.length;i++)
             json = samsung_smartTV(json);
     }
    // json = duplication_eliminate(json);
-
-    // {
-    //     //test
-    //     let id_set=[];
-    //     for (let i=0;i<json.length;i++)
-    //     {
-    //         if(json[i].id !== undefined)
-    //         {
-    //             id_set.push(json[i].id);  
-    //         }
-    //     }
-
-    //     x=id_set;
-    //     n=0;
-
-    //     for(let i=0;i<x.length;i++)
-    //     {
-    //         for (let j=0;j<x.length;j++)
-    //         {
-    //             if(x[i]==x[j])
-    //             {
-    //                 n++;
-    //                 if(n>1)
-    //                 {
-    //                     console.log(x[i] + ' ' + x[j] );
-    //                 }
-    //             }
-    //         }   
-    //         n=0;
-    //     }
-    // }
-
+    
     write_json(json);
 }
