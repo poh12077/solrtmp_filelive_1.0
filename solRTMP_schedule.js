@@ -1,14 +1,14 @@
 const xlsx = require( "xlsx" );
 var fs = require('fs');
 
-let file_name = 'PlutoTV_4월편성_CC_220322.xlsx';
+let file_name = '북미삼성TV(4월)_220322.xlsx';
 
 //samsungTV_domestic =1
 //samsungTV_northern_america =2
 //plutoTV =3
 //plutoTV_1080p =4
 
-let num=3;
+let num=2;
 excel = xlsx.readFile( file_name );
 
 let read_excel = (i) =>
@@ -67,7 +67,7 @@ let samsung_smartTV = (json)=>
     return json;
 }
 
-let write_json_samsungTV_domestic = (json,k) =>
+let write_json_samsungTV_domestic = (json,k,file_name) =>
 {
 
   let n=1;
@@ -285,7 +285,7 @@ let write_json_samsungTV_domestic = (json,k) =>
 
   n=1;
   file_name = file_name.split('.')[0];
-  file_name = '202204_' + file_name + k.toString() + '.json';  
+  file_name = '202204_' + file_name + '_' + k.toString() + '.json';  
   let file_json = JSON.stringify(schedule, null, "\t");
   fs.writeFile( './json/' + file_name, file_json , function(err) 
   {
@@ -296,7 +296,7 @@ let write_json_samsungTV_domestic = (json,k) =>
   });
 }
 
-let write_json_samsungTV_northern_america = (json,k) =>
+let write_json_samsungTV_northern_america = (json,file_name) =>
 {
 
   let n=1;
@@ -525,7 +525,7 @@ let write_json_samsungTV_northern_america = (json,k) =>
   });
 }
 
-let write_json_plutoTV = (json) =>
+let write_json_plutoTV = (json,file_name) =>
 {
     n=1;
     let schedule=
@@ -809,7 +809,7 @@ let write_json_plutoTV = (json) =>
       });
 }
 
-let write_json_plutoTV_1080p = (json) =>
+let write_json_plutoTV_1080p = (json,file_name) =>
 {
     n=1;
     let schedule=
@@ -1054,7 +1054,7 @@ let write_json_plutoTV_1080p = (json) =>
       }
       n=1;
       file_name = file_name.split('.')[0];
-      file_name = '202204_' + file_name + '.json';  
+      file_name = '202204_' + file_name + '_1080p' + '.json';  
       let file_json = JSON.stringify(schedule, null, "\t");
       fs.writeFile( './json/' + file_name, file_json , function(err) 
       {
@@ -1071,24 +1071,23 @@ let json;
 for(let k=0;k<excel.SheetNames.length;k++)
 {
     json = read_excel(k);
-    //json = samsung_smartTV(json);
     
     if(num==1)
     {
       json = samsung_smartTV(json);
-      write_json_samsungTV_domestic(json,k);
+      write_json_samsungTV_domestic(json,k,file_name);
     }
     else if(num==2)
     {
       json = samsung_smartTV(json);
-      write_json_samsungTV_northern_america(json);
+      write_json_samsungTV_northern_america(json,file_name);
     }
     else if (num==3)
     {
-      write_json_plutoTV(json);
+      write_json_plutoTV(json,file_name);
     }
     else if (num==4)
     {
-      write_json_plutoTV_1080p(json);
+      write_json_plutoTV_1080p(json,file_name);
     }
 }
