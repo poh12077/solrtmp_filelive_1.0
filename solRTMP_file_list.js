@@ -2,11 +2,11 @@ const xlsx = require( "xlsx" );
 var fs = require('fs');
 const { fileURLToPath } = require("url");
 
-let file_name = 'PlutoTV_4월편성_CC_220322.xlsx';
+let file_name = '삼성_국내_202204.xlsx';
  
 // samsung smartTV ==1
 // pluto 1080p ==2
-let n=2;
+let n=1;
 excel = xlsx.readFile( file_name );
 
 let read_excel = (i) =>

@@ -1,14 +1,14 @@
 const xlsx = require( "xlsx" );
 var fs = require('fs');
 
-let file_name = '북미삼성TV(4월)_220322.xlsx';
+let file_name = '삼성_국내_202204.xlsx';
 
 //samsungTV_domestic =1
 //samsungTV_northern_america =2
 //plutoTV =3
 //plutoTV_1080p =4
 
-let num=2;
+let num=1;
 excel = xlsx.readFile( file_name );
 
 let read_excel = (i) =>
@@ -49,7 +49,7 @@ let time_converter = (x) =>
   }
   else
   {
-    console.log('time is wired');
+    console.log('time is wierd');
     return x;
   }
 }
@@ -83,7 +83,7 @@ let write_json_samsungTV_domestic = (json,k,file_name) =>
       "input": {
         "type": "schedule",
         "socket_timeout": 3,
-        "reconnect_timeout": 60,
+        "reconnect_timeout": 300,
         "streams": [
           {
             "adaptive_id": "1080p",
@@ -250,7 +250,7 @@ let write_json_samsungTV_domestic = (json,k,file_name) =>
                   "range": 
                   {
                   "start":  600000*j,
-                  "end":  6000000*(j+1) 
+                  "end":  600000*(j+1) 
                   }
               }
           let advertisement =
@@ -312,7 +312,7 @@ let write_json_samsungTV_northern_america = (json,file_name) =>
       "input": {
         "type": "schedule",
         "socket_timeout": 3,
-        "reconnect_timeout": 60,
+        "reconnect_timeout": 300,
         "streams": [
           {
             "adaptive_id": "1080p",
@@ -479,7 +479,7 @@ let write_json_samsungTV_northern_america = (json,file_name) =>
                   "range": 
                   {
                   "start":  900000*j,
-                  "end":  9000000*(j+1) 
+                  "end":  900000*(j+1) 
                   }
               }
           let advertisement =

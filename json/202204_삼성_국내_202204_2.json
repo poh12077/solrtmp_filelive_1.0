@@ -8,7 +8,7 @@
 		"input": {
 			"type": "schedule",
 			"socket_timeout": 3,
-			"reconnect_timeout": 60,
+			"reconnect_timeout": 300,
 			"streams": [
 				{
 					"adaptive_id": "1080p",
@@ -56,7 +56,7 @@
 				{
 					"start_date": "20220323T15:00:00",
 					"id": "schid_1_1",
-					"ch_id": "cocos_program_B120194952_D1",
+					"ch_id": "cocos_program_B120181291_D1",
 					"range": {
 						"start": 0,
 						"end": 600000
@@ -72,10 +72,10 @@
 				},
 				{
 					"id": "schid_1_2",
-					"ch_id": "cocos_program_B120194952_D1",
+					"ch_id": "cocos_program_B120181291_D1",
 					"range": {
 						"start": 600000,
-						"end": 12000000
+						"end": 1200000
 					}
 				},
 				{
@@ -88,10 +88,10 @@
 				},
 				{
 					"id": "schid_1_3",
-					"ch_id": "cocos_program_B120194952_D1",
+					"ch_id": "cocos_program_B120181291_D1",
 					"range": {
 						"start": 1200000,
-						"end": 18000000
+						"end": 1800000
 					}
 				},
 				{
@@ -104,10 +104,10 @@
 				},
 				{
 					"id": "schid_1_4",
-					"ch_id": "cocos_program_B120194952_D1",
+					"ch_id": "cocos_program_B120181291_D1",
 					"range": {
 						"start": 1800000,
-						"end": 24000000
+						"end": 2400000
 					}
 				},
 				{
@@ -120,10 +120,10 @@
 				},
 				{
 					"id": "schid_1_5",
-					"ch_id": "cocos_program_B120194952_D1",
+					"ch_id": "cocos_program_B120181291_D1",
 					"range": {
 						"start": 2400000,
-						"end": 30000000
+						"end": 3000000
 					}
 				},
 				{
@@ -136,10 +136,10 @@
 				},
 				{
 					"id": "schid_1_6",
-					"ch_id": "cocos_program_B120194952_D1",
+					"ch_id": "cocos_program_B120181291_D1",
 					"range": {
 						"start": 3000000,
-						"end": 36000000
+						"end": 3600000
 					}
 				},
 				{
@@ -152,10 +152,10 @@
 				},
 				{
 					"id": "schid_1_7",
-					"ch_id": "cocos_program_B120194952_D1",
+					"ch_id": "cocos_program_B120181291_D1",
 					"range": {
 						"start": 3600000,
-						"end": 42000000
+						"end": 4200000
 					}
 				},
 				{
@@ -168,10 +168,10 @@
 				},
 				{
 					"id": "schid_1_8",
-					"ch_id": "cocos_program_B120194952_D1",
+					"ch_id": "cocos_program_B120181291_D1",
 					"range": {
 						"start": 4200000,
-						"end": 48000000
+						"end": 4800000
 					}
 				},
 				{
@@ -184,15 +184,15 @@
 				},
 				{
 					"id": "schid_1_9",
-					"ch_id": "cocos_program_B120194952_D1",
+					"ch_id": "cocos_program_B120181291_D1",
 					"range": {
 						"start": 4800000,
-						"end": 5222000
+						"end": 4949000
 					}
 				},
 				{
 					"id": "schid_2_1",
-					"ch_id": "cocos_program_B120194952_D2",
+					"ch_id": "cocos_program_B120181291_D2",
 					"range": {
 						"start": 0,
 						"end": 600000
@@ -208,10 +208,10 @@
 				},
 				{
 					"id": "schid_2_2",
-					"ch_id": "cocos_program_B120194952_D2",
+					"ch_id": "cocos_program_B120181291_D2",
 					"range": {
 						"start": 600000,
-						"end": 12000000
+						"end": 1200000
 					}
 				},
 				{
@@ -224,10 +224,10 @@
 				},
 				{
 					"id": "schid_2_3",
-					"ch_id": "cocos_program_B120194952_D2",
+					"ch_id": "cocos_program_B120181291_D2",
 					"range": {
 						"start": 1200000,
-						"end": 18000000
+						"end": 1800000
 					}
 				},
 				{
@@ -240,10 +240,10 @@
 				},
 				{
 					"id": "schid_2_4",
-					"ch_id": "cocos_program_B120194952_D2",
+					"ch_id": "cocos_program_B120181291_D2",
 					"range": {
 						"start": 1800000,
-						"end": 24000000
+						"end": 2400000
 					}
 				},
 				{
@@ -256,10 +256,10 @@
 				},
 				{
 					"id": "schid_2_5",
-					"ch_id": "cocos_program_B120194952_D2",
+					"ch_id": "cocos_program_B120181291_D2",
 					"range": {
 						"start": 2400000,
-						"end": 30000000
+						"end": 3000000
 					}
 				},
 				{
@@ -272,10 +272,10 @@
 				},
 				{
 					"id": "schid_2_6",
-					"ch_id": "cocos_program_B120194952_D2",
+					"ch_id": "cocos_program_B120181291_D2",
 					"range": {
 						"start": 3000000,
-						"end": 36000000
+						"end": 3600000
 					}
 				},
 				{
@@ -288,10 +288,10 @@
 				},
 				{
 					"id": "schid_2_7",
-					"ch_id": "cocos_program_B120194952_D2",
+					"ch_id": "cocos_program_B120181291_D2",
 					"range": {
 						"start": 3600000,
-						"end": 42000000
+						"end": 4200000
 					}
 				},
 				{
@@ -304,10 +304,10 @@
 				},
 				{
 					"id": "schid_2_8",
-					"ch_id": "cocos_program_B120194952_D2",
+					"ch_id": "cocos_program_B120181291_D2",
 					"range": {
 						"start": 4200000,
-						"end": 48000000
+						"end": 4800000
 					}
 				},
 				{
@@ -320,15 +320,15 @@
 				},
 				{
 					"id": "schid_2_9",
-					"ch_id": "cocos_program_B120194952_D2",
+					"ch_id": "cocos_program_B120181291_D2",
 					"range": {
 						"start": 4800000,
-						"end": 4819000
+						"end": 5138000
 					}
 				},
 				{
 					"id": "schid_3_1",
-					"ch_id": "cocos_program_B120194952_D3",
+					"ch_id": "cocos_program_B120181291_D3",
 					"range": {
 						"start": 0,
 						"end": 600000
@@ -344,10 +344,10 @@
 				},
 				{
 					"id": "schid_3_2",
-					"ch_id": "cocos_program_B120194952_D3",
+					"ch_id": "cocos_program_B120181291_D3",
 					"range": {
 						"start": 600000,
-						"end": 12000000
+						"end": 1200000
 					}
 				},
 				{
@@ -360,10 +360,10 @@
 				},
 				{
 					"id": "schid_3_3",
-					"ch_id": "cocos_program_B120194952_D3",
+					"ch_id": "cocos_program_B120181291_D3",
 					"range": {
 						"start": 1200000,
-						"end": 18000000
+						"end": 1800000
 					}
 				},
 				{
@@ -376,10 +376,10 @@
 				},
 				{
 					"id": "schid_3_4",
-					"ch_id": "cocos_program_B120194952_D3",
+					"ch_id": "cocos_program_B120181291_D3",
 					"range": {
 						"start": 1800000,
-						"end": 24000000
+						"end": 2400000
 					}
 				},
 				{
@@ -392,10 +392,10 @@
 				},
 				{
 					"id": "schid_3_5",
-					"ch_id": "cocos_program_B120194952_D3",
+					"ch_id": "cocos_program_B120181291_D3",
 					"range": {
 						"start": 2400000,
-						"end": 30000000
+						"end": 3000000
 					}
 				},
 				{
@@ -408,10 +408,10 @@
 				},
 				{
 					"id": "schid_3_6",
-					"ch_id": "cocos_program_B120194952_D3",
+					"ch_id": "cocos_program_B120181291_D3",
 					"range": {
 						"start": 3000000,
-						"end": 36000000
+						"end": 3600000
 					}
 				},
 				{
@@ -424,10 +424,10 @@
 				},
 				{
 					"id": "schid_3_7",
-					"ch_id": "cocos_program_B120194952_D3",
+					"ch_id": "cocos_program_B120181291_D3",
 					"range": {
 						"start": 3600000,
-						"end": 42000000
+						"end": 4200000
 					}
 				},
 				{
@@ -440,15 +440,15 @@
 				},
 				{
 					"id": "schid_3_8",
-					"ch_id": "cocos_program_B120194952_D3",
+					"ch_id": "cocos_program_B120181291_D3",
 					"range": {
 						"start": 4200000,
-						"end": 4388000
+						"end": 4544000
 					}
 				},
 				{
 					"id": "schid_4_1",
-					"ch_id": "cocos_program_B120194952_D4",
+					"ch_id": "cocos_program_B120181291_D4",
 					"range": {
 						"start": 0,
 						"end": 600000
@@ -464,10 +464,10 @@
 				},
 				{
 					"id": "schid_4_2",
-					"ch_id": "cocos_program_B120194952_D4",
+					"ch_id": "cocos_program_B120181291_D4",
 					"range": {
 						"start": 600000,
-						"end": 12000000
+						"end": 1200000
 					}
 				},
 				{
@@ -480,10 +480,10 @@
 				},
 				{
 					"id": "schid_4_3",
-					"ch_id": "cocos_program_B120194952_D4",
+					"ch_id": "cocos_program_B120181291_D4",
 					"range": {
 						"start": 1200000,
-						"end": 18000000
+						"end": 1800000
 					}
 				},
 				{
@@ -496,10 +496,10 @@
 				},
 				{
 					"id": "schid_4_4",
-					"ch_id": "cocos_program_B120194952_D4",
+					"ch_id": "cocos_program_B120181291_D4",
 					"range": {
 						"start": 1800000,
-						"end": 24000000
+						"end": 2400000
 					}
 				},
 				{
@@ -512,10 +512,10 @@
 				},
 				{
 					"id": "schid_4_5",
-					"ch_id": "cocos_program_B120194952_D4",
+					"ch_id": "cocos_program_B120181291_D4",
 					"range": {
 						"start": 2400000,
-						"end": 30000000
+						"end": 3000000
 					}
 				},
 				{
@@ -528,10 +528,10 @@
 				},
 				{
 					"id": "schid_4_6",
-					"ch_id": "cocos_program_B120194952_D4",
+					"ch_id": "cocos_program_B120181291_D4",
 					"range": {
 						"start": 3000000,
-						"end": 36000000
+						"end": 3600000
 					}
 				},
 				{
@@ -544,15 +544,31 @@
 				},
 				{
 					"id": "schid_4_7",
-					"ch_id": "cocos_program_B120194952_D4",
+					"ch_id": "cocos_program_B120181291_D4",
 					"range": {
 						"start": 3600000,
-						"end": 4089000
+						"end": 4200000
+					}
+				},
+				{
+					"id": "schid_ad_4_7",
+					"ch_id": "cocos_ad_60s_20210528_2mbps",
+					"range": {
+						"start": 0,
+						"end": 60000
+					}
+				},
+				{
+					"id": "schid_4_8",
+					"ch_id": "cocos_program_B120181291_D4",
+					"range": {
+						"start": 4200000,
+						"end": 4581000
 					}
 				},
 				{
 					"id": "schid_5_1",
-					"ch_id": "cocos_program_B120194952_D5",
+					"ch_id": "cocos_program_B120181291_D5",
 					"range": {
 						"start": 0,
 						"end": 600000
@@ -568,10 +584,10 @@
 				},
 				{
 					"id": "schid_5_2",
-					"ch_id": "cocos_program_B120194952_D5",
+					"ch_id": "cocos_program_B120181291_D5",
 					"range": {
 						"start": 600000,
-						"end": 12000000
+						"end": 1200000
 					}
 				},
 				{
@@ -584,10 +600,10 @@
 				},
 				{
 					"id": "schid_5_3",
-					"ch_id": "cocos_program_B120194952_D5",
+					"ch_id": "cocos_program_B120181291_D5",
 					"range": {
 						"start": 1200000,
-						"end": 18000000
+						"end": 1800000
 					}
 				},
 				{
@@ -600,10 +616,10 @@
 				},
 				{
 					"id": "schid_5_4",
-					"ch_id": "cocos_program_B120194952_D5",
+					"ch_id": "cocos_program_B120181291_D5",
 					"range": {
 						"start": 1800000,
-						"end": 24000000
+						"end": 2400000
 					}
 				},
 				{
@@ -616,10 +632,10 @@
 				},
 				{
 					"id": "schid_5_5",
-					"ch_id": "cocos_program_B120194952_D5",
+					"ch_id": "cocos_program_B120181291_D5",
 					"range": {
 						"start": 2400000,
-						"end": 30000000
+						"end": 3000000
 					}
 				},
 				{
@@ -632,10 +648,10 @@
 				},
 				{
 					"id": "schid_5_6",
-					"ch_id": "cocos_program_B120194952_D5",
+					"ch_id": "cocos_program_B120181291_D5",
 					"range": {
 						"start": 3000000,
-						"end": 36000000
+						"end": 3600000
 					}
 				},
 				{
@@ -648,10 +664,10 @@
 				},
 				{
 					"id": "schid_5_7",
-					"ch_id": "cocos_program_B120194952_D5",
+					"ch_id": "cocos_program_B120181291_D5",
 					"range": {
 						"start": 3600000,
-						"end": 42000000
+						"end": 4200000
 					}
 				},
 				{
@@ -664,15 +680,15 @@
 				},
 				{
 					"id": "schid_5_8",
-					"ch_id": "cocos_program_B120194952_D5",
+					"ch_id": "cocos_program_B120181291_D5",
 					"range": {
 						"start": 4200000,
-						"end": 4409000
+						"end": 4484000
 					}
 				},
 				{
 					"id": "schid_6_1",
-					"ch_id": "cocos_program_B120194952_D6",
+					"ch_id": "cocos_program_B120181291_D6",
 					"range": {
 						"start": 0,
 						"end": 600000
@@ -688,10 +704,10 @@
 				},
 				{
 					"id": "schid_6_2",
-					"ch_id": "cocos_program_B120194952_D6",
+					"ch_id": "cocos_program_B120181291_D6",
 					"range": {
 						"start": 600000,
-						"end": 12000000
+						"end": 1200000
 					}
 				},
 				{
@@ -704,10 +720,10 @@
 				},
 				{
 					"id": "schid_6_3",
-					"ch_id": "cocos_program_B120194952_D6",
+					"ch_id": "cocos_program_B120181291_D6",
 					"range": {
 						"start": 1200000,
-						"end": 18000000
+						"end": 1800000
 					}
 				},
 				{
@@ -720,10 +736,10 @@
 				},
 				{
 					"id": "schid_6_4",
-					"ch_id": "cocos_program_B120194952_D6",
+					"ch_id": "cocos_program_B120181291_D6",
 					"range": {
 						"start": 1800000,
-						"end": 24000000
+						"end": 2400000
 					}
 				},
 				{
@@ -736,10 +752,10 @@
 				},
 				{
 					"id": "schid_6_5",
-					"ch_id": "cocos_program_B120194952_D6",
+					"ch_id": "cocos_program_B120181291_D6",
 					"range": {
 						"start": 2400000,
-						"end": 30000000
+						"end": 3000000
 					}
 				},
 				{
@@ -752,10 +768,10 @@
 				},
 				{
 					"id": "schid_6_6",
-					"ch_id": "cocos_program_B120194952_D6",
+					"ch_id": "cocos_program_B120181291_D6",
 					"range": {
 						"start": 3000000,
-						"end": 36000000
+						"end": 3600000
 					}
 				},
 				{
@@ -768,10 +784,10 @@
 				},
 				{
 					"id": "schid_6_7",
-					"ch_id": "cocos_program_B120194952_D6",
+					"ch_id": "cocos_program_B120181291_D6",
 					"range": {
 						"start": 3600000,
-						"end": 42000000
+						"end": 4200000
 					}
 				},
 				{
@@ -784,15 +800,15 @@
 				},
 				{
 					"id": "schid_6_8",
-					"ch_id": "cocos_program_B120194952_D6",
+					"ch_id": "cocos_program_B120181291_D6",
 					"range": {
 						"start": 4200000,
-						"end": 4410000
+						"end": 4387000
 					}
 				},
 				{
 					"id": "schid_7_1",
-					"ch_id": "cocos_program_B120194952_D7",
+					"ch_id": "cocos_program_B120181291_D7",
 					"range": {
 						"start": 0,
 						"end": 600000
@@ -808,10 +824,10 @@
 				},
 				{
 					"id": "schid_7_2",
-					"ch_id": "cocos_program_B120194952_D7",
+					"ch_id": "cocos_program_B120181291_D7",
 					"range": {
 						"start": 600000,
-						"end": 12000000
+						"end": 1200000
 					}
 				},
 				{
@@ -824,10 +840,10 @@
 				},
 				{
 					"id": "schid_7_3",
-					"ch_id": "cocos_program_B120194952_D7",
+					"ch_id": "cocos_program_B120181291_D7",
 					"range": {
 						"start": 1200000,
-						"end": 18000000
+						"end": 1800000
 					}
 				},
 				{
@@ -840,10 +856,10 @@
 				},
 				{
 					"id": "schid_7_4",
-					"ch_id": "cocos_program_B120194952_D7",
+					"ch_id": "cocos_program_B120181291_D7",
 					"range": {
 						"start": 1800000,
-						"end": 24000000
+						"end": 2400000
 					}
 				},
 				{
@@ -856,10 +872,10 @@
 				},
 				{
 					"id": "schid_7_5",
-					"ch_id": "cocos_program_B120194952_D7",
+					"ch_id": "cocos_program_B120181291_D7",
 					"range": {
 						"start": 2400000,
-						"end": 30000000
+						"end": 3000000
 					}
 				},
 				{
@@ -872,10 +888,10 @@
 				},
 				{
 					"id": "schid_7_6",
-					"ch_id": "cocos_program_B120194952_D7",
+					"ch_id": "cocos_program_B120181291_D7",
 					"range": {
 						"start": 3000000,
-						"end": 36000000
+						"end": 3600000
 					}
 				},
 				{
@@ -888,10 +904,10 @@
 				},
 				{
 					"id": "schid_7_7",
-					"ch_id": "cocos_program_B120194952_D7",
+					"ch_id": "cocos_program_B120181291_D7",
 					"range": {
 						"start": 3600000,
-						"end": 42000000
+						"end": 4200000
 					}
 				},
 				{
@@ -904,15 +920,15 @@
 				},
 				{
 					"id": "schid_7_8",
-					"ch_id": "cocos_program_B120194952_D7",
+					"ch_id": "cocos_program_B120181291_D7",
 					"range": {
 						"start": 4200000,
-						"end": 4398000
+						"end": 4545000
 					}
 				},
 				{
 					"id": "schid_8_1",
-					"ch_id": "cocos_program_B120194952_D8",
+					"ch_id": "cocos_program_B120181291_D8",
 					"range": {
 						"start": 0,
 						"end": 600000
@@ -928,10 +944,10 @@
 				},
 				{
 					"id": "schid_8_2",
-					"ch_id": "cocos_program_B120194952_D8",
+					"ch_id": "cocos_program_B120181291_D8",
 					"range": {
 						"start": 600000,
-						"end": 12000000
+						"end": 1200000
 					}
 				},
 				{
@@ -944,10 +960,10 @@
 				},
 				{
 					"id": "schid_8_3",
-					"ch_id": "cocos_program_B120194952_D8",
+					"ch_id": "cocos_program_B120181291_D8",
 					"range": {
 						"start": 1200000,
-						"end": 18000000
+						"end": 1800000
 					}
 				},
 				{
@@ -960,10 +976,10 @@
 				},
 				{
 					"id": "schid_8_4",
-					"ch_id": "cocos_program_B120194952_D8",
+					"ch_id": "cocos_program_B120181291_D8",
 					"range": {
 						"start": 1800000,
-						"end": 24000000
+						"end": 2400000
 					}
 				},
 				{
@@ -976,10 +992,10 @@
 				},
 				{
 					"id": "schid_8_5",
-					"ch_id": "cocos_program_B120194952_D8",
+					"ch_id": "cocos_program_B120181291_D8",
 					"range": {
 						"start": 2400000,
-						"end": 30000000
+						"end": 3000000
 					}
 				},
 				{
@@ -992,10 +1008,10 @@
 				},
 				{
 					"id": "schid_8_6",
-					"ch_id": "cocos_program_B120194952_D8",
+					"ch_id": "cocos_program_B120181291_D8",
 					"range": {
 						"start": 3000000,
-						"end": 36000000
+						"end": 3600000
 					}
 				},
 				{
@@ -1008,10 +1024,10 @@
 				},
 				{
 					"id": "schid_8_7",
-					"ch_id": "cocos_program_B120194952_D8",
+					"ch_id": "cocos_program_B120181291_D8",
 					"range": {
 						"start": 3600000,
-						"end": 42000000
+						"end": 4200000
 					}
 				},
 				{
@@ -1024,15 +1040,15 @@
 				},
 				{
 					"id": "schid_8_8",
-					"ch_id": "cocos_program_B120194952_D8",
+					"ch_id": "cocos_program_B120181291_D8",
 					"range": {
 						"start": 4200000,
-						"end": 4413000
+						"end": 4547000
 					}
 				},
 				{
 					"id": "schid_9_1",
-					"ch_id": "cocos_program_B120194952_D9",
+					"ch_id": "cocos_program_B120181291_D9",
 					"range": {
 						"start": 0,
 						"end": 600000
@@ -1048,10 +1064,10 @@
 				},
 				{
 					"id": "schid_9_2",
-					"ch_id": "cocos_program_B120194952_D9",
+					"ch_id": "cocos_program_B120181291_D9",
 					"range": {
 						"start": 600000,
-						"end": 12000000
+						"end": 1200000
 					}
 				},
 				{
@@ -1064,10 +1080,10 @@
 				},
 				{
 					"id": "schid_9_3",
-					"ch_id": "cocos_program_B120194952_D9",
+					"ch_id": "cocos_program_B120181291_D9",
 					"range": {
 						"start": 1200000,
-						"end": 18000000
+						"end": 1800000
 					}
 				},
 				{
@@ -1080,10 +1096,10 @@
 				},
 				{
 					"id": "schid_9_4",
-					"ch_id": "cocos_program_B120194952_D9",
+					"ch_id": "cocos_program_B120181291_D9",
 					"range": {
 						"start": 1800000,
-						"end": 24000000
+						"end": 2400000
 					}
 				},
 				{
@@ -1096,10 +1112,10 @@
 				},
 				{
 					"id": "schid_9_5",
-					"ch_id": "cocos_program_B120194952_D9",
+					"ch_id": "cocos_program_B120181291_D9",
 					"range": {
 						"start": 2400000,
-						"end": 30000000
+						"end": 3000000
 					}
 				},
 				{
@@ -1112,10 +1128,10 @@
 				},
 				{
 					"id": "schid_9_6",
-					"ch_id": "cocos_program_B120194952_D9",
+					"ch_id": "cocos_program_B120181291_D9",
 					"range": {
 						"start": 3000000,
-						"end": 36000000
+						"end": 3600000
 					}
 				},
 				{
@@ -1128,10 +1144,10 @@
 				},
 				{
 					"id": "schid_9_7",
-					"ch_id": "cocos_program_B120194952_D9",
+					"ch_id": "cocos_program_B120181291_D9",
 					"range": {
 						"start": 3600000,
-						"end": 42000000
+						"end": 4200000
 					}
 				},
 				{
@@ -1144,15 +1160,15 @@
 				},
 				{
 					"id": "schid_9_8",
-					"ch_id": "cocos_program_B120194952_D9",
+					"ch_id": "cocos_program_B120181291_D9",
 					"range": {
 						"start": 4200000,
-						"end": 4418000
+						"end": 4414000
 					}
 				},
 				{
 					"id": "schid_10_1",
-					"ch_id": "cocos_program_B120194952_D10",
+					"ch_id": "cocos_program_B120181291_D10",
 					"range": {
 						"start": 0,
 						"end": 600000
@@ -1168,10 +1184,10 @@
 				},
 				{
 					"id": "schid_10_2",
-					"ch_id": "cocos_program_B120194952_D10",
+					"ch_id": "cocos_program_B120181291_D10",
 					"range": {
 						"start": 600000,
-						"end": 12000000
+						"end": 1200000
 					}
 				},
 				{
@@ -1184,10 +1200,10 @@
 				},
 				{
 					"id": "schid_10_3",
-					"ch_id": "cocos_program_B120194952_D10",
+					"ch_id": "cocos_program_B120181291_D10",
 					"range": {
 						"start": 1200000,
-						"end": 18000000
+						"end": 1800000
 					}
 				},
 				{
@@ -1200,10 +1216,10 @@
 				},
 				{
 					"id": "schid_10_4",
-					"ch_id": "cocos_program_B120194952_D10",
+					"ch_id": "cocos_program_B120181291_D10",
 					"range": {
 						"start": 1800000,
-						"end": 24000000
+						"end": 2400000
 					}
 				},
 				{
@@ -1216,10 +1232,10 @@
 				},
 				{
 					"id": "schid_10_5",
-					"ch_id": "cocos_program_B120194952_D10",
+					"ch_id": "cocos_program_B120181291_D10",
 					"range": {
 						"start": 2400000,
-						"end": 30000000
+						"end": 3000000
 					}
 				},
 				{
@@ -1232,10 +1248,10 @@
 				},
 				{
 					"id": "schid_10_6",
-					"ch_id": "cocos_program_B120194952_D10",
+					"ch_id": "cocos_program_B120181291_D10",
 					"range": {
 						"start": 3000000,
-						"end": 36000000
+						"end": 3600000
 					}
 				},
 				{
@@ -1248,10 +1264,10 @@
 				},
 				{
 					"id": "schid_10_7",
-					"ch_id": "cocos_program_B120194952_D10",
+					"ch_id": "cocos_program_B120181291_D10",
 					"range": {
 						"start": 3600000,
-						"end": 42000000
+						"end": 4200000
 					}
 				},
 				{
@@ -1264,15 +1280,15 @@
 				},
 				{
 					"id": "schid_10_8",
-					"ch_id": "cocos_program_B120194952_D10",
+					"ch_id": "cocos_program_B120181291_D10",
 					"range": {
 						"start": 4200000,
-						"end": 4491000
+						"end": 4370000
 					}
 				},
 				{
 					"id": "schid_11_1",
-					"ch_id": "cocos_program_B120194952_D11",
+					"ch_id": "cocos_program_B120181291_D11",
 					"range": {
 						"start": 0,
 						"end": 600000
@@ -1288,10 +1304,10 @@
 				},
 				{
 					"id": "schid_11_2",
-					"ch_id": "cocos_program_B120194952_D11",
+					"ch_id": "cocos_program_B120181291_D11",
 					"range": {
 						"start": 600000,
-						"end": 12000000
+						"end": 1200000
 					}
 				},
 				{
@@ -1304,10 +1320,10 @@
 				},
 				{
 					"id": "schid_11_3",
-					"ch_id": "cocos_program_B120194952_D11",
+					"ch_id": "cocos_program_B120181291_D11",
 					"range": {
 						"start": 1200000,
-						"end": 18000000
+						"end": 1800000
 					}
 				},
 				{
@@ -1320,10 +1336,10 @@
 				},
 				{
 					"id": "schid_11_4",
-					"ch_id": "cocos_program_B120194952_D11",
+					"ch_id": "cocos_program_B120181291_D11",
 					"range": {
 						"start": 1800000,
-						"end": 24000000
+						"end": 2400000
 					}
 				},
 				{
@@ -1336,10 +1352,10 @@
 				},
 				{
 					"id": "schid_11_5",
-					"ch_id": "cocos_program_B120194952_D11",
+					"ch_id": "cocos_program_B120181291_D11",
 					"range": {
 						"start": 2400000,
-						"end": 30000000
+						"end": 3000000
 					}
 				},
 				{
@@ -1352,10 +1368,10 @@
 				},
 				{
 					"id": "schid_11_6",
-					"ch_id": "cocos_program_B120194952_D11",
+					"ch_id": "cocos_program_B120181291_D11",
 					"range": {
 						"start": 3000000,
-						"end": 36000000
+						"end": 3600000
 					}
 				},
 				{
@@ -1368,10 +1384,10 @@
 				},
 				{
 					"id": "schid_11_7",
-					"ch_id": "cocos_program_B120194952_D11",
+					"ch_id": "cocos_program_B120181291_D11",
 					"range": {
 						"start": 3600000,
-						"end": 42000000
+						"end": 4200000
 					}
 				},
 				{
@@ -1384,31 +1400,15 @@
 				},
 				{
 					"id": "schid_11_8",
-					"ch_id": "cocos_program_B120194952_D11",
+					"ch_id": "cocos_program_B120181291_D11",
 					"range": {
 						"start": 4200000,
-						"end": 48000000
-					}
-				},
-				{
-					"id": "schid_ad_11_8",
-					"ch_id": "cocos_ad_60s_20210528_2mbps",
-					"range": {
-						"start": 0,
-						"end": 60000
-					}
-				},
-				{
-					"id": "schid_11_9",
-					"ch_id": "cocos_program_B120194952_D11",
-					"range": {
-						"start": 4800000,
-						"end": 5045000
+						"end": 4316000
 					}
 				},
 				{
 					"id": "schid_12_1",
-					"ch_id": "cocos_program_B120194952_D12",
+					"ch_id": "cocos_program_B120181291_D12",
 					"range": {
 						"start": 0,
 						"end": 600000
@@ -1424,10 +1424,10 @@
 				},
 				{
 					"id": "schid_12_2",
-					"ch_id": "cocos_program_B120194952_D12",
+					"ch_id": "cocos_program_B120181291_D12",
 					"range": {
 						"start": 600000,
-						"end": 12000000
+						"end": 1200000
 					}
 				},
 				{
@@ -1440,10 +1440,10 @@
 				},
 				{
 					"id": "schid_12_3",
-					"ch_id": "cocos_program_B120194952_D12",
+					"ch_id": "cocos_program_B120181291_D12",
 					"range": {
 						"start": 1200000,
-						"end": 18000000
+						"end": 1800000
 					}
 				},
 				{
@@ -1456,10 +1456,10 @@
 				},
 				{
 					"id": "schid_12_4",
-					"ch_id": "cocos_program_B120194952_D12",
+					"ch_id": "cocos_program_B120181291_D12",
 					"range": {
 						"start": 1800000,
-						"end": 24000000
+						"end": 2400000
 					}
 				},
 				{
@@ -1472,10 +1472,10 @@
 				},
 				{
 					"id": "schid_12_5",
-					"ch_id": "cocos_program_B120194952_D12",
+					"ch_id": "cocos_program_B120181291_D12",
 					"range": {
 						"start": 2400000,
-						"end": 30000000
+						"end": 3000000
 					}
 				},
 				{
@@ -1488,10 +1488,10 @@
 				},
 				{
 					"id": "schid_12_6",
-					"ch_id": "cocos_program_B120194952_D12",
+					"ch_id": "cocos_program_B120181291_D12",
 					"range": {
 						"start": 3000000,
-						"end": 36000000
+						"end": 3600000
 					}
 				},
 				{
@@ -1504,10 +1504,10 @@
 				},
 				{
 					"id": "schid_12_7",
-					"ch_id": "cocos_program_B120194952_D12",
+					"ch_id": "cocos_program_B120181291_D12",
 					"range": {
 						"start": 3600000,
-						"end": 42000000
+						"end": 4200000
 					}
 				},
 				{
@@ -1520,15 +1520,15 @@
 				},
 				{
 					"id": "schid_12_8",
-					"ch_id": "cocos_program_B120194952_D12",
+					"ch_id": "cocos_program_B120181291_D12",
 					"range": {
 						"start": 4200000,
-						"end": 4527000
+						"end": 4541000
 					}
 				},
 				{
 					"id": "schid_13_1",
-					"ch_id": "cocos_program_B120194952_D13",
+					"ch_id": "cocos_program_B120181291_D13",
 					"range": {
 						"start": 0,
 						"end": 600000
@@ -1544,10 +1544,10 @@
 				},
 				{
 					"id": "schid_13_2",
-					"ch_id": "cocos_program_B120194952_D13",
+					"ch_id": "cocos_program_B120181291_D13",
 					"range": {
 						"start": 600000,
-						"end": 12000000
+						"end": 1200000
 					}
 				},
 				{
@@ -1560,10 +1560,10 @@
 				},
 				{
 					"id": "schid_13_3",
-					"ch_id": "cocos_program_B120194952_D13",
+					"ch_id": "cocos_program_B120181291_D13",
 					"range": {
 						"start": 1200000,
-						"end": 18000000
+						"end": 1800000
 					}
 				},
 				{
@@ -1576,10 +1576,10 @@
 				},
 				{
 					"id": "schid_13_4",
-					"ch_id": "cocos_program_B120194952_D13",
+					"ch_id": "cocos_program_B120181291_D13",
 					"range": {
 						"start": 1800000,
-						"end": 24000000
+						"end": 2400000
 					}
 				},
 				{
@@ -1592,10 +1592,10 @@
 				},
 				{
 					"id": "schid_13_5",
-					"ch_id": "cocos_program_B120194952_D13",
+					"ch_id": "cocos_program_B120181291_D13",
 					"range": {
 						"start": 2400000,
-						"end": 30000000
+						"end": 3000000
 					}
 				},
 				{
@@ -1608,10 +1608,10 @@
 				},
 				{
 					"id": "schid_13_6",
-					"ch_id": "cocos_program_B120194952_D13",
+					"ch_id": "cocos_program_B120181291_D13",
 					"range": {
 						"start": 3000000,
-						"end": 36000000
+						"end": 3600000
 					}
 				},
 				{
@@ -1624,10 +1624,10 @@
 				},
 				{
 					"id": "schid_13_7",
-					"ch_id": "cocos_program_B120194952_D13",
+					"ch_id": "cocos_program_B120181291_D13",
 					"range": {
 						"start": 3600000,
-						"end": 42000000
+						"end": 4200000
 					}
 				},
 				{
@@ -1640,15 +1640,15 @@
 				},
 				{
 					"id": "schid_13_8",
-					"ch_id": "cocos_program_B120194952_D13",
+					"ch_id": "cocos_program_B120181291_D13",
 					"range": {
 						"start": 4200000,
-						"end": 4305000
+						"end": 4617000
 					}
 				},
 				{
 					"id": "schid_14_1",
-					"ch_id": "cocos_program_B120194952_D14",
+					"ch_id": "cocos_program_B120181291_D14",
 					"range": {
 						"start": 0,
 						"end": 600000
@@ -1664,10 +1664,10 @@
 				},
 				{
 					"id": "schid_14_2",
-					"ch_id": "cocos_program_B120194952_D14",
+					"ch_id": "cocos_program_B120181291_D14",
 					"range": {
 						"start": 600000,
-						"end": 12000000
+						"end": 1200000
 					}
 				},
 				{
@@ -1680,10 +1680,10 @@
 				},
 				{
 					"id": "schid_14_3",
-					"ch_id": "cocos_program_B120194952_D14",
+					"ch_id": "cocos_program_B120181291_D14",
 					"range": {
 						"start": 1200000,
-						"end": 18000000
+						"end": 1800000
 					}
 				},
 				{
@@ -1696,10 +1696,10 @@
 				},
 				{
 					"id": "schid_14_4",
-					"ch_id": "cocos_program_B120194952_D14",
+					"ch_id": "cocos_program_B120181291_D14",
 					"range": {
 						"start": 1800000,
-						"end": 24000000
+						"end": 2400000
 					}
 				},
 				{
@@ -1712,10 +1712,10 @@
 				},
 				{
 					"id": "schid_14_5",
-					"ch_id": "cocos_program_B120194952_D14",
+					"ch_id": "cocos_program_B120181291_D14",
 					"range": {
 						"start": 2400000,
-						"end": 30000000
+						"end": 3000000
 					}
 				},
 				{
@@ -1728,10 +1728,10 @@
 				},
 				{
 					"id": "schid_14_6",
-					"ch_id": "cocos_program_B120194952_D14",
+					"ch_id": "cocos_program_B120181291_D14",
 					"range": {
 						"start": 3000000,
-						"end": 36000000
+						"end": 3600000
 					}
 				},
 				{
@@ -1744,15 +1744,31 @@
 				},
 				{
 					"id": "schid_14_7",
-					"ch_id": "cocos_program_B120194952_D14",
+					"ch_id": "cocos_program_B120181291_D14",
 					"range": {
 						"start": 3600000,
-						"end": 4034000
+						"end": 4200000
+					}
+				},
+				{
+					"id": "schid_ad_14_7",
+					"ch_id": "cocos_ad_60s_20210528_2mbps",
+					"range": {
+						"start": 0,
+						"end": 60000
+					}
+				},
+				{
+					"id": "schid_14_8",
+					"ch_id": "cocos_program_B120181291_D14",
+					"range": {
+						"start": 4200000,
+						"end": 4430000
 					}
 				},
 				{
 					"id": "schid_15_1",
-					"ch_id": "cocos_program_B120194952_D15",
+					"ch_id": "cocos_program_B120181291_D15",
 					"range": {
 						"start": 0,
 						"end": 600000
@@ -1768,10 +1784,10 @@
 				},
 				{
 					"id": "schid_15_2",
-					"ch_id": "cocos_program_B120194952_D15",
+					"ch_id": "cocos_program_B120181291_D15",
 					"range": {
 						"start": 600000,
-						"end": 12000000
+						"end": 1200000
 					}
 				},
 				{
@@ -1784,10 +1800,10 @@
 				},
 				{
 					"id": "schid_15_3",
-					"ch_id": "cocos_program_B120194952_D15",
+					"ch_id": "cocos_program_B120181291_D15",
 					"range": {
 						"start": 1200000,
-						"end": 18000000
+						"end": 1800000
 					}
 				},
 				{
@@ -1800,10 +1816,10 @@
 				},
 				{
 					"id": "schid_15_4",
-					"ch_id": "cocos_program_B120194952_D15",
+					"ch_id": "cocos_program_B120181291_D15",
 					"range": {
 						"start": 1800000,
-						"end": 24000000
+						"end": 2400000
 					}
 				},
 				{
@@ -1816,10 +1832,10 @@
 				},
 				{
 					"id": "schid_15_5",
-					"ch_id": "cocos_program_B120194952_D15",
+					"ch_id": "cocos_program_B120181291_D15",
 					"range": {
 						"start": 2400000,
-						"end": 30000000
+						"end": 3000000
 					}
 				},
 				{
@@ -1832,10 +1848,10 @@
 				},
 				{
 					"id": "schid_15_6",
-					"ch_id": "cocos_program_B120194952_D15",
+					"ch_id": "cocos_program_B120181291_D15",
 					"range": {
 						"start": 3000000,
-						"end": 36000000
+						"end": 3600000
 					}
 				},
 				{
@@ -1848,31 +1864,15 @@
 				},
 				{
 					"id": "schid_15_7",
-					"ch_id": "cocos_program_B120194952_D15",
+					"ch_id": "cocos_program_B120181291_D15",
 					"range": {
 						"start": 3600000,
-						"end": 42000000
-					}
-				},
-				{
-					"id": "schid_ad_15_7",
-					"ch_id": "cocos_ad_60s_20210528_2mbps",
-					"range": {
-						"start": 0,
-						"end": 60000
-					}
-				},
-				{
-					"id": "schid_15_8",
-					"ch_id": "cocos_program_B120194952_D15",
-					"range": {
-						"start": 4200000,
-						"end": 4488000
+						"end": 4059000
 					}
 				},
 				{
 					"id": "schid_16_1",
-					"ch_id": "cocos_program_B120194952_D16",
+					"ch_id": "cocos_program_B120181291_D16",
 					"range": {
 						"start": 0,
 						"end": 600000
@@ -1888,10 +1888,10 @@
 				},
 				{
 					"id": "schid_16_2",
-					"ch_id": "cocos_program_B120194952_D16",
+					"ch_id": "cocos_program_B120181291_D16",
 					"range": {
 						"start": 600000,
-						"end": 12000000
+						"end": 1200000
 					}
 				},
 				{
@@ -1904,10 +1904,10 @@
 				},
 				{
 					"id": "schid_16_3",
-					"ch_id": "cocos_program_B120194952_D16",
+					"ch_id": "cocos_program_B120181291_D16",
 					"range": {
 						"start": 1200000,
-						"end": 18000000
+						"end": 1800000
 					}
 				},
 				{
@@ -1920,10 +1920,10 @@
 				},
 				{
 					"id": "schid_16_4",
-					"ch_id": "cocos_program_B120194952_D16",
+					"ch_id": "cocos_program_B120181291_D16",
 					"range": {
 						"start": 1800000,
-						"end": 24000000
+						"end": 2400000
 					}
 				},
 				{
@@ -1936,10 +1936,10 @@
 				},
 				{
 					"id": "schid_16_5",
-					"ch_id": "cocos_program_B120194952_D16",
+					"ch_id": "cocos_program_B120181291_D16",
 					"range": {
 						"start": 2400000,
-						"end": 30000000
+						"end": 3000000
 					}
 				},
 				{
@@ -1952,10 +1952,10 @@
 				},
 				{
 					"id": "schid_16_6",
-					"ch_id": "cocos_program_B120194952_D16",
+					"ch_id": "cocos_program_B120181291_D16",
 					"range": {
 						"start": 3000000,
-						"end": 36000000
+						"end": 3600000
 					}
 				},
 				{
@@ -1968,10 +1968,10 @@
 				},
 				{
 					"id": "schid_16_7",
-					"ch_id": "cocos_program_B120194952_D16",
+					"ch_id": "cocos_program_B120181291_D16",
 					"range": {
 						"start": 3600000,
-						"end": 42000000
+						"end": 4200000
 					}
 				},
 				{
@@ -1984,10 +1984,10 @@
 				},
 				{
 					"id": "schid_16_8",
-					"ch_id": "cocos_program_B120194952_D16",
+					"ch_id": "cocos_program_B120181291_D16",
 					"range": {
 						"start": 4200000,
-						"end": 4406000
+						"end": 4549000
 					}
 				}
 			]
