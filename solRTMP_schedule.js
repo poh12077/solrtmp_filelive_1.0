@@ -16,7 +16,6 @@ let read_excel = (i) =>
     const sheet_name = excel.SheetNames[i];          
     const sheet_data = excel.Sheets[sheet_name];     
     
-    // let json = xlsx.utils.sheet_to_json( sheet_data, { defval : "" } );
     let json = xlsx.utils.sheet_to_json( sheet_data );
     return json;
 }
@@ -399,7 +398,6 @@ class templete
           }
         }
       }
-  
   
       if (x=='samsung')
       {
@@ -961,7 +959,6 @@ let write_json_plutoTV_1080p = (json,file_name) =>
           }
       });
 }
-
 
 let json;
 

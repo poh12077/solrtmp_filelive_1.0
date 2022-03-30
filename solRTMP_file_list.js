@@ -13,8 +13,6 @@ let read_excel = (i) =>
 {
     const sheet_name = excel.SheetNames[i];          
     const sheet_data = excel.Sheets[sheet_name];     
-    
-    // let json = xlsx.utils.sheet_to_json( sheet_data, { defval : "" } );
     let json = xlsx.utils.sheet_to_json( sheet_data );
     return json;
 }
@@ -282,11 +280,11 @@ let write_json = (json) =>
 
     let base_url="http://Y2pjb2Nvc3N0Z0BjamVubXN0b3I6MjU1MmM1MjVhOWRkMTUzNTcwNjFiZTIzMTcyMzRlNjU=@cjcocosstg.x-cdn.com/dav";
     
-    if(n!=2)
+    if(n!=2) //samsung
     {
         for (let i=0;i<json.length;i++)
         {
-            if (json[i]['Caption Path'] === undefined)
+            if (json[i]['Caption Path'] === undefined) // no caption
             {
                 templete.channel.id = "cocos_program_" + json[i].id;
             
@@ -304,7 +302,7 @@ let write_json = (json) =>
                         console.log(err);
                     }
                 });
-            }else
+            }else //caption
             {
                 templete_caption.channel.id = "cocos_program_" + json[i].id;
 
@@ -326,20 +324,14 @@ let write_json = (json) =>
             }
         }
     }
-    else
+    else //pluto_1080p
     {
         for (let i=0;i<json.length;i++)
         {
-            if (json[i]['Caption Path'] === undefined)
+            if (json[i]['Caption Path'] === undefined) //no caption
             {
                 templete_pluto_1080p.channel.id = "cocos_program_" + json[i].id;
-            
-                // for(let j=0;j<resolution.length;j++)
-                // {
-                //     templete_pluto_1080p.channel.input.streams[j].urls = [base_url + json[i][resolution[j]] ];
-                // }
-
-                    templete_pluto_1080p.channel.input.streams[0].urls = [base_url + json[i]['1080p'] ];
+                templete_pluto_1080p.channel.input.streams[0].urls = [base_url + json[i]['1080p'] ];
 
                 let file_name = json[i].id + '.json';  
                 let file_json = JSON.stringify(templete_pluto_1080p, null, "\t");
@@ -350,17 +342,10 @@ let write_json = (json) =>
                         console.log(err);
                     }
                 });
-            }else
+            }else //caption
             {
                 templete_caption_pluto_1080p.channel.id = "cocos_program_" + json[i].id;
-
-                // for(let j=0;j<resolution.length;j++)
-                // {
-                //     templete_caption_pluto_1080p.channel.input.streams[j].urls = [base_url + json[i][resolution[j]] ];
-                // }
-
-                    templete_caption_pluto_1080p.channel.input.streams[0].urls = [base_url + json[i]['1080p'] ];
-
+                templete_caption_pluto_1080p.channel.input.streams[0].urls = [base_url + json[i]['1080p'] ];
                 templete_caption_pluto_1080p.channel.input.streams[1].urls = [base_url + json[i]['Caption Path'] ];
 
                 let file_name = json[i].id + '.json';  
