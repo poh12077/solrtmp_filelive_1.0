@@ -2,11 +2,14 @@ const xlsx = require( "xlsx" );
 var fs = require('fs');
 const { fileURLToPath } = require("url");
 
-let file_name = '삼성_국내_202204.xlsx';
+let data = fs.readFileSync('configure.conf', 'utf8');
+data = JSON.parse(data);
+
+let file_name = data.file_name;
  
-// samsung smartTV ==1
-// pluto 1080p ==2
-let n=1;
+// samsung smartTV == 1 or 2
+// pluto 1080p == 4
+let n=data.option;
 excel = xlsx.readFile( file_name );
 
 let read_excel = (i) =>
@@ -280,7 +283,7 @@ let write_json = (json) =>
 
     let base_url="http://Y2pjb2Nvc3N0Z0BjamVubXN0b3I6MjU1MmM1MjVhOWRkMTUzNTcwNjFiZTIzMTcyMzRlNjU=@cjcocosstg.x-cdn.com/dav";
     
-    if(n!=2) //samsung
+    if(n!=4) 
     {
         for (let i=0;i<json.length;i++)
         {
@@ -295,13 +298,7 @@ let write_json = (json) =>
 
                 let file_name = json[i].id + '.json';  
                 let file_json = JSON.stringify(templete, null, "\t");
-                fs.writeFile( './json/' + file_name, file_json , function(err) 
-                {
-                    if (err) 
-                    {
-                        console.log(err);
-                    }
-                });
+                fs.writeFileSync( './json/' + file_name, file_json, 'utf8' );
             }else //caption
             {
                 templete_caption.channel.id = "cocos_program_" + json[i].id;
@@ -314,13 +311,7 @@ let write_json = (json) =>
 
                 let file_name = json[i].id + '.json';  
                 let file_json = JSON.stringify(templete_caption, null, "\t");
-                fs.writeFile( './json/' + file_name, file_json , function(err) 
-                {
-                    if (err) 
-                    {
-                        console.log(err);
-                    }
-                });
+                fs.writeFileSync( './json/' + file_name, file_json , 'utf8' );
             }
         }
     }
@@ -335,13 +326,7 @@ let write_json = (json) =>
 
                 let file_name = json[i].id + '.json';  
                 let file_json = JSON.stringify(templete_pluto_1080p, null, "\t");
-                fs.writeFile( './json/' + file_name, file_json , function(err) 
-                {
-                    if (err) 
-                    {
-                        console.log(err);
-                    }
-                });
+                fs.writeFileSync( './json/' + file_name, file_json , 'utf8' );
             }else //caption
             {
                 templete_caption_pluto_1080p.channel.id = "cocos_program_" + json[i].id;
@@ -350,13 +335,7 @@ let write_json = (json) =>
 
                 let file_name = json[i].id + '.json';  
                 let file_json = JSON.stringify(templete_caption_pluto_1080p, null, "\t");
-                fs.writeFile( './json/' + file_name, file_json , function(err) 
-                {
-                    if (err) 
-                    {
-                        console.log(err);
-                    }
-                });
+                fs.writeFileSync( './json/' + file_name, file_json , 'utf8' );
             }
         }
     }
@@ -380,7 +359,7 @@ for(let i=0;i<excel.SheetNames.length;i++)
 {
     json = read_excel(i);
     json = duplication_eliminate(json);
-    if(n==1)
+    if(n==1 || n==2)
     {
             json = samsung_smartTV(json);
     }

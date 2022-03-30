@@ -1,14 +1,16 @@
 const xlsx = require( "xlsx" );
 var fs = require('fs');
 
-let file_name = '삼성_국내_202204.xlsx';
+let data = fs.readFileSync('configure.conf', 'utf8');
+data = JSON.parse(data);
 
+let file_name = data.file_name;
 //samsungTV_domestic =1
 //samsungTV_northern_america =2
 //plutoTV =3
 //plutoTV_1080p =4
 
-let num=1;
+let num=data.option;
 excel = xlsx.readFile( file_name );
 
 let read_excel = (i) =>
