@@ -11,6 +11,12 @@ let file_name = data.file_name;
 //plutoTV_1080p =4
 
 let num=data.option;
+let ad_interval_korea= data.ad_interval.samsung_korea;
+let ad_interval_northern_america = data.ad_interval.samsung_northern_america;
+let ad_duration_samsung_korea = data.ad_duration.samsung_korea;
+let ad_duration_samsung_northern_america = data.ad_duration.samsung_northern_america;
+let ad_duration_pluto = data.ad_duration.pluto;
+
 excel = xlsx.readFile( file_name );
 
 let read_excel = (i) =>
@@ -469,7 +475,7 @@ let write_json_samsungTV_domestic = (json,k,file_name) =>
               "range": 
               {
               "start": 0,
-              "end": 600000
+              "end": ad_interval_korea
               }
           }
           schedule.channel.schedule.list.push(video);
@@ -483,7 +489,7 @@ let write_json_samsungTV_domestic = (json,k,file_name) =>
               "range": 
               {
               "start": 0,
-              "end": 600000
+              "end": ad_interval_korea
               }
           }
           schedule.channel.schedule.list.push(video);
@@ -496,7 +502,7 @@ let write_json_samsungTV_domestic = (json,k,file_name) =>
           "range": 
           {
                   "start": 0,
-                  "end": 60000
+                  "end": ad_duration_samsung_korea
           }
       }
       schedule.channel.schedule.list.push(advertisement);
@@ -504,7 +510,7 @@ let write_json_samsungTV_domestic = (json,k,file_name) =>
       let m;
       for (let j=1;j>0;j++)
       {
-          if(json[i]['__EMPTY'] < 600000*(j+1) )
+          if(json[i]['__EMPTY'] < ad_interval_korea*(j+1) )
           { 
               m=j;
               break;
@@ -516,8 +522,8 @@ let write_json_samsungTV_domestic = (json,k,file_name) =>
                   "ch_id": "cocos_program_" + json[i].id,
                   "range": 
                   {
-                  "start":  600000*j,
-                  "end":  600000*(j+1) 
+                  "start":  ad_interval_korea*j,
+                  "end":  ad_interval_korea*(j+1) 
                   }
               }
           let advertisement =
@@ -527,7 +533,7 @@ let write_json_samsungTV_domestic = (json,k,file_name) =>
                   "range": 
                   {
                           "start": 0,
-                          "end": 60000
+                          "end": ad_duration_samsung_korea
                   }
               }
               schedule.channel.schedule.list.push(video);
@@ -540,7 +546,7 @@ let write_json_samsungTV_domestic = (json,k,file_name) =>
               "ch_id": "cocos_program_" + json[i].id,
               "range": 
               {
-                  "start": 600000*m,
+                  "start": ad_interval_korea*m,
                   "end": json[i]['__EMPTY'],
               }
           }
@@ -584,7 +590,7 @@ let write_json_samsungTV_northern_america = (json,file_name) =>
               "range": 
               {
               "start": 0,
-              "end": 900000
+              "end": ad_interval_northern_america
               }
           }
           schedule.channel.schedule.list.push(video);
@@ -598,7 +604,7 @@ let write_json_samsungTV_northern_america = (json,file_name) =>
               "range": 
               {
               "start": 0,
-              "end": 900000
+              "end": ad_interval_northern_america
               }
           }
           schedule.channel.schedule.list.push(video);
@@ -611,7 +617,7 @@ let write_json_samsungTV_northern_america = (json,file_name) =>
           "range": 
           {
                   "start": 0,
-                  "end": 60000
+                  "end": ad_duration_samsung_northern_america
           }
       }
       schedule.channel.schedule.list.push(advertisement);
@@ -619,7 +625,7 @@ let write_json_samsungTV_northern_america = (json,file_name) =>
       let m;
       for (let j=1;j>0;j++)
       {
-          if(json[i]['__EMPTY'] < 900000*(j+1) )
+          if(json[i]['__EMPTY'] < ad_interval_northern_america*(j+1) )
           { 
               m=j;
               break;
@@ -631,8 +637,8 @@ let write_json_samsungTV_northern_america = (json,file_name) =>
                   "ch_id": "cocos_program_" + json[i].id,
                   "range": 
                   {
-                  "start":  900000*j,
-                  "end":  900000*(j+1) 
+                  "start":  ad_interval_northern_america*j,
+                  "end":  ad_interval_northern_america*(j+1) 
                   }
               }
           let advertisement =
@@ -642,7 +648,7 @@ let write_json_samsungTV_northern_america = (json,file_name) =>
                   "range": 
                   {
                           "start": 0,
-                          "end": 60000
+                          "end": ad_duration_samsung_northern_america
                   }
               }
               schedule.channel.schedule.list.push(video);
@@ -655,7 +661,7 @@ let write_json_samsungTV_northern_america = (json,file_name) =>
               "ch_id": "cocos_program_" + json[i].id,
               "range": 
               {
-                  "start": 900000*m,
+                  "start": ad_interval_northern_america*m,
                   "end": json[i]['__EMPTY'],
               }
           }
@@ -760,7 +766,7 @@ let write_json_plutoTV = (json,file_name) =>
                     "range": 
                     {
                             "start": 0,
-                            "end": 120000
+                            "end": ad_duration_pluto
                     }
                 }
                 schedule.channel.schedule.list.push(advertisement);
@@ -784,7 +790,7 @@ let write_json_plutoTV = (json,file_name) =>
                           "range": 
                           {
                                   "start": 0,
-                                  "end": 120000
+                                  "end": ad_duration_pluto
                           }
                       }
                         schedule.channel.schedule.list.push(video);
@@ -902,7 +908,7 @@ let write_json_plutoTV_1080p = (json,file_name) =>
                     "range": 
                     {
                             "start": 0,
-                            "end": 120000
+                            "end": ad_duration_pluto
                     }
                 }
                 schedule.channel.schedule.list.push(advertisement);
@@ -926,7 +932,7 @@ let write_json_plutoTV_1080p = (json,file_name) =>
                           "range": 
                           {
                                   "start": 0,
-                                  "end": 120000
+                                  "end": ad_duration_pluto
                           }
                       }
                         schedule.channel.schedule.list.push(video);
