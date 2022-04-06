@@ -1,4 +1,4 @@
-const xlsx = require( "xlsx" );
+const xlsx = require("xlsx");
 var fs = require('fs');
 const { exit } = require("process");
 
@@ -11,1006 +11,942 @@ let file_name = data.file_name;
 //plutoTV =3
 //plutoTV_1080p =4
 
-let num=data.option;
-let ad_interval_korea= data.ad_interval.samsung_korea;
+let num = data.option;
+let ad_interval_korea = data.ad_interval.samsung_korea;
 let ad_interval_northern_america = data.ad_interval.samsung_northern_america;
 let ad_duration_samsung_korea = data.ad_duration.samsung_korea;
 let ad_duration_samsung_northern_america = data.ad_duration.samsung_northern_america;
 let ad_duration_pluto = data.ad_duration.pluto;
+let CJENM_leaderfilm_duration = data.CJENM_leaderfilm_duration;
 
-let excel = xlsx.readFile( file_name );
+let excel = xlsx.readFile(file_name);
 
-let read_excel = (i) =>
-{
-    const sheet_name = excel.SheetNames[i];          
-    const sheet_data = excel.Sheets[sheet_name];     
-    
-    let json = xlsx.utils.sheet_to_json( sheet_data );
-    return json;
+let read_excel = (i) => {
+  const sheet_name = excel.SheetNames[i];
+  const sheet_data = excel.Sheets[sheet_name];
+
+  let json = xlsx.utils.sheet_to_json(sheet_data);
+  return json;
 }
 
-class templete 
-{
-    constructor(x)
+class templete {
+  constructor(x) {
+    let schedule_samsung =
     {
-      let schedule_samsung =
-      {
-        "server_id": "manager_1234",
-        "command": "ch_add",
-        "channel": {
-          "id": "ch_id",
-          "version": "v1",
-          "category": "live",
-          "input": {
-            "type": "schedule",
-            "socket_timeout": 3,
-            "reconnect_timeout": 300,
-            "streams": [
-              {
-                "adaptive_id": "1080p",
-                "variant": true,
-                "urls": [
-                  "file:///stg/solrtmp/file/default_1080p.mp4"
-                ]
-              },
-              {
-                "adaptive_id": "720p",
-                "variant": true,
-                "urls": [
-                  "file:///stg/solrtmp/file/default_720p.mp4"
-                ]
-              },
-              {
-                "adaptive_id": "480p",
-                "variant": true,
-                "urls": [
-                  "file:///stg/solrtmp/file/default_480p.mp4"
-                ]
-              },
-              {
-                "adaptive_id": "360p",
-                "variant": true,
-                "urls": [
-                  "file:///stg/solrtmp/file/default_360p.mp4"
-                ]
-              },
-              {
-                "adaptive_id": "270p",
-                "variant": true,
-                "urls": [
-                  "file:///stg/solrtmp/file/default_270p.mp4"
-                ]
-              }
-            ]
-          },
-          "schedule": {
-            "loop": true,
-            "sync_timeout": 2,
-            "range_start_by": "front",
-            "auto_adaptive_mapping": "media",
-            "list": [
-            ]
-          },
-          "output": {
-            "base_dir": "%r/%s",
-            "clear_when_finish": true,
-            "segment_opt": {
-              "playlist_chunk_count": 10,
-              "max_chunk_count": 30,
-              "duration_time": 6,
-              "align_by_src": true
-            },
-            "variant": {
-              "memory_caching": false,
-              "sort_order": "bandwidth",
-              "item": {
-                "codec": true,
-                "bandwidth": true,
-                "resolution": true,
-                "framerate": true,
-                "sar": false,
-                "samplerate": false,
-                "channel": false,
-                "lang": true
-              },
-              "output_path": [
-                {
-                  "o_type": "gateway_m3u8",
-                  "combine": "%f/playlist.m3u8"
-                },
-                {
-                  "o_type": "mpd",
-                  "combine": "%f/manifest.mpd"
-                }
+      "server_id": "manager_1234",
+      "command": "ch_add",
+      "channel": {
+        "id": "ch_id",
+        "version": "v1",
+        "category": "live",
+        "input": {
+          "type": "schedule",
+          "socket_timeout": 3,
+          "reconnect_timeout": 300,
+          "streams": [
+            {
+              "adaptive_id": "1080p",
+              "variant": true,
+              "urls": [
+                "file:///stg/solrtmp/file/default_1080p.mp4"
               ]
             },
-            "hls": {
-              "ad_marker": "scte35enh",
-              "memory_caching": false,
-              "start_sequence_num": 0,
-              "hls_version": 3,
-              "output_path": [
-                {
-                  "o_type": "m3u8",
-                  "combine": "%f/%a/chunklist.m3u8"
-                },
-                {
-                  "o_type": "gateway_m3u8",
-                  "combine": "%f/%a/playlist.m3u8"
-                },
-                {
-                  "o_type": "ts_segment",
-                  "combine": "%f/%a/segment_%n.ts"
-                }
+            {
+              "adaptive_id": "720p",
+              "variant": true,
+              "urls": [
+                "file:///stg/solrtmp/file/default_720p.mp4"
+              ]
+            },
+            {
+              "adaptive_id": "480p",
+              "variant": true,
+              "urls": [
+                "file:///stg/solrtmp/file/default_480p.mp4"
+              ]
+            },
+            {
+              "adaptive_id": "360p",
+              "variant": true,
+              "urls": [
+                "file:///stg/solrtmp/file/default_360p.mp4"
+              ]
+            },
+            {
+              "adaptive_id": "270p",
+              "variant": true,
+              "urls": [
+                "file:///stg/solrtmp/file/default_270p.mp4"
               ]
             }
-          }
-        }
-      }
-      
-      let schedule_pluto =
-      {
-        "server_id": "manager_1234",
-        "command": "ch_add",
-        "channel": {
-          "id": "2c56c2b9_aa3a_409e_a99b_37b01a746233",
-          "version": "v1",
-          "category": "live",
-          "input": {
-            "type": "schedule",
-            "socket_timeout": 3,
-            "reconnect_timeout": 300,
-            "streams": [
+          ]
+        },
+        "schedule": {
+          "loop": true,
+          "sync_timeout": 2,
+          "range_start_by": "front",
+          "auto_adaptive_mapping": "media",
+          "list": [
+          ]
+        },
+        "output": {
+          "base_dir": "%r/%s",
+          "clear_when_finish": true,
+          "segment_opt": {
+            "playlist_chunk_count": 10,
+            "max_chunk_count": 30,
+            "duration_time": 6,
+            "align_by_src": true
+          },
+          "variant": {
+            "memory_caching": false,
+            "sort_order": "bandwidth",
+            "item": {
+              "codec": true,
+              "bandwidth": true,
+              "resolution": true,
+              "framerate": true,
+              "sar": false,
+              "samplerate": false,
+              "channel": false,
+              "lang": true
+            },
+            "output_path": [
               {
-                "adaptive_id": "1080p",
-                "variant": true,
-                "urls": [
-                  "file:///usr/service/stg/solrtmp/file/default_1080p.mp4"
-                ]
+                "o_type": "gateway_m3u8",
+                "combine": "%f/playlist.m3u8"
               },
               {
-                "adaptive_id": "720p",
-                "variant": true,
-                "urls": [
-                  "file:///usr/service/stg/solrtmp/file/default_720p.mp4"
-                ]
-              },
-              {
-                "adaptive_id": "480p",
-                "variant": true,
-                "urls": [
-                  "file:///usr/service/stg/solrtmp/file/default_480p.mp4"
-                ]
-              },
-              {
-                "adaptive_id": "360p",
-                "variant": true,
-                "urls": [
-                  "file:///usr/service/stg/solrtmp/file/default_360p.mp4"
-                ]
-              },
-              {
-                "adaptive_id": "270p",
-                "variant": true,
-                "urls": [
-                  "file:///usr/service/stg/solrtmp/file/default_270p.mp4"
-                ]
-              }
-            ],
-            "subs": [
-              {
-                "name": "english",
-                "lang": "eng",
-                "default": true
+                "o_type": "mpd",
+                "combine": "%f/manifest.mpd"
               }
             ]
           },
-          "schedule": {
-            "loop": true,
-            "sync_timeout": 2,
-            "range_start_by": "front",
-            "auto_adaptive_mapping": "media",
-            "list": []
-          },
-          "output": {
-            "base_dir": "%r/%s",
-            "clear_when_finish": true,
-            "segment_opt": {
-              "playlist_chunk_count": 10,
-              "max_chunk_count": 30,
-              "duration_time": 6,
-              "align_by_src": true
-            },
-            "variant": {
-              "memory_caching": false,
-              "sort_order": "bandwidth",
-              "item": {
-                "codec": true,
-                "bandwidth": true,
-                "resolution": true,
-                "framerate": true,
-                "sar": false,
-                "samplerate": false,
-                "channel": false,
-                "lang": true
-              },
-              "output_path": [
-                {
-                  "o_type": "gateway_m3u8",
-                  "combine": "%f/playlist.m3u8"
-                },
-                {
-                  "o_type": "mpd",
-                  "combine": "%f/manifest.mpd"
-                }
-              ]
-            },
-            "hls": {
-              "ad_marker": "scte35all",
-              "subtitle": "cea708",
-              "memory_caching": false,
-              "start_sequence_num": 0,
-              "hls_version": 3,
-              "output_path": [
-                {
-                  "o_type": "m3u8",
-                  "combine": "%f/%a/chunklist.m3u8"
-                },
-                {
-                  "o_type": "gateway_m3u8",
-                  "combine": "%f/%a/playlist.m3u8"
-                },
-                {
-                  "o_type": "ts_segment",
-                  "combine": "%f/%a/segment_%n.ts"
-                }
-              ],
-              "cmaf": {
-                "enable": false,
-                "support_relay": false,
-                "chunk_interval": 500
-              },
-              "drm": {
-                "encryption_type": "none",
-                "key_info": [
-                  {
-                    "name": "key",
-                    "value": "31323334353637383930616263646566"
-                  }
-                ],
-                "ro_server": [
-                  {
-                    "ro_type": "normal",
-                    "version": "1",
-                    "url": "http://localhost:8080/test.key",
-                    "provider": "SolBox Inc."
-                  }
-                ]
-              }
-            }
-          }
-        }
-      }
-
-      let schedule_pluto_1080p=
-      {
-        "server_id": "manager_1234",
-        "command": "ch_add",
-        "channel": {
-          "id": "2c56c2b9_aa3a_409e_a99b_37b01a746233",
-          "version": "v1",
-          "category": "live",
-          "input": {
-            "type": "schedule",
-            "socket_timeout": 3,
-            "reconnect_timeout": 300,
-            "streams": [
+          "hls": {
+            "ad_marker": "scte35enh",
+            "memory_caching": false,
+            "start_sequence_num": 0,
+            "hls_version": 3,
+            "output_path": [
               {
-                "adaptive_id": "1080p",
-                "variant": true,
-                "urls": [
-                  "file:///usr/service/stg/solrtmp/file/default_1080p.mp4"
-                ]
+                "o_type": "m3u8",
+                "combine": "%f/%a/chunklist.m3u8"
               },
-            ],
-            "subs": [
               {
-                "name": "english",
-                "lang": "eng",
-                "default": true
+                "o_type": "gateway_m3u8",
+                "combine": "%f/%a/playlist.m3u8"
+              },
+              {
+                "o_type": "ts_segment",
+                "combine": "%f/%a/segment_%n.ts"
               }
             ]
-          },
-          "schedule": {
-            "loop": true,
-            "sync_timeout": 2,
-            "range_start_by": "front",
-            "auto_adaptive_mapping": "media",
-            "list": []
-          },
-          "output": {
-            "base_dir": "%r/%s",
-            "clear_when_finish": true,
-            "segment_opt": {
-              "playlist_chunk_count": 10,
-              "max_chunk_count": 30,
-              "duration_time": 6,
-              "align_by_src": true
-            },
-            "variant": {
-              "memory_caching": false,
-              "sort_order": "bandwidth",
-              "item": {
-                "codec": true,
-                "bandwidth": true,
-                "resolution": true,
-                "framerate": true,
-                "sar": false,
-                "samplerate": false,
-                "channel": false,
-                "lang": true
-              },
-              "output_path": [
-                {
-                  "o_type": "gateway_m3u8",
-                  "combine": "%f/playlist.m3u8"
-                },
-                {
-                  "o_type": "mpd",
-                  "combine": "%f/manifest.mpd"
-                }
-              ]
-            },
-            "hls": {
-              "ad_marker": "scte35all",
-              "subtitle": "cea708",
-              "memory_caching": false,
-              "start_sequence_num": 0,
-              "hls_version": 3,
-              "output_path": [
-                {
-                  "o_type": "m3u8",
-                  "combine": "%f/%a/chunklist.m3u8"
-                },
-                {
-                  "o_type": "gateway_m3u8",
-                  "combine": "%f/%a/playlist.m3u8"
-                },
-                {
-                  "o_type": "ts_segment",
-                  "combine": "%f/%a/segment_%n.ts"
-                }
-              ],
-              "cmaf": {
-                "enable": false,
-                "support_relay": false,
-                "chunk_interval": 500
-              },
-              "drm": {
-                "encryption_type": "none",
-                "key_info": [
-                  {
-                    "name": "key",
-                    "value": "31323334353637383930616263646566"
-                  }
-                ],
-                "ro_server": [
-                  {
-                    "ro_type": "normal",
-                    "version": "1",
-                    "url": "http://localhost:8080/test.key",
-                    "provider": "SolBox Inc."
-                  }
-                ]
-              }
-            }
           }
         }
-      }
-  
-      if (x=='samsung')
-      {
-        return schedule_samsung;
-      }
-      else if(x=='pluto')
-      {
-        return schedule_pluto;
-      }
-      else if (x=='pluto_1080p')
-      {
-        return schedule_pluto_1080p;
       }
     }
+
+    let schedule_pluto =
+    {
+      "server_id": "manager_1234",
+      "command": "ch_add",
+      "channel": {
+        "id": "2c56c2b9_aa3a_409e_a99b_37b01a746233",
+        "version": "v1",
+        "category": "live",
+        "input": {
+          "type": "schedule",
+          "socket_timeout": 3,
+          "reconnect_timeout": 300,
+          "streams": [
+            {
+              "adaptive_id": "1080p",
+              "variant": true,
+              "urls": [
+                "file:///usr/service/stg/solrtmp/file/default_1080p.mp4"
+              ]
+            },
+            {
+              "adaptive_id": "720p",
+              "variant": true,
+              "urls": [
+                "file:///usr/service/stg/solrtmp/file/default_720p.mp4"
+              ]
+            },
+            {
+              "adaptive_id": "480p",
+              "variant": true,
+              "urls": [
+                "file:///usr/service/stg/solrtmp/file/default_480p.mp4"
+              ]
+            },
+            {
+              "adaptive_id": "360p",
+              "variant": true,
+              "urls": [
+                "file:///usr/service/stg/solrtmp/file/default_360p.mp4"
+              ]
+            },
+            {
+              "adaptive_id": "270p",
+              "variant": true,
+              "urls": [
+                "file:///usr/service/stg/solrtmp/file/default_270p.mp4"
+              ]
+            }
+          ],
+          "subs": [
+            {
+              "name": "english",
+              "lang": "eng",
+              "default": true
+            }
+          ]
+        },
+        "schedule": {
+          "loop": true,
+          "sync_timeout": 2,
+          "range_start_by": "front",
+          "auto_adaptive_mapping": "media",
+          "list": []
+        },
+        "output": {
+          "base_dir": "%r/%s",
+          "clear_when_finish": true,
+          "segment_opt": {
+            "playlist_chunk_count": 10,
+            "max_chunk_count": 30,
+            "duration_time": 6,
+            "align_by_src": true
+          },
+          "variant": {
+            "memory_caching": false,
+            "sort_order": "bandwidth",
+            "item": {
+              "codec": true,
+              "bandwidth": true,
+              "resolution": true,
+              "framerate": true,
+              "sar": false,
+              "samplerate": false,
+              "channel": false,
+              "lang": true
+            },
+            "output_path": [
+              {
+                "o_type": "gateway_m3u8",
+                "combine": "%f/playlist.m3u8"
+              },
+              {
+                "o_type": "mpd",
+                "combine": "%f/manifest.mpd"
+              }
+            ]
+          },
+          "hls": {
+            "ad_marker": "scte35all",
+            "subtitle": "cea708",
+            "memory_caching": false,
+            "start_sequence_num": 0,
+            "hls_version": 3,
+            "output_path": [
+              {
+                "o_type": "m3u8",
+                "combine": "%f/%a/chunklist.m3u8"
+              },
+              {
+                "o_type": "gateway_m3u8",
+                "combine": "%f/%a/playlist.m3u8"
+              },
+              {
+                "o_type": "ts_segment",
+                "combine": "%f/%a/segment_%n.ts"
+              }
+            ],
+            "cmaf": {
+              "enable": false,
+              "support_relay": false,
+              "chunk_interval": 500
+            },
+            "drm": {
+              "encryption_type": "none",
+              "key_info": [
+                {
+                  "name": "key",
+                  "value": "31323334353637383930616263646566"
+                }
+              ],
+              "ro_server": [
+                {
+                  "ro_type": "normal",
+                  "version": "1",
+                  "url": "http://localhost:8080/test.key",
+                  "provider": "SolBox Inc."
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+
+    let schedule_pluto_1080p =
+    {
+      "server_id": "manager_1234",
+      "command": "ch_add",
+      "channel": {
+        "id": "2c56c2b9_aa3a_409e_a99b_37b01a746233",
+        "version": "v1",
+        "category": "live",
+        "input": {
+          "type": "schedule",
+          "socket_timeout": 3,
+          "reconnect_timeout": 300,
+          "streams": [
+            {
+              "adaptive_id": "1080p",
+              "variant": true,
+              "urls": [
+                "file:///usr/service/stg/solrtmp/file/default_1080p.mp4"
+              ]
+            },
+          ],
+          "subs": [
+            {
+              "name": "english",
+              "lang": "eng",
+              "default": true
+            }
+          ]
+        },
+        "schedule": {
+          "loop": true,
+          "sync_timeout": 2,
+          "range_start_by": "front",
+          "auto_adaptive_mapping": "media",
+          "list": []
+        },
+        "output": {
+          "base_dir": "%r/%s",
+          "clear_when_finish": true,
+          "segment_opt": {
+            "playlist_chunk_count": 10,
+            "max_chunk_count": 30,
+            "duration_time": 6,
+            "align_by_src": true
+          },
+          "variant": {
+            "memory_caching": false,
+            "sort_order": "bandwidth",
+            "item": {
+              "codec": true,
+              "bandwidth": true,
+              "resolution": true,
+              "framerate": true,
+              "sar": false,
+              "samplerate": false,
+              "channel": false,
+              "lang": true
+            },
+            "output_path": [
+              {
+                "o_type": "gateway_m3u8",
+                "combine": "%f/playlist.m3u8"
+              },
+              {
+                "o_type": "mpd",
+                "combine": "%f/manifest.mpd"
+              }
+            ]
+          },
+          "hls": {
+            "ad_marker": "scte35all",
+            "subtitle": "cea708",
+            "memory_caching": false,
+            "start_sequence_num": 0,
+            "hls_version": 3,
+            "output_path": [
+              {
+                "o_type": "m3u8",
+                "combine": "%f/%a/chunklist.m3u8"
+              },
+              {
+                "o_type": "gateway_m3u8",
+                "combine": "%f/%a/playlist.m3u8"
+              },
+              {
+                "o_type": "ts_segment",
+                "combine": "%f/%a/segment_%n.ts"
+              }
+            ],
+            "cmaf": {
+              "enable": false,
+              "support_relay": false,
+              "chunk_interval": 500
+            },
+            "drm": {
+              "encryption_type": "none",
+              "key_info": [
+                {
+                  "name": "key",
+                  "value": "31323334353637383930616263646566"
+                }
+              ],
+              "ro_server": [
+                {
+                  "ro_type": "normal",
+                  "version": "1",
+                  "url": "http://localhost:8080/test.key",
+                  "provider": "SolBox Inc."
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+
+    if (x == 'samsung') {
+      return schedule_samsung;
+    }
+    else if (x == 'pluto') {
+      return schedule_pluto;
+    }
+    else if (x == 'pluto_1080p') {
+      return schedule_pluto_1080p;
+    }
+  }
 }
 
-let time_converter = (x) =>
-{
-  try
-  {
-        if(typeof(x) === 'string')
-        {
-            if( isNaN(Number(x) )  )
-            {
-              y=x.split(':');
-              if (y.length != 3)
-              {
-                console.log("time is wired");
-                process.exit(1);
-              }
-              time = ( parseInt(y[0])*3600 + parseInt(y[1])*60 + parseInt(y[2]) ) *1000 ;
-              return time;
-            }
-            else
-            {
-              return x;
-            }
-        }
-        else if (typeof(x) == 'number')
-        {
-          return x;
-        }
-        else
-        {
+let time_converter = (x) => {
+  try {
+    if (typeof (x) === 'string') {
+      if (isNaN(Number(x))) {
+        y = x.split(':');
+        if (y.length != 3) {
           console.log("time is wired");
           process.exit(1);
         }
-  }
-  catch(err)
-  {
-      console.log(err);
-      process.exit(1);
-  }
-}
-
-let samsung_smartTV = (json)=>
-{
-    for (let i=0;i<json.length;i++)
-    {
-        if(json[i].id !== undefined)
-        {
-             let a = json[i].id.split('_');
-             json[i].id = json[i].id.slice(0, -( a[a.length-1].length +1) );
-        }
+        time = (parseInt(y[0]) * 3600 + parseInt(y[1]) * 60 + parseInt(y[2])) * 1000;
+        return time;
+      }
+      else {
+        return x;
+      }
     }
-    return json;
+    else if (typeof (x) == 'number') {
+      return x;
+    }
+    else {
+      console.log("time is wired");
+      process.exit(1);
+    }
+  }
+  catch (err) {
+    console.log(err);
+    process.exit(1);
+  }
 }
 
-let write_json_samsungTV_domestic = (json,k,file_name) =>
-{
+let samsung_smartTV = (json) => {
+  for (let i = 0; i < json.length; i++) {
+    if (json[i].id !== undefined) {
+      let a = json[i].id.split('_');
+      json[i].id = json[i].id.slice(0, -(a[a.length - 1].length + 1));
+    }
+  }
+  return json;
+}
 
-  let n=1;
+let write_json_samsungTV_domestic = (json, k, file_name) => {
+
+  let n = 1;
   let schedule = new templete('samsung');
 
-  for (let i=0;i<json.length;i++)
-  {
-      if(json[i]['id']!=undefined)
-      {
+  for (let i = 0; i < json.length; i++) {
+    if (json[i]['id'] != undefined) {
 
-      if (n==1)
-      {
-          let video =
-          {
+      if (n == 1) {
+        let video =
+        {
           "start_date": "20220323T15:00:00",
-              "id": "schid_" + n.toString() + "_1" ,
-              "ch_id": "cocos_program_" + json[i].id,
-              "range": 
-              {
-              "start": 0,
-              "end": ad_interval_korea
-              }
-          }
-          schedule.channel.schedule.list.push(video);
-      }
-      else
-      {
-          let video =
+          "id": "schid_" + n.toString() + "_1",
+          "ch_id": "cocos_program_" + json[i].id,
+          "range":
           {
-              "id": "schid_" + n.toString() + "_1" ,
-              "ch_id": "cocos_program_" + json[i].id,
-              "range": 
-              {
-              "start": 0,
-              "end": ad_interval_korea
-              }
+            "start": 0,
+            "end": ad_interval_korea
           }
-          schedule.channel.schedule.list.push(video);
+        }
+        schedule.channel.schedule.list.push(video);
+      }
+      else {
+        let video =
+        {
+          "id": "schid_" + n.toString() + "_1",
+          "ch_id": "cocos_program_" + json[i].id,
+          "range":
+          {
+            "start": 0,
+            "end": ad_interval_korea
+          }
+        }
+        schedule.channel.schedule.list.push(video);
       }
 
       let advertisement =
       {
-          "id": "schid_ad_" + n.toString() + "_1" ,
+        "id": "schid_ad_" + n.toString() + "_1",
+        "ch_id": "cocos_ad_60s_20210528_2mbps",
+        "range":
+        {
+          "start": 0,
+          "end": ad_duration_samsung_korea
+        }
+      }
+      schedule.channel.schedule.list.push(advertisement);
+
+      let m;
+      for (let j = 1; j > 0; j++) {
+        if (json[i]['__EMPTY'] <= ad_interval_korea * (j + 1)) {
+          m = j;
+          break;
+        }
+
+        let video =
+        {
+          "id": "schid_" + n.toString() + "_" + (j + 1).toString(),
+          "ch_id": "cocos_program_" + json[i].id,
+          "range":
+          {
+            "start": ad_interval_korea * j,
+            "end": ad_interval_korea * (j + 1)
+          }
+        }
+        let advertisement =
+        {
+          "id": "schid_ad_" + n.toString() + "_" + (j + 1).toString(),
           "ch_id": "cocos_ad_60s_20210528_2mbps",
-          "range": 
+          "range":
           {
-                  "start": 0,
-                  "end": ad_duration_samsung_korea
+            "start": 0,
+            "end": ad_duration_samsung_korea
           }
+        }
+        schedule.channel.schedule.list.push(video);
+        schedule.channel.schedule.list.push(advertisement);
       }
-      schedule.channel.schedule.list.push(advertisement);
 
-      let m;
-      for (let j=1;j>0;j++)
+      video =
       {
-          if(json[i]['__EMPTY'] < ad_interval_korea*(j+1) )
-          { 
-              m=j;
-              break;
-          }
-
-          let video =
-              {
-                  "id": "schid_" + n.toString() + "_" + (j+1).toString(),
-                  "ch_id": "cocos_program_" + json[i].id,
-                  "range": 
-                  {
-                  "start":  ad_interval_korea*j,
-                  "end":  ad_interval_korea*(j+1) 
-                  }
-              }
-          let advertisement =
-              {
-                  "id": "schid_ad_" + n.toString() + "_" + (j+1).toString(),
-                  "ch_id": "cocos_ad_60s_20210528_2mbps", 
-                  "range": 
-                  {
-                          "start": 0,
-                          "end": ad_duration_samsung_korea
-                  }
-              }
-              schedule.channel.schedule.list.push(video);
-              schedule.channel.schedule.list.push(advertisement);
-          }
-
-          video =
-          {
-              "id": "schid_" + n.toString() + "_" + (m+1).toString() ,
-              "ch_id": "cocos_program_" + json[i].id,
-              "range": 
-              {
-                  "start": ad_interval_korea*m,
-                  "end": json[i]['__EMPTY'],
-              }
-          }
-      
-          schedule.channel.schedule.list.push(video);
-          n++;
+        "id": "schid_" + n.toString() + "_" + (m + 1).toString(),
+        "ch_id": "cocos_program_" + json[i].id,
+        "range":
+        {
+          "start": ad_interval_korea * m,
+          "end": json[i]['__EMPTY'],
+        }
       }
+
+      schedule.channel.schedule.list.push(video);
+      n++;
+    }
   }
 
-  n=1;
+  n = 1;
   file_name = file_name.split('.')[0];
-  file_name = '202204_' + file_name + '_' + k.toString() + '.json';  
+  file_name = '202204_' + file_name + '_' + k.toString() + '.json';
   let file_json = JSON.stringify(schedule, null, "\t");
-  fs.writeFile( './json/' + file_name, file_json , function(err) 
-  {
-      if (err) 
-      {
-          console.log(err);
-      }
+  fs.writeFile('./json/' + file_name, file_json, function (err) {
+    if (err) {
+      console.log(err);
+    }
   });
 }
 
-let write_json_samsungTV_northern_america = (json,file_name) =>
-{
+let write_json_samsungTV_northern_america = (json, file_name) => {
 
-  let n=1;
+  let n = 1;
   let schedule = new templete('samsung');
-  
-  for (let i=0;i<json.length;i++)
-  {
-      if(json[i]['id']!=undefined)
-      {
 
-      if (n==1)
-      {
-          let video =
-          {
+  for (let i = 0; i < json.length; i++) {
+    if (json[i]['id'] != undefined) {
+
+      if (n == 1) {
+        let video =
+        {
           "start_date": "20220323T15:00:00",
-              "id": "schid_" + n.toString() + "_1" ,
-              "ch_id": "cocos_program_" + json[i].id,
-              "range": 
-              {
-              "start": 0,
-              "end": ad_interval_northern_america
-              }
-          }
-          schedule.channel.schedule.list.push(video);
-      }
-      else
-      {
-          let video =
+          "id": "schid_" + n.toString() + "_1",
+          "ch_id": "cocos_program_" + json[i].id,
+          "range":
           {
-              "id": "schid_" + n.toString() + "_1" ,
-              "ch_id": "cocos_program_" + json[i].id,
-              "range": 
-              {
-              "start": 0,
-              "end": ad_interval_northern_america
-              }
+            "start": 0,
+            "end": ad_interval_northern_america
           }
-          schedule.channel.schedule.list.push(video);
+        }
+        schedule.channel.schedule.list.push(video);
+      }
+      else {
+        let video =
+        {
+          "id": "schid_" + n.toString() + "_1",
+          "ch_id": "cocos_program_" + json[i].id,
+          "range":
+          {
+            "start": 0,
+            "end": ad_interval_northern_america
+          }
+        }
+        schedule.channel.schedule.list.push(video);
       }
 
       let advertisement =
       {
-          "id": "schid_ad_" + n.toString() + "_1" ,
-          "ch_id": "cocos_ad_60s_us",
-          "range": 
-          {
-                  "start": 0,
-                  "end": ad_duration_samsung_northern_america
-          }
+        "id": "schid_ad_" + n.toString() + "_1",
+        "ch_id": "cocos_ad_60s_us",
+        "range":
+        {
+          "start": 0,
+          "end": ad_duration_samsung_northern_america
+        }
       }
       schedule.channel.schedule.list.push(advertisement);
 
       let m;
-      for (let j=1;j>0;j++)
-      {
-          if(json[i]['__EMPTY'] < ad_interval_northern_america*(j+1) )
-          { 
-              m=j;
-              break;
-          }
+      for (let j = 1; j > 0; j++) {
+        if (json[i]['__EMPTY'] <= ad_interval_northern_america * (j + 1)) {
+          m = j;
+          break;
+        }
 
-          let video =
-              {
-                  "id": "schid_" + n.toString() + "_" + (j+1).toString(),
-                  "ch_id": "cocos_program_" + json[i].id,
-                  "range": 
-                  {
-                  "start":  ad_interval_northern_america*j,
-                  "end":  ad_interval_northern_america*(j+1) 
-                  }
-              }
-          let advertisement =
-              {
-                  "id": "schid_ad_" + n.toString() + "_" + (j+1).toString(),
-                  "ch_id": "cocos_ad_60s_us", 
-                  "range": 
-                  {
-                          "start": 0,
-                          "end": ad_duration_samsung_northern_america
-                  }
-              }
-              schedule.channel.schedule.list.push(video);
-              schedule.channel.schedule.list.push(advertisement);
-          }
-
-          video =
+        let video =
+        {
+          "id": "schid_" + n.toString() + "_" + (j + 1).toString(),
+          "ch_id": "cocos_program_" + json[i].id,
+          "range":
           {
-              "id": "schid_" + n.toString() + "_" + (m+1).toString() ,
-              "ch_id": "cocos_program_" + json[i].id,
-              "range": 
-              {
-                  "start": ad_interval_northern_america*m,
-                  "end": json[i]['__EMPTY'],
-              }
+            "start": ad_interval_northern_america * j,
+            "end": ad_interval_northern_america * (j + 1)
           }
-      
-          schedule.channel.schedule.list.push(video);
-          n++;
+        }
+        let advertisement =
+        {
+          "id": "schid_ad_" + n.toString() + "_" + (j + 1).toString(),
+          "ch_id": "cocos_ad_60s_us",
+          "range":
+          {
+            "start": 0,
+            "end": ad_duration_samsung_northern_america
+          }
+        }
+        schedule.channel.schedule.list.push(video);
+        schedule.channel.schedule.list.push(advertisement);
       }
+
+      video =
+      {
+        "id": "schid_" + n.toString() + "_" + (m + 1).toString(),
+        "ch_id": "cocos_program_" + json[i].id,
+        "range":
+        {
+          "start": ad_interval_northern_america * m,
+          "end": json[i]['__EMPTY'],
+        }
+      }
+
+      schedule.channel.schedule.list.push(video);
+      n++;
+    }
   }
 
-  n=1;
+  n = 1;
   file_name = file_name.split('.')[0];
-  file_name = '202204_' + file_name + '.json';  
+  file_name = '202204_' + file_name + '.json';
   let file_json = JSON.stringify(schedule, null, "\t");
-  fs.writeFile( './json/' + file_name, file_json , function(err) 
-  {
-      if (err) 
-      {
-          console.log(err);
-      }
+  fs.writeFile('./json/' + file_name, file_json, function (err) {
+    if (err) {
+      console.log(err);
+    }
   });
 }
 
-let write_json_plutoTV = (json,file_name) =>
-{
-    n=1;
-    let schedule = new templete('pluto');
+let write_json_plutoTV = (json, file_name) => {
+  n = 1;
+  let schedule = new templete('pluto');
 
-      for (let i=0;i<json.length;i++)
-      {
-          if(json[i]['id']!=undefined)
+  for (let i = 0; i < json.length; i++) {
+    if (json[i]['id'] != undefined) {
+      if (json[i]['__EMPTY'] == CJENM_leaderfilm_duration) {
+        if (n == 1) {
+          let video =
           {
-            if(json[i]['__EMPTY']<10000)
+            "start_date": "20220323T15:00:00",
+            "id": "schid_" + n.toString() + "_1",
+            "ch_id": "cocos_program_" + json[i].id,
+            "range":
             {
-              if(n==1)
-                {
-                    let video =
-                    {
-                        "start_date": "20220323T15:00:00",
-                        "id": "schid_" + n.toString() + "_1" ,
-                        "ch_id": "cocos_program_" + json[i].id,
-                        "range": 
-                        {
-                          "start": 0,
-                          "end": time_converter(json[i]['__EMPTY']),
-                        }
-                    }
-                    schedule.channel.schedule.list.push(video);
-                    n++;
-                }
-                else
-                {
-                    let video =
-                    {
-                        "id": "schid_" + n.toString() + "_1" ,
-                        "ch_id": "cocos_program_" + json[i].id,
-                        "range": 
-                        {
-                          "start": 0,
-                          "end": time_converter(json[i]['__EMPTY']),
-                        }
-                    }
-                    schedule.channel.schedule.list.push(video);
-                    n++;
-                }
+              "start": 0,
+              "end": time_converter(json[i]['__EMPTY']),
             }
-            else
-            {
-                if (n==1)
-                {
-                  let video =
-                  {
-                    "start_date": "20220323T15:00:00",
-                      "id": "schid_" + n.toString() + "_1" ,
-                      "ch_id": "cocos_program_" + json[i].id,
-                      "range": 
-                      {
-                        "start": 0,
-                        "end": time_converter(json[i]['Ad Point 1']),
-                      }
-                  }
-                  schedule.channel.schedule.list.push(video);
-                }
-                else
-                {
-                  let video =
-                  {
-                      "id": "schid_" + n.toString() + "_1" ,
-                      "ch_id": "cocos_program_" + json[i].id,
-                      "range": 
-                      {
-                        "start": 0,
-                        "end": time_converter(json[i]['Ad Point 1']),
-                      }
-                  }
-                  schedule.channel.schedule.list.push(video);
-                }
-
-                let advertisement =
-                {
-                    "id": "schid_ad_" + n.toString() + "_1" ,
-                    "ch_id": "cocos_ad_120s_us",
-                    "range": 
-                    {
-                            "start": 0,
-                            "end": ad_duration_pluto
-                    }
-                }
-                schedule.channel.schedule.list.push(advertisement);
-
-                for (let j=1;j<5;j++)
-                {
-                    let video =
-                      {
-                          "id": "schid_" + n.toString() + "_" + (j+1).toString(),
-                          "ch_id": "cocos_program_" + json[i].id,
-                          "range": 
-                          {
-                            "start": time_converter(json[i]['Ad Point '+ j.toString()]) ,
-                            "end": time_converter(json[i]['Ad Point ' + (j+1).toString()]),
-                          }
-                      }
-                    let advertisement =
-                      {
-                          "id": "schid_ad_" + n.toString() + "_" + (j+1).toString(),
-                          "ch_id": "cocos_ad_120s_us",
-                          "range": 
-                          {
-                                  "start": 0,
-                                  "end": ad_duration_pluto
-                          }
-                      }
-                        schedule.channel.schedule.list.push(video);
-                        schedule.channel.schedule.list.push(advertisement);
-                  }
-
-                    video =
-                    {
-                        "id": "schid_" + n.toString() + "_6" ,
-                        "ch_id": "cocos_program_" + json[i].id,
-                        "range": 
-                        {
-                          "start": time_converter(json[i]['Ad Point 5']),
-                          "end": json[i]['__EMPTY'],
-                        }
-                    }
-              
-                    schedule.channel.schedule.list.push(video);
-                    n++;
           }
+          schedule.channel.schedule.list.push(video);
+          n++;
+        }
+        else {
+          let video =
+          {
+            "id": "schid_" + n.toString() + "_1",
+            "ch_id": "cocos_program_" + json[i].id,
+            "range":
+            {
+              "start": 0,
+              "end": time_converter(json[i]['__EMPTY']),
+            }
+          }
+          schedule.channel.schedule.list.push(video);
+          n++;
         }
       }
-      n=1;
-      file_name = file_name.split('.')[0];
-      file_name = '202204_' + file_name + '.json';  
-      let file_json = JSON.stringify(schedule, null, "\t");
-      fs.writeFile( './json/' + file_name, file_json , function(err) 
-      {
-          if (err) 
+      else {
+        if (n == 1) {
+          let video =
           {
-              console.log(err);
+            "start_date": "20220323T15:00:00",
+            "id": "schid_" + n.toString() + "_1",
+            "ch_id": "cocos_program_" + json[i].id,
+            "range":
+            {
+              "start": 0,
+              "end": time_converter(json[i]['Ad Point 1']),
+            }
           }
-      });
+          schedule.channel.schedule.list.push(video);
+        }
+        else {
+          let video =
+          {
+            "id": "schid_" + n.toString() + "_1",
+            "ch_id": "cocos_program_" + json[i].id,
+            "range":
+            {
+              "start": 0,
+              "end": time_converter(json[i]['Ad Point 1']),
+            }
+          }
+          schedule.channel.schedule.list.push(video);
+        }
+
+        let advertisement =
+        {
+          "id": "schid_ad_" + n.toString() + "_1",
+          "ch_id": "cocos_ad_120s_us",
+          "range":
+          {
+            "start": 0,
+            "end": ad_duration_pluto
+          }
+        }
+        schedule.channel.schedule.list.push(advertisement);
+
+        for (let j = 1; j < 5; j++) {
+          let video =
+          {
+            "id": "schid_" + n.toString() + "_" + (j + 1).toString(),
+            "ch_id": "cocos_program_" + json[i].id,
+            "range":
+            {
+              "start": time_converter(json[i]['Ad Point ' + j.toString()]),
+              "end": time_converter(json[i]['Ad Point ' + (j + 1).toString()]),
+            }
+          }
+          let advertisement =
+          {
+            "id": "schid_ad_" + n.toString() + "_" + (j + 1).toString(),
+            "ch_id": "cocos_ad_120s_us",
+            "range":
+            {
+              "start": 0,
+              "end": ad_duration_pluto
+            }
+          }
+          schedule.channel.schedule.list.push(video);
+          schedule.channel.schedule.list.push(advertisement);
+        }
+
+        video =
+        {
+          "id": "schid_" + n.toString() + "_6",
+          "ch_id": "cocos_program_" + json[i].id,
+          "range":
+          {
+            "start": time_converter(json[i]['Ad Point 5']),
+            "end": json[i]['__EMPTY'],
+          }
+        }
+
+        schedule.channel.schedule.list.push(video);
+        n++;
+      }
+    }
+  }
+  n = 1;
+  file_name = file_name.split('.')[0];
+  file_name = '202204_' + file_name + '.json';
+  let file_json = JSON.stringify(schedule, null, "\t");
+  fs.writeFile('./json/' + file_name, file_json, function (err) {
+    if (err) {
+      console.log(err);
+    }
+  });
 }
 
-let write_json_plutoTV_1080p = (json,file_name) =>
-{
-    n=1;
-    let schedule = new templete('pluto_1080p');
+let write_json_plutoTV_1080p = (json, file_name) => {
+  n = 1;
+  let schedule = new templete('pluto_1080p');
 
-    for (let i=0;i<json.length;i++)
-      {
-          if(json[i]['id']!=undefined)
+  for (let i = 0; i < json.length; i++) {
+    if (json[i]['id'] != undefined) {
+      if (json[i]['__EMPTY'] == CJENM_leaderfilm_duration) {
+        if (n == 1) {
+          let video =
           {
-            if(json[i]['__EMPTY']<10000)
+            "start_date": "20220323T15:00:00",
+            "id": "schid_" + n.toString() + "_1",
+            "ch_id": "cocos_program_" + json[i].id,
+            "range":
             {
-                if(n==1)
-                {
-                  let video =
-                  {
-                      "start_date": "20220323T15:00:00",
-                      "id": "schid_" + n.toString() + "_1" ,
-                      "ch_id": "cocos_program_" + json[i].id,
-                      "range": 
-                      {
-                        "start": 0,
-                        "end": time_converter(json[i]['__EMPTY']),
-                      }
-                  }
-                  schedule.channel.schedule.list.push(video);
-                  n++;
-                }
-                else
-                {
-                  let video =
-                  {
-                      "id": "schid_" + n.toString() + "_1" ,
-                      "ch_id": "cocos_program_" + json[i].id,
-                      "range": 
-                      {
-                        "start": 0,
-                        "end": time_converter(json[i]['__EMPTY']),
-                      }
-                  }
-                  schedule.channel.schedule.list.push(video);
-                  n++;
-                }
+              "start": 0,
+              "end": time_converter(json[i]['__EMPTY']),
             }
-            else
-            {
-                if (n==1)
-                {
-                  let video =
-                  {
-                    "start_date": "20220323T15:00:00",
-                      "id": "schid_" + n.toString() + "_1" ,
-                      "ch_id": "cocos_program_" + json[i].id,
-                      "range": 
-                      {
-                        "start": 0,
-                        "end": time_converter(json[i]['Ad Point 1']),
-                      }
-                  }
-                  schedule.channel.schedule.list.push(video);
-                }
-                else
-                {
-                  let video =
-                  {
-                      "id": "schid_" + n.toString() + "_1" ,
-                      "ch_id": "cocos_program_" + json[i].id,
-                      "range": 
-                      {
-                        "start": 0,
-                        "end": time_converter(json[i]['Ad Point 1']),
-                      }
-                  }
-                  schedule.channel.schedule.list.push(video);
-                }
-
-                let advertisement =
-                {
-                    "id": "schid_ad_" + n.toString() + "_1" ,
-                    "ch_id": "cocos_ad_120s_us",
-                    "range": 
-                    {
-                            "start": 0,
-                            "end": ad_duration_pluto
-                    }
-                }
-                schedule.channel.schedule.list.push(advertisement);
-
-                for (let j=1;j<5;j++)
-                {
-                    let video =
-                      {
-                          "id": "schid_" + n.toString() + "_" + (j+1).toString(),
-                          "ch_id": "cocos_program_" + json[i].id,
-                          "range": 
-                          {
-                            "start": time_converter(json[i]['Ad Point '+ j.toString()]) ,
-                            "end": time_converter(json[i]['Ad Point ' + (j+1).toString()]),
-                          }
-                      }
-                    let advertisement =
-                      {
-                          "id": "schid_ad_" + n.toString() + "_" + (j+1).toString(),
-                          "ch_id": "cocos_ad_120s_us",
-                          "range": 
-                          {
-                                  "start": 0,
-                                  "end": ad_duration_pluto
-                          }
-                      }
-                        schedule.channel.schedule.list.push(video);
-                        schedule.channel.schedule.list.push(advertisement);
-                  }
-
-                    video =
-                    {
-                        "id": "schid_" + n.toString() + "_6" ,
-                        "ch_id": "cocos_program_" + json[i].id,
-                        "range": 
-                        {
-                          "start": time_converter(json[i]['Ad Point 5']),
-                          "end": json[i]['__EMPTY'],
-                        }
-                    }
-              
-                    schedule.channel.schedule.list.push(video);
-                    n++;
           }
+          schedule.channel.schedule.list.push(video);
+          n++;
+        }
+        else {
+          let video =
+          {
+            "id": "schid_" + n.toString() + "_1",
+            "ch_id": "cocos_program_" + json[i].id,
+            "range":
+            {
+              "start": 0,
+              "end": time_converter(json[i]['__EMPTY']),
+            }
+          }
+          schedule.channel.schedule.list.push(video);
+          n++;
         }
       }
-      n=1;
-      file_name = file_name.split('.')[0];
-      file_name = '202204_' + file_name + '_1080p' + '.json';  
-      let file_json = JSON.stringify(schedule, null, "\t");
-      fs.writeFile( './json/' + file_name, file_json , function(err) 
-      {
-          if (err) 
+      else {
+        if (n == 1) {
+          let video =
           {
-              console.log(err);
+            "start_date": "20220323T15:00:00",
+            "id": "schid_" + n.toString() + "_1",
+            "ch_id": "cocos_program_" + json[i].id,
+            "range":
+            {
+              "start": 0,
+              "end": time_converter(json[i]['Ad Point 1']),
+            }
           }
-      });
+          schedule.channel.schedule.list.push(video);
+        }
+        else {
+          let video =
+          {
+            "id": "schid_" + n.toString() + "_1",
+            "ch_id": "cocos_program_" + json[i].id,
+            "range":
+            {
+              "start": 0,
+              "end": time_converter(json[i]['Ad Point 1']),
+            }
+          }
+          schedule.channel.schedule.list.push(video);
+        }
+
+        let advertisement =
+        {
+          "id": "schid_ad_" + n.toString() + "_1",
+          "ch_id": "cocos_ad_120s_us",
+          "range":
+          {
+            "start": 0,
+            "end": ad_duration_pluto
+          }
+        }
+        schedule.channel.schedule.list.push(advertisement);
+
+        for (let j = 1; j < 5; j++) {
+          let video =
+          {
+            "id": "schid_" + n.toString() + "_" + (j + 1).toString(),
+            "ch_id": "cocos_program_" + json[i].id,
+            "range":
+            {
+              "start": time_converter(json[i]['Ad Point ' + j.toString()]),
+              "end": time_converter(json[i]['Ad Point ' + (j + 1).toString()]),
+            }
+          }
+          let advertisement =
+          {
+            "id": "schid_ad_" + n.toString() + "_" + (j + 1).toString(),
+            "ch_id": "cocos_ad_120s_us",
+            "range":
+            {
+              "start": 0,
+              "end": ad_duration_pluto
+            }
+          }
+          schedule.channel.schedule.list.push(video);
+          schedule.channel.schedule.list.push(advertisement);
+        }
+
+        video =
+        {
+          "id": "schid_" + n.toString() + "_6",
+          "ch_id": "cocos_program_" + json[i].id,
+          "range":
+          {
+            "start": time_converter(json[i]['Ad Point 5']),
+            "end": json[i]['__EMPTY'],
+          }
+        }
+
+        schedule.channel.schedule.list.push(video);
+        n++;
+      }
+    }
+  }
+  n = 1;
+  file_name = file_name.split('.')[0];
+  file_name = '202204_' + file_name + '_1080p' + '.json';
+  let file_json = JSON.stringify(schedule, null, "\t");
+  fs.writeFile('./json/' + file_name, file_json, function (err) {
+    if (err) {
+      console.log(err);
+    }
+  });
 }
 
 let json;
 
-for(let k=0;k<excel.SheetNames.length;k++)
-{
-    json = read_excel(k);
-    
-    if(num==1)
-    {
-      json = samsung_smartTV(json);
-      write_json_samsungTV_domestic(json,k,file_name);
-    }
-    else if(num==2)
-    {
-      json = samsung_smartTV(json);
-      write_json_samsungTV_northern_america(json,file_name);
-    }
-    else if (num==3)
-    {
-      write_json_plutoTV(json,file_name);
-    }
-    else if (num==4)
-    {
-      write_json_plutoTV_1080p(json,file_name);
-    }
+for (let k = 0; k < excel.SheetNames.length; k++) {
+  json = read_excel(k);
+
+  if (num == 1) {
+    json = samsung_smartTV(json);
+    write_json_samsungTV_domestic(json, k, file_name);
+  }
+  else if (num == 2) {
+    json = samsung_smartTV(json);
+    write_json_samsungTV_northern_america(json, file_name);
+  }
+  else if (num == 3) {
+    write_json_plutoTV(json, file_name);
+  }
+  else if (num == 4) {
+    write_json_plutoTV_1080p(json, file_name);
+  }
 }
