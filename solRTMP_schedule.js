@@ -17,7 +17,7 @@ let ad_duration_samsung_korea = data.ad_duration.samsung_korea;
 let ad_duration_samsung_northern_america = data.ad_duration.samsung_northern_america;
 let ad_duration_pluto = data.ad_duration.pluto;
 
-excel = xlsx.readFile( file_name );
+let excel = xlsx.readFile( file_name );
 
 let read_excel = (i) =>
 {

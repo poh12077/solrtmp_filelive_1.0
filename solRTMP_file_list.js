@@ -10,7 +10,7 @@ let file_name = data.file_name;
 // samsung smartTV == 1 or 2
 // pluto 1080p == 4
 let n=data.option;
-excel = xlsx.readFile( file_name );
+let excel = xlsx.readFile( file_name );
 
 let read_excel = (i) =>
 {
