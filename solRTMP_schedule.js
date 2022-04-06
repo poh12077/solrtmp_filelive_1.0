@@ -1,5 +1,6 @@
 const xlsx = require( "xlsx" );
 var fs = require('fs');
+const { exit } = require("process");
 
 let data = fs.readFileSync('configure.conf', 'utf8');
 data = JSON.parse(data);
@@ -424,20 +425,40 @@ class templete
 
 let time_converter = (x) =>
 {
-  if(typeof(x)=='string')
+  try
   {
-    y=x.split(':');
-    time = ( parseInt(y[0])*3600 + parseInt(y[1])*60 + parseInt(y[2]) ) *1000 ;
-    return time;
+        if(typeof(x) === 'string')
+        {
+            if( isNaN(Number(x) )  )
+            {
+              y=x.split(':');
+              if (y.length != 3)
+              {
+                console.log("time is wired");
+                process.exit(1);
+              }
+              time = ( parseInt(y[0])*3600 + parseInt(y[1])*60 + parseInt(y[2]) ) *1000 ;
+              return time;
+            }
+            else
+            {
+              return x;
+            }
+        }
+        else if (typeof(x) == 'number')
+        {
+          return x;
+        }
+        else
+        {
+          console.log("time is wired");
+          process.exit(1);
+        }
   }
-  else if (typeof(x)=='number')
+  catch(err)
   {
-    return x;
-  }
-  else
-  {
-    console.log('time is wierd');
-    return x;
+      console.log(err);
+      process.exit(1);
   }
 }
 
