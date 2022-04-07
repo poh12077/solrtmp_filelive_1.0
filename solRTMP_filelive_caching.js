@@ -2,17 +2,22 @@ const xlsx = require("xlsx");
 var fs = require('fs');
 const { fileURLToPath } = require("url");
 
-let data = fs.readFileSync('configure.conf', 'utf8');
-data = JSON.parse(data);
+let read_conf = (file_name) =>
+{
+    let conf_file = fs.readFileSync(file_name, 'utf8');
+    conf_file = JSON.parse(conf_file);
+    
+    let conf={
+        file_name:'',
+        option:0
+    }
 
-let file_name = data.file_name;
+    conf.file_name = conf_file.file_name;
+    conf.option = conf_file.option;
+    return conf;
+}
 
-// samsung smartTV == 1 or 2
-// pluto 1080p == 4
-let n = data.option;
-let excel = xlsx.readFile(file_name);
-
-let read_excel = (i) => {
+let read_excel = (excel, i) => {
     const sheet_name = excel.SheetNames[i];
     const sheet_data = excel.Sheets[sheet_name];
     let json = xlsx.utils.sheet_to_json(sheet_data);
@@ -47,7 +52,7 @@ let duplication_eliminate = (json) => {
 //read every resolution from the excel file
 let read_resolution = (json) => {
     let resolution = [];
-    for (j in json[0]) {
+    for (let j in json[0]) {
         if (!isNaN(parseInt(j.slice(0, -1))) && (j.slice(-1) === 'p')) {
             resolution.push(j);
         }
@@ -72,7 +77,7 @@ let duplication_check = (array) => {
     }
 }
 
-let write_json = (json) => {
+let write_json = (json, option) => {
     let resolution = read_resolution(json);
 
     let templete =
@@ -267,7 +272,7 @@ let write_json = (json) => {
 
     let base_url = "http://Y2pjb2Nvc3N0Z0BjamVubXN0b3I6MjU1MmM1MjVhOWRkMTUzNTcwNjFiZTIzMTcyMzRlNjU=@cjcocosstg.x-cdn.com/dav";
 
-    if (n != 4) {
+    if (option != 4) {
         for (let i = 0; i < json.length; i++) {
             if (json[i]['Caption Path'] === undefined) // no caption
             {
@@ -330,14 +335,22 @@ let samsung_smartTV = (json) => {
     return json;
 }
 
-let json;
-for (let i = 0; i < excel.SheetNames.length; i++) {
-    json = read_excel(i);
-    json = duplication_eliminate(json);
-    if (n == 1 || n == 2) {
-        json = samsung_smartTV(json);
-    }
-    // json = duplication_eliminate(json);
+let main = () =>
+{
+    let conf = read_conf('configure.conf');
+    let excel = xlsx.readFile(conf.file_name);
 
-    write_json(json);
+    let json;
+    for (let i = 0; i < excel.SheetNames.length; i++) {
+        json = read_excel(excel, i);
+        json = duplication_eliminate(json);
+        if (conf.option == 1 || conf.option == 2) {
+            json = samsung_smartTV(json);
+        }
+    
+        write_json(json, conf.option);
+    }    
 }
+
+main();
+
