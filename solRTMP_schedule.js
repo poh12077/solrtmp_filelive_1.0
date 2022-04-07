@@ -2,26 +2,24 @@ const xlsx = require("xlsx");
 var fs = require('fs');
 const { exit } = require("process");
 
-let data = fs.readFileSync('configure.conf', 'utf8');
-data = JSON.parse(data);
+let read_conf = (conf_name) => {
+  let data = fs.readFileSync(conf_name, 'utf8');
+  data = JSON.parse(data);
 
-let file_name = data.file_name;
-//samsungTV_domestic =1
-//samsungTV_northern_america =2
-//plutoTV =3
-//plutoTV_1080p =4
+  let file_name = data.file_name;
 
-let num = data.option;
-let ad_interval_korea = data.ad_interval.samsung_korea;
-let ad_interval_northern_america = data.ad_interval.samsung_northern_america;
-let ad_duration_samsung_korea = data.ad_duration.samsung_korea;
-let ad_duration_samsung_northern_america = data.ad_duration.samsung_northern_america;
-let ad_duration_pluto = data.ad_duration.pluto;
-let CJENM_leaderfilm_duration = data.CJENM_leaderfilm_duration;
+  option = data.option;
+  ad_interval_korea = data.ad_interval.samsung_korea;
+  ad_interval_northern_america = data.ad_interval.samsung_northern_america;
+  ad_duration_samsung_korea = data.ad_duration.samsung_korea;
+  ad_duration_samsung_northern_america = data.ad_duration.samsung_northern_america;
+  ad_duration_pluto = data.ad_duration.pluto;
+  CJENM_leaderfilm_duration = data.CJENM_leaderfilm_duration;
 
-let excel = xlsx.readFile(file_name);
+  return file_name;
+}
 
-let read_excel = (i) => {
+let read_excel = (excel, i) => {
   const sheet_name = excel.SheetNames[i];
   const sheet_data = excel.Sheets[sheet_name];
 
@@ -537,7 +535,7 @@ let write_json_samsungTV_domestic = (json, k, file_name) => {
         schedule.channel.schedule.list.push(advertisement);
       }
 
-      video =
+      let video =
       {
         "id": "schid_" + n.toString() + "_" + (m + 1).toString(),
         "ch_id": "cocos_program_" + json[i].id,
@@ -643,7 +641,7 @@ let write_json_samsungTV_northern_america = (json, file_name) => {
         schedule.channel.schedule.list.push(advertisement);
       }
 
-      video =
+      let video =
       {
         "id": "schid_" + n.toString() + "_" + (m + 1).toString(),
         "ch_id": "cocos_program_" + json[i].id,
@@ -773,7 +771,7 @@ let write_json_plutoTV = (json, file_name) => {
           schedule.channel.schedule.list.push(advertisement);
         }
 
-        video =
+        let video =
         {
           "id": "schid_" + n.toString() + "_6",
           "ch_id": "cocos_program_" + json[i].id,
@@ -903,7 +901,7 @@ let write_json_plutoTV_1080p = (json, file_name) => {
           schedule.channel.schedule.list.push(advertisement);
         }
 
-        video =
+        let video =
         {
           "id": "schid_" + n.toString() + "_6",
           "ch_id": "cocos_program_" + json[i].id,
@@ -930,23 +928,32 @@ let write_json_plutoTV_1080p = (json, file_name) => {
   });
 }
 
-let json;
+let main = () => {
 
-for (let k = 0; k < excel.SheetNames.length; k++) {
-  json = read_excel(k);
+  let file_name = read_conf('configure.conf');
+  let excel = xlsx.readFile(file_name);
+  let json;
 
-  if (num == 1) {
-    json = samsung_smartTV(json);
-    write_json_samsungTV_domestic(json, k, file_name);
-  }
-  else if (num == 2) {
-    json = samsung_smartTV(json);
-    write_json_samsungTV_northern_america(json, file_name);
-  }
-  else if (num == 3) {
-    write_json_plutoTV(json, file_name);
-  }
-  else if (num == 4) {
-    write_json_plutoTV_1080p(json, file_name);
+  for (let k = 0; k < excel.SheetNames.length; k++) {
+    json = read_excel(excel, k);
+
+    if (option == 1) {
+      json = samsung_smartTV(json);
+      write_json_samsungTV_domestic(json, k, file_name);
+    }
+    else if (option == 2) {
+      json = samsung_smartTV(json);
+      write_json_samsungTV_northern_america(json, file_name);
+    }
+    else if (option == 3) {
+      write_json_plutoTV(json, file_name);
+    }
+    else if (option == 4) {
+      write_json_plutoTV_1080p(json, file_name);
+    }
   }
 }
+
+main();
+
+
