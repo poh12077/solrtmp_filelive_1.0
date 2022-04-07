@@ -16,9 +16,15 @@ let read_conf = (conf_name) => {
     ad_duration_pluto = data.ad_duration.pluto;
     CJENM_leaderfilm_duration = data.CJENM_leaderfilm_duration;
 
+    if (option < 1 || option > 4 || ad_interval_korea <= 0 || ad_interval_northern_america <= 0
+      || ad_duration_samsung_korea <= 0 || ad_duration_samsung_northern_america <= 0 || ad_duration_pluto <= 0
+      || CJENM_leaderfilm_duration <= 0) {
+      throw new Error("[error] configure value");
+    }
+
     return file_name;
   } catch (error) {
-    console.log('[error] configure.conf parse ');
+    console.log('[error] configure.conf');
     console.log(error);
     process.exit(1);
   }
@@ -537,6 +543,12 @@ let write_json_samsungTV_domestic = (json, k, file_name) => {
               "end": ad_interval_korea * (j + 1)
             }
           }
+
+          if (time_converter(video.range.start) >= time_converter(video.range.end)) {
+            console.log('[error] start == end ');
+            process.exit(1);
+          }
+
           let advertisement =
           {
             "id": "schid_ad_" + n.toString() + "_" + (j + 1).toString(),
@@ -560,6 +572,11 @@ let write_json_samsungTV_domestic = (json, k, file_name) => {
             "start": ad_interval_korea * m,
             "end": json[i]['__EMPTY'],
           }
+        }
+
+        if (time_converter(video.range.start) >= time_converter(video.range.end)) {
+          console.log('[error] start == end ');
+          process.exit(1);
         }
 
         schedule.channel.schedule.list.push(video);
@@ -647,6 +664,11 @@ let write_json_samsungTV_northern_america = (json, file_name) => {
               "end": ad_interval_northern_america * (j + 1)
             }
           }
+          if (time_converter(video.range.start) >= time_converter(video.range.end)) {
+            console.log('[error] start == end ');
+            process.exit(1);
+          }
+
           let advertisement =
           {
             "id": "schid_ad_" + n.toString() + "_" + (j + 1).toString(),
@@ -670,6 +692,11 @@ let write_json_samsungTV_northern_america = (json, file_name) => {
             "start": ad_interval_northern_america * m,
             "end": json[i]['__EMPTY'],
           }
+        }
+
+        if (time_converter(video.range.start) >= time_converter(video.range.end)) {
+          console.log('[error] start == end ');
+          process.exit(1);
         }
 
         schedule.channel.schedule.list.push(video);
@@ -713,6 +740,12 @@ let write_json_plutoTV = (json, file_name) => {
                 "end": time_converter(json[i]['__EMPTY']),
               }
             }
+
+            if (time_converter(video.range.start) >= time_converter(video.range.end)) {
+              console.log('[error] start == end ');
+              process.exit(1);
+            }
+
             schedule.channel.schedule.list.push(video);
             n++;
           }
@@ -727,6 +760,12 @@ let write_json_plutoTV = (json, file_name) => {
                 "end": time_converter(json[i]['__EMPTY']),
               }
             }
+
+            if (time_converter(video.range.start) >= time_converter(video.range.end)) {
+              console.log('[error] start == end ');
+              process.exit(1);
+            }
+
             schedule.channel.schedule.list.push(video);
             n++;
           }
@@ -744,6 +783,12 @@ let write_json_plutoTV = (json, file_name) => {
                 "end": time_converter(json[i]['Ad Point 1']),
               }
             }
+
+            if (time_converter(video.range.start) >= time_converter(video.range.end)) {
+              console.log('[error] start == end ');
+              process.exit(1);
+            }
+
             schedule.channel.schedule.list.push(video);
           }
           else {
@@ -756,6 +801,11 @@ let write_json_plutoTV = (json, file_name) => {
                 "start": 0,
                 "end": time_converter(json[i]['Ad Point 1']),
               }
+            }
+
+            if (time_converter(video.range.start) >= time_converter(video.range.end)) {
+              console.log('[error] start == end ');
+              process.exit(1);
             }
             schedule.channel.schedule.list.push(video);
           }
@@ -783,6 +833,12 @@ let write_json_plutoTV = (json, file_name) => {
                 "end": time_converter(json[i]['Ad Point ' + (j + 1).toString()]),
               }
             }
+
+            if (time_converter(video.range.start) >= time_converter(video.range.end)) {
+              console.log('[error] start == end ');
+              process.exit(1);
+            }
+
             let advertisement =
             {
               "id": "schid_ad_" + n.toString() + "_" + (j + 1).toString(),
@@ -806,6 +862,11 @@ let write_json_plutoTV = (json, file_name) => {
               "start": time_converter(json[i]['Ad Point 5']),
               "end": json[i]['__EMPTY'],
             }
+          }
+
+          if (time_converter(video.range.start) >= time_converter(video.range.end)) {
+            console.log('[error] start == end ');
+            process.exit(1);
           }
 
           schedule.channel.schedule.list.push(video);
@@ -849,6 +910,12 @@ let write_json_plutoTV_1080p = (json, file_name) => {
                 "end": time_converter(json[i]['__EMPTY']),
               }
             }
+
+            if (time_converter(video.range.start) >= time_converter(video.range.end)) {
+              console.log('[error] start == end ');
+              process.exit(1);
+            }
+
             schedule.channel.schedule.list.push(video);
             n++;
           }
@@ -863,6 +930,12 @@ let write_json_plutoTV_1080p = (json, file_name) => {
                 "end": time_converter(json[i]['__EMPTY']),
               }
             }
+
+            if (time_converter(video.range.start) >= time_converter(video.range.end)) {
+              console.log('[error] start == end ');
+              process.exit(1);
+            }
+
             schedule.channel.schedule.list.push(video);
             n++;
           }
@@ -880,6 +953,12 @@ let write_json_plutoTV_1080p = (json, file_name) => {
                 "end": time_converter(json[i]['Ad Point 1']),
               }
             }
+
+            if (time_converter(video.range.start) >= time_converter(video.range.end)) {
+              console.log('[error] start == end ');
+              process.exit(1);
+            }
+
             schedule.channel.schedule.list.push(video);
           }
           else {
@@ -893,6 +972,12 @@ let write_json_plutoTV_1080p = (json, file_name) => {
                 "end": time_converter(json[i]['Ad Point 1']),
               }
             }
+
+            if (time_converter(video.range.start) >= time_converter(video.range.end)) {
+              console.log('[error] start == end ');
+              process.exit(1);
+            }
+
             schedule.channel.schedule.list.push(video);
           }
 
@@ -919,6 +1004,12 @@ let write_json_plutoTV_1080p = (json, file_name) => {
                 "end": time_converter(json[i]['Ad Point ' + (j + 1).toString()]),
               }
             }
+
+            if (time_converter(video.range.start) >= time_converter(video.range.end)) {
+              console.log('[error] start == end ');
+              process.exit(1);
+            }
+
             let advertisement =
             {
               "id": "schid_ad_" + n.toString() + "_" + (j + 1).toString(),
@@ -943,7 +1034,10 @@ let write_json_plutoTV_1080p = (json, file_name) => {
               "end": json[i]['__EMPTY'],
             }
           }
-
+          if (time_converter(video.range.start) >= time_converter(video.range.end)) {
+            console.log('[error] start == end ');
+            process.exit(1);
+          }
           schedule.channel.schedule.list.push(video);
           n++;
         }
