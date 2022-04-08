@@ -14,9 +14,14 @@ let read_conf = (file_name) => {
 
         conf.file_name = conf_file.file_name;
         conf.option = conf_file.option;
+
+        if (conf.option < 1 || conf.option > 4) {
+            throw new Error("[error] configure value");
+        }
+
         return conf;
     } catch (err) {
-        console.log('[error] configure.conf read');
+        console.log('[error] configure.conf ');
         console.log(err);
         process.exit(1);
     }
@@ -72,9 +77,17 @@ let read_resolution = (json) => {
         let resolution = [];
         for (let j in json[0]) {
             if (!isNaN(parseInt(j.slice(0, -1))) && (j.slice(-1) === 'p')) {
+                if (j.length <= 0) {
+                    throw new Error("");
+                }
                 resolution.push(j);
             }
         }
+
+        if (resolution.length != 5) {
+            throw new Error('[error] number of resolution');
+        }
+
         return resolution;
     } catch (err) {
         console.log('[error] resolution read');
@@ -360,6 +373,9 @@ let samsung_smartTV = (json) => {
         for (let i = 0; i < json.length; i++) {
             if (json[i].id !== undefined) {
                 let a = json[i].id.split('_');
+                if (a.length != 3) {
+                    throw new Error();
+                }
                 json[i].id = json[i].id.slice(0, -(a[a.length - 1].length + 1));
             }
         }
@@ -371,9 +387,41 @@ let samsung_smartTV = (json) => {
     }
 }
 
+let verify = (json) => {
+    try {
+        if (json.length <= 0) {
+            throw new Error();
+        }
+
+        let resolution = read_resolution(json);
+
+        for (let i = 1; i < json.length; i++) {
+            if (!(json[i][resolution[0]].length > 0 && json[i][resolution[1]].length > 0
+                && json[i][resolution[2]].length > 0 && json[i][resolution[3]].length > 0
+                && json[i][resolution[4]].length > 0 && json[i]['id'].length > 0)) {
+                throw new Error();
+            }
+        }
+
+        return json;
+    } catch (err) {
+        console.log('[error] excel parse');
+        console.log(err);
+        process.exit(1);
+    }
+}
+
+
 let main = () => {
     let conf = read_conf('configure.conf');
-    let excel = xlsx.readFile(conf.file_name);
+    let excel;
+    try {
+        excel = xlsx.readFile(conf.file_name);
+    } catch (err) {
+        console.log('[error] configure.conf file_name');
+        console.log(err);
+        process.exit(1);
+    }
     let json;
     for (let i = 0; i < excel.SheetNames.length; i++) {
         json = read_excel(excel, i);
@@ -381,6 +429,7 @@ let main = () => {
         if (conf.option == 1 || conf.option == 2) {
             json = samsung_smartTV(json);
         }
+        json = verify(json);
         write_json(json, conf.option);
     }
 }
