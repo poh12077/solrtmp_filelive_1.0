@@ -15,6 +15,7 @@ let read_conf = (conf_name) => {
     ad_duration_samsung_northern_america = data.ad_duration.samsung_northern_america;
     ad_duration_pluto = data.ad_duration.pluto;
     CJENM_leaderfilm_duration = data.CJENM_leaderfilm_duration;
+    start_date = data.start_date;
 
     if (option < 1 || option > 4 || ad_interval_korea <= 0 || ad_interval_northern_america <= 0
       || ad_duration_samsung_korea <= 0 || ad_duration_samsung_northern_america <= 0 || ad_duration_pluto <= 0
@@ -494,7 +495,7 @@ let write_json_samsungTV_domestic = (json, k, file_name) => {
         if (n == 1) {
           let video =
           {
-            "start_date": "20220323T15:00:00",
+            "start_date": start_date,
             "id": "schid_" + n.toString() + "_1",
             "ch_id": "cocos_program_" + json[i].id,
             "range":
@@ -615,7 +616,7 @@ let write_json_samsungTV_northern_america = (json, file_name) => {
         if (n == 1) {
           let video =
           {
-            "start_date": "20220323T15:00:00",
+            "start_date": start_date,
             "id": "schid_" + n.toString() + "_1",
             "ch_id": "cocos_program_" + json[i].id,
             "range":
@@ -736,7 +737,7 @@ let write_json_plutoTV = (json, file_name) => {
           if (n == 1) {
             let video =
             {
-              "start_date": "20220323T15:00:00",
+              "start_date": start_date,
               "id": "schid_" + n.toString() + "_1",
               "ch_id": "cocos_program_" + json[i].id,
               "range":
@@ -779,7 +780,7 @@ let write_json_plutoTV = (json, file_name) => {
           if (n == 1) {
             let video =
             {
-              "start_date": "20220323T15:00:00",
+              "start_date": start_date,
               "id": "schid_" + n.toString() + "_1",
               "ch_id": "cocos_program_" + json[i].id,
               "range":
@@ -906,7 +907,7 @@ let write_json_plutoTV_1080p = (json, file_name) => {
           if (n == 1) {
             let video =
             {
-              "start_date": "20220323T15:00:00",
+              "start_date": start_date,
               "id": "schid_" + n.toString() + "_1",
               "ch_id": "cocos_program_" + json[i].id,
               "range":
@@ -949,7 +950,7 @@ let write_json_plutoTV_1080p = (json, file_name) => {
           if (n == 1) {
             let video =
             {
-              "start_date": "20220323T15:00:00",
+              "start_date": start_date,
               "id": "schid_" + n.toString() + "_1",
               "ch_id": "cocos_program_" + json[i].id,
               "range":
