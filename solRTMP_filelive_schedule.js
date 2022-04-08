@@ -468,6 +468,11 @@ let samsung_smartTV = (json) => {
     for (let i = 0; i < json.length; i++) {
       if (json[i].id !== undefined) {
         let a = json[i].id.split('_');
+        if(a.length!=3)
+        {
+          console.log('[error] samsungTV id');
+          process.exit(1);
+        }
         json[i].id = json[i].id.slice(0, -(a[a.length - 1].length + 1));
       }
     }
@@ -1083,24 +1088,35 @@ let verify = (json) => {
 let main = () => {
 
   let file_name = read_conf('configure.conf');
-  let excel = xlsx.readFile(file_name);
+  let excel;
+  try{
+   excel = xlsx.readFile(file_name);
+  }catch(err){
+    console.log('[error] configure.conf file_name');
+    console.log(err);
+    process.exit(1);
+  }
   let json;
 
   for (let k = 0; k < excel.SheetNames.length; k++) {
     json = read_excel(excel, k);
-    json = verify(json);
+
     if (option == 1) {
       json = samsung_smartTV(json);
+      json = verify(json);
       write_json_samsungTV_domestic(json, k, file_name);
     }
     else if (option == 2) {
       json = samsung_smartTV(json);
+      json = verify(json);
       write_json_samsungTV_northern_america(json, file_name);
     }
     else if (option == 3) {
+      json = verify(json);
       write_json_plutoTV(json, file_name);
     }
     else if (option == 4) {
+      json = verify(json);
       write_json_plutoTV_1080p(json, file_name);
     }
   }
