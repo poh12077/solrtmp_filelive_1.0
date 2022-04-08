@@ -1059,6 +1059,27 @@ let write_json_plutoTV_1080p = (json, file_name) => {
   }
 }
 
+let verify = (json) => {
+  try {
+    if (json.length <= 0) {
+      console.log('[error] excel parse');
+      process.exit(1);
+    }
+
+    for (let i = 1; i < json.length; i++) {
+      if ( !(json[i]['__EMPTY'] > 0 && json[i]['id'].length > 0) ) {
+        console.log('[error] excel parse');
+        process.exit(1);
+      }
+    }
+    return json;
+  } catch (err) {
+    console.log('[error] excel parse');
+    console.log(err);
+    process.exit(1);
+  }
+}
+
 let main = () => {
 
   let file_name = read_conf('configure.conf');
@@ -1067,7 +1088,7 @@ let main = () => {
 
   for (let k = 0; k < excel.SheetNames.length; k++) {
     json = read_excel(excel, k);
-
+    json = verify(json);
     if (option == 1) {
       json = samsung_smartTV(json);
       write_json_samsungTV_domestic(json, k, file_name);

@@ -1,7 +1,7 @@
 var fs = require('fs');
 
-//let data = fs.readFileSync('test_solrtmp_pluto.log', 'utf8');
-let data = fs.readFileSync('test_solrtmp_samsung.log', 'utf8');
+let data = fs.readFileSync('test_solrtmp_pluto.log', 'utf8');
+//let data = fs.readFileSync('test_solrtmp_samsung.log', 'utf8');
 
 let full_log = [];
 full_log = data.split('\n');
