@@ -20,11 +20,13 @@ let read_conf = (file_name) => {
 
         let conf = {
             file_name: '',
-            option: 0
+            option: 0,
+            start_date: '',
         }
 
         conf.file_name = conf_file.file_name;
         conf.option = conf_file.option;
+        conf.start_date = conf_file.start_date;
 
         if (conf.option < 1 || conf.option > 4) {
             throw new Error("[error] configure value");
@@ -62,6 +64,12 @@ let parser = (json) => {
     }
     return schedule;
 }
+
+let id_finder =(current_time) =>
+{
+    
+}
+
 
 
 let main = () => {

@@ -1,7 +1,7 @@
 var fs = require('fs');
 
-let file = fs.readFileSync('test_solrtmp_pluto.log', 'utf8');
-//let data = fs.readFileSync('test_solrtmp_samsung.log', 'utf8');
+//let file = fs.readFileSync('test_solrtmp_pluto.log', 'utf8');
+let file = fs.readFileSync('test_solrtmp_samsung.log', 'utf8');
 
 let full_log = [];
 full_log = file.split('\n');
@@ -34,6 +34,8 @@ for (let i = 0; i < full_log.length; i++) {
         log[channel_id].push(new line(time, video_id));
     }
 }
+
+
 
 for (let x in log)
 {
