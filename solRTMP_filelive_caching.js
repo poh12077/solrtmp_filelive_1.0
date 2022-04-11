@@ -27,7 +27,7 @@ let read_conf = (file_name) => {
     }
 }
 
-let read_excel = (excel, i) => {
+let read_excel_pluto = (excel, i) => {
     try {
         const sheet_name = excel.SheetNames[i];
         const sheet_data = excel.Sheets[sheet_name];
@@ -43,6 +43,24 @@ let read_excel = (excel, i) => {
         process.exit(1);
     }
 }
+
+let read_excel_samsungTV = (excel, i) => {
+    try {
+        const sheet_name = excel.SheetNames[i];
+        const sheet_data = excel.Sheets[sheet_name];
+        let json = xlsx.utils.sheet_to_json(sheet_data);
+        if(sheet_data.B1.v!='id')
+        {
+            throw new Error('');
+        }
+        return json;
+    } catch (err) {
+        console.log('[error] excel');
+        console.log(err);
+        process.exit(1);
+    }
+}
+
 
 let duplication_eliminate = (json) => {
     try {
@@ -428,7 +446,15 @@ let main = () => {
     }
     let json;
     for (let i = 0; i < excel.SheetNames.length; i++) {
-        json = read_excel(excel, i);
+        if(conf.option==1 || conf.option ==2)
+        {
+            json = read_excel_samsungTV(excel, i);
+        }
+        else if (conf.option ==3 || conf.option ==4)
+        {
+            json = read_excel_pluto(excel, i);
+        }
+        
         json = duplication_eliminate(json);
         if (conf.option == 1 || conf.option == 2) {
             json = samsung_smartTV(json);
