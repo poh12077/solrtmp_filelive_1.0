@@ -439,8 +439,7 @@ let time_converter = (x) => {
       if (isNaN(Number(x))) {
         y = x.split(':');
         if (y.length != 3) {
-          console.log("time is wired");
-          process.exit(1);
+         throw new Error();
         }
         time = (parseInt(y[0]) * 3600 + parseInt(y[1]) * 60 + parseInt(y[2])) * 1000;
         return time;
@@ -453,8 +452,7 @@ let time_converter = (x) => {
       return x;
     }
     else {
-      console.log("time is wired");
-      process.exit(1);
+     throw new Error();
     }
   }
   catch (err) {
@@ -471,8 +469,7 @@ let samsung_smartTV = (json) => {
         let a = json[i].id.split('_');
         if(a.length!=3)
         {
-          console.log('[error] samsungTV id');
-          process.exit(1);
+         throw new Error();
         }
         json[i].id = json[i].id.slice(0, -(a[a.length - 1].length + 1));
       }
@@ -1068,14 +1065,12 @@ let write_json_plutoTV_1080p = (json, file_name) => {
 let verify = (json) => {
   try {
     if (json.length <= 0) {
-      console.log('[error] excel parse');
-      process.exit(1);
+     throw new Error();
     }
 
     for (let i = 1; i < json.length; i++) {
       if ( !(json[i]['__EMPTY'] > 0 && json[i]['id'].length > 0) ) {
-        console.log('[error] excel parse');
-        process.exit(1);
+        throw new Error();
       }
     }
     return json;
