@@ -89,9 +89,17 @@ let parser = (json, conf) => {
 }
 
 
-let id_finder =(current_time) =>
+let id_finder =(schedule) =>
 {
-    
+    let current_time = Math.floor(new Date().getTime() / 1000);
+    for(let i=0;i<schedule.length;i++)
+    {
+        if ( (schedule[i].end_time < current_time) && ( current_time <= schedule[i+1].end_time) )
+        {
+            console.log(schedule[i].id);
+            return schedule[i].id;
+        }
+    }
 }
 
 
@@ -112,6 +120,7 @@ let main = () => {
     for (let i = 0; i < excel.SheetNames.length; i++) {
         json = read_excel(excel, i);
         schedule = parser(json, conf);
+        id_finder(schedule);
     }
 }
 
