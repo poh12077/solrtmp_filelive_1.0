@@ -41,11 +41,17 @@ let read_conf = (file_name) => {
             file_name: '',
             option: 0,
             start_date: '',
+            ad_duration:{
+                pluto:'',
+                samsung_korea:'',
+                samsung_northern_america:''
+            }
         }
 
         conf.file_name = conf_file.file_name;
         conf.option = conf_file.option;
         conf.start_date = fetch_unix_timestamp(conf_file.start_date);
+        conf.ad_duration.pluto = conf_file.ad_duration.pluto;
 
         if (conf.option < 1 || conf.option > 4) {
             throw new Error("[error] configure value");
@@ -80,6 +86,14 @@ let parser = (json, conf) => {
     for (let i = 0; i < json.length; i++) {
         if (json[i].id !== undefined) {
             end_time += json[i]['__EMPTY'];
+            for(let j=1;j<6;j++)
+            {
+                if ( json[i]['Ad Point ' + j.toString()] !=undefined )
+                {
+                    end_time += conf.ad_duration.pluto;
+                }
+            }
+            
             video = new video_info(json[i]['id'], end_time);
             schedule.push(video);
         }
