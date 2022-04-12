@@ -21,15 +21,14 @@ class video_info {
 }
 
 
-let advertisement={
-    start:'',
-    end:''
+let advertisement = {
+    start: '',
+    end: ''
 }
 
 //time =　'2012-05-17 10:20:30'　
-let fetch_unix_timestamp = (time) =>
-{
-	return Math.floor(new Date(time).getTime() / 1000);
+let fetch_unix_timestamp = (time) => {
+    return Math.floor(new Date(time).getTime() / 1000);
 }
 
 
@@ -77,11 +76,11 @@ let read_excel = (excel, i) => {
 let parser = (json, conf) => {
     let schedule = [];
     let video;
-    let end_time = conf.start_date ;
+    let end_time = conf.start_date;
     for (let i = 0; i < json.length; i++) {
         if (json[i].id !== undefined) {
-            end_time += json[i]['__EMPTY']; 
-            video = new video_info(json[i]['id'], end_time );
+            end_time += json[i]['__EMPTY'];
+            video = new video_info(json[i]['id'], end_time);
             schedule.push(video);
         }
     }
@@ -89,16 +88,28 @@ let parser = (json, conf) => {
 }
 
 
-let id_finder =(schedule) =>
-{
-    let current_time = Math.floor(new Date().getTime() / 1000);
-    for(let i=0;i<schedule.length;i++)
-    {
-        if ( (schedule[i].end_time < current_time) && ( current_time <= schedule[i+1].end_time) )
-        {
-            console.log(schedule[i].id);
-            return schedule[i].id;
+let id_finder = (schedule) => {
+    try {
+        let current_time = Math.floor(new Date().getTime() / 1000);
+
+        if (current_time <= schedule[0].end_time) {
+           // the first video is streaming now
+            console.log(schedule[0].id);
+            return schedule[0].id;
         }
+        if(schedule[schedule.length-1].end_time < current_time)
+        {
+            // the end_time of the last content in the schedule is smaller than the current time
+            throw new Error('[error] the end_time of the last content in the schedule is smaller than the current time');
+        }
+        for (let i = 0; i < schedule.length - 1; i++) {
+            if ((schedule[i].end_time < current_time) && (current_time <= schedule[i + 1].end_time)) {
+                console.log(schedule[i + 1].id);
+                return schedule[i + 1].id;
+            }
+        }
+    } catch (err) {
+        console.log(err);
     }
 }
 
