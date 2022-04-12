@@ -69,10 +69,16 @@ let read_excel = (excel, i) => {
     try {
         const sheet_name = excel.SheetNames[i];
         const sheet_data = excel.Sheets[sheet_name];
+        if( (sheet_data.E1.v != 'Ad Point 1') || (sheet_data.F1.v != 'Ad Point 2') 
+        || (sheet_data.G1.v != 'Ad Point 3') || (sheet_data.H1.v != 'Ad Point 4') 
+        || (sheet_data.I1.v != 'Ad Point 5') )
+        {
+            throw new Error('[error] excel Ad Point title');
+        }
         let json = xlsx.utils.sheet_to_json(sheet_data);
         return json;
     } catch (err) {
-        console.log('[error] excel read');
+        console.log('[error] excel');
         console.log(err);
         process.exit(1);
     }
@@ -93,7 +99,6 @@ let parser = (json, conf) => {
                     end_time += conf.ad_duration.pluto;
                 }
             }
-            
             video = new video_info(json[i]['id'], end_time);
             schedule.push(video);
         }
