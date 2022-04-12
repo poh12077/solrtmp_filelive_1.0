@@ -1,36 +1,74 @@
 const xlsx = require("xlsx");
 var fs = require('fs');
 
-// class video_info {
-//     constructor(id, end_time, ad_point_1, ad_point_2, ad_point_3, ad_point_4, ad_point_5) {
-//         this.id = id;
-//         this.end_time = end_time;
-//         this.ad_point_1 = ad_point_1;
-//         this.ad_point_2 = ad_point_2;
-//         this.ad_point_3 = ad_point_3;
-//         this.ad_point_4 = ad_point_4;
-//         this.ad_point_5 = ad_point_5;
-//     }
-// }
-
-class video_info {
-    constructor(id, end_time) {
+class video_info_pluto {
+    constructor(id, end_time, ad_list) {
         this.id = id;
         this.end_time = end_time;
+        this.ad_list = ad_list;    
     }
 }
 
-
-let advertisement = {
-    start: '',
-    end: ''
-}
+// class ad_info_pluto{
+//     ad = {
+//         'Ad Point 1':{
+//             start:'',
+//             end:''
+//         },
+//         ad_point_2:{
+//             start:'',
+//             end:''
+//         },
+//         ad_point_3:{
+//             start:'',
+//             end:''
+//         },
+//         ad_point_4:{
+//             start:'',
+//             end:''
+//         },
+//         ad_point_5:{
+//             start:'',
+//             end:''
+//         }
+//     }
+       
+// }
 
 //time =　'2012-05-17 10:20:30'　
 let fetch_unix_timestamp = (time) => {
     return Math.floor(new Date(time).getTime() / 1000);
 }
 
+let time_converter = (x) => {
+    try {
+      if (typeof (x) === 'string') {
+        if (isNaN(Number(x))) {
+          y = x.split(':');
+          if (y.length != 3) {
+           throw new Error();
+          }
+          time = (parseInt(y[0]) * 3600 + parseInt(y[1]) * 60 + parseInt(y[2])) * 1000;
+          return time;
+        }
+        else {
+          return x;
+        }
+      }
+      else if (typeof (x) == 'number') {
+        return x;
+      }
+      else {
+       throw new Error();
+      }
+    }
+    catch (err) {
+      console.log('[error] time parse');
+      console.log(err);
+      process.exit(1);
+    }
+  }
+  
 
 let read_conf = (file_name) => {
     try {
@@ -85,22 +123,33 @@ let read_excel = (excel, i) => {
 }
 
 
-let parser = (json, conf) => {
+let parser_pluto = (json, conf) => {
     let schedule = [];
-    let video;
     let end_time = conf.start_date;
+    let ad_list = [];
+
     for (let i = 0; i < json.length; i++) {
         if (json[i].id !== undefined) {
+            //playtime
             end_time += json[i]['__EMPTY'];
-            for(let j=1;j<6;j++)
+            
+            //advertisement 
+            for(let k=1;k<6;k++)
             {
-                if ( json[i]['Ad Point ' + j.toString()] !=undefined )
+                if ( json[i]['Ad Point ' + k.toString()] !=undefined )
                 {
+                    let ad ={
+                        start:'',
+                        end:''
+                    }
                     end_time += conf.ad_duration.pluto;
+                    ad.start = time_converter( json[i]['Ad Point ' + k.toString()] );
+                    ad.end = ad.start + conf.ad_duration.pluto;
+                    ad_list.push(ad);
                 }
             }
-            video = new video_info(json[i]['id'], end_time);
-            schedule.push(video);
+            schedule.push( new video_info_pluto(json[i]['id'], end_time, ad_list) ); 
+            ad_list=[];
         }
     }
     return schedule;
@@ -149,7 +198,7 @@ let main = () => {
     let json;
     for (let i = 0; i < excel.SheetNames.length; i++) {
         json = read_excel(excel, i);
-        schedule = parser(json, conf);
+        schedule = parser_pluto(json, conf);
         id_finder(schedule);
     }
 }
