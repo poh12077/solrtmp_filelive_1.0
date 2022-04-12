@@ -9,32 +9,6 @@ class video_info_pluto {
     }
 }
 
-// class ad_info_pluto{
-//     ad = {
-//         'Ad Point 1':{
-//             start:'',
-//             end:''
-//         },
-//         ad_point_2:{
-//             start:'',
-//             end:''
-//         },
-//         ad_point_3:{
-//             start:'',
-//             end:''
-//         },
-//         ad_point_4:{
-//             start:'',
-//             end:''
-//         },
-//         ad_point_5:{
-//             start:'',
-//             end:''
-//         }
-//     }
-       
-// }
-
 //time =　'2012-05-17 10:20:30'　
 let fetch_unix_timestamp = (time) => {
     return Math.floor(new Date(time).getTime() / 1000);
@@ -156,6 +130,37 @@ let parser_pluto = (json, conf) => {
 }
 
 
+let parser_pluto_ = (json, conf) => {
+    let schedule = [];
+    let end_time = conf.start_date;
+    let ad_list = [];
+
+    for (let i = 0; i < json.length; i++) {
+        if (json[i].id !== undefined) {
+            //playtime
+            end_time += json[i]['__EMPTY'];
+            
+            //advertisement 
+            for(let k=1;k<6;k++)
+            {
+                if ( json[i]['Ad Point ' + k.toString()] !=undefined )
+                {
+                    end_time += conf.ad_duration.pluto;
+                    let start = time_converter( json[i]['Ad Point ' + k.toString()] );
+                    let end = start + conf.ad_duration.pluto;
+                    ad_list.push(start);
+                    ad_list.push(end);
+                }
+            }
+            schedule.push( new video_info_pluto(json[i]['id'], end_time, ad_list) ); 
+            ad_list=[];
+        }
+    }
+    return schedule;
+}
+
+
+
 let id_finder = (schedule) => {
     try {
         let current_time = Math.floor(new Date().getTime() / 1000);
@@ -198,7 +203,7 @@ let main = () => {
     let json;
     for (let i = 0; i < excel.SheetNames.length; i++) {
         json = read_excel(excel, i);
-        schedule = parser_pluto(json, conf);
+        schedule = parser_pluto_(json, conf);
         id_finder(schedule);
     }
 }
