@@ -35,12 +35,11 @@ let read_excel = (excel, i) => {
   try {
     const sheet_name = excel.SheetNames[i];
     const sheet_data = excel.Sheets[sheet_name];
-    if( (sheet_data.E1.v != 'Ad Point 1') || (sheet_data.F1.v != 'Ad Point 2') 
-        || (sheet_data.G1.v != 'Ad Point 3') || (sheet_data.H1.v != 'Ad Point 4') 
-        || (sheet_data.I1.v != 'Ad Point 5') )
-        {
-            throw new Error('[error] excel Ad Point title');
-        }
+    if ((sheet_data.E1.v != 'Ad Point 1') || (sheet_data.F1.v != 'Ad Point 2')
+      || (sheet_data.G1.v != 'Ad Point 3') || (sheet_data.H1.v != 'Ad Point 4')
+      || (sheet_data.I1.v != 'Ad Point 5')) {
+      throw new Error('[error] excel Ad Point title');
+    }
     let json = xlsx.utils.sheet_to_json(sheet_data);
     return json;
   } catch (error) {
@@ -445,7 +444,7 @@ let time_converter = (x) => {
       if (isNaN(Number(x))) {
         y = x.split(':');
         if (y.length != 3) {
-         throw new Error();
+          throw new Error();
         }
         time = (parseInt(y[0]) * 3600 + parseInt(y[1]) * 60 + parseInt(y[2])) * 1000;
         return time;
@@ -458,7 +457,7 @@ let time_converter = (x) => {
       return x;
     }
     else {
-     throw new Error();
+      throw new Error();
     }
   }
   catch (err) {
@@ -473,9 +472,8 @@ let samsung_smartTV = (json) => {
     for (let i = 0; i < json.length; i++) {
       if (json[i].id !== undefined) {
         let a = json[i].id.split('_');
-        if(a.length!=3)
-        {
-         throw new Error();
+        if (a.length != 3) {
+          throw new Error();
         }
         json[i].id = json[i].id.slice(0, -(a[a.length - 1].length + 1));
       }
@@ -1071,11 +1069,11 @@ let write_json_plutoTV_1080p = (json, file_name) => {
 let verify = (json) => {
   try {
     if (json.length <= 0) {
-     throw new Error();
+      throw new Error();
     }
 
     for (let i = 1; i < json.length; i++) {
-      if ( !(json[i]['__EMPTY'] > 0 && json[i]['id'].length > 0) ) {
+      if (!(json[i]['__EMPTY'] > 0 && json[i]['id'].length > 0)) {
         throw new Error();
       }
     }
@@ -1088,39 +1086,36 @@ let verify = (json) => {
 }
 
 let main = () => {
+  try {
+    let file_name = read_conf('configure.conf');
+    let excel = xlsx.readFile(file_name);
+    let json;
 
-  let file_name = read_conf('configure.conf');
-  let excel;
-  try{
-   excel = xlsx.readFile(file_name);
-  }catch(err){
-    console.log('[error] configure.conf file_name');
+    for (let k = 0; k < excel.SheetNames.length; k++) {
+      json = read_excel(excel, k);
+
+      if (option == 1) {
+        json = samsung_smartTV(json);
+        json = verify(json);
+        write_json_samsungTV_domestic(json, k, file_name);
+      }
+      else if (option == 2) {
+        json = samsung_smartTV(json);
+        json = verify(json);
+        write_json_samsungTV_northern_america(json, file_name);
+      }
+      else if (option == 3) {
+        json = verify(json);
+        write_json_plutoTV(json, file_name);
+      }
+      else if (option == 4) {
+        json = verify(json);
+        write_json_plutoTV_1080p(json, file_name);
+      }
+    }
+  } catch (err) {
     console.log(err);
     process.exit(1);
-  }
-  let json;
-
-  for (let k = 0; k < excel.SheetNames.length; k++) {
-    json = read_excel(excel, k);
-
-    if (option == 1) {
-      json = samsung_smartTV(json);
-      json = verify(json);
-      write_json_samsungTV_domestic(json, k, file_name);
-    }
-    else if (option == 2) {
-      json = samsung_smartTV(json);
-      json = verify(json);
-      write_json_samsungTV_northern_america(json, file_name);
-    }
-    else if (option == 3) {
-      json = verify(json);
-      write_json_plutoTV(json, file_name);
-    }
-    else if (option == 4) {
-      json = verify(json);
-      write_json_plutoTV_1080p(json, file_name);
-    }
   }
 }
 

@@ -32,8 +32,7 @@ let read_excel_pluto = (excel, i) => {
         const sheet_name = excel.SheetNames[i];
         const sheet_data = excel.Sheets[sheet_name];
         let json = xlsx.utils.sheet_to_json(sheet_data);
-        if(sheet_data.B1.v!='id' || sheet_data.J1.v!='Caption Path')
-        {
+        if (sheet_data.B1.v != 'id' || sheet_data.J1.v != 'Caption Path') {
             throw new Error('');
         }
         return json;
@@ -49,8 +48,7 @@ let read_excel_samsungTV = (excel, i) => {
         const sheet_name = excel.SheetNames[i];
         const sheet_data = excel.Sheets[sheet_name];
         let json = xlsx.utils.sheet_to_json(sheet_data);
-        if(sheet_data.B1.v!='id')
-        {
+        if (sheet_data.B1.v != 'id') {
             throw new Error('');
         }
         return json;
@@ -420,7 +418,7 @@ let verify = (json) => {
         for (let i = 1; i < json.length; i++) {
             if (!(json[i][resolution[0]].length > 0 && json[i][resolution[1]].length > 0
                 && json[i][resolution[2]].length > 0 && json[i][resolution[3]].length > 0
-                && json[i][resolution[4]].length > 0 && json[i]['id'].length > 0 )) {
+                && json[i][resolution[4]].length > 0 && json[i]['id'].length > 0)) {
                 throw new Error();
             }
         }
@@ -435,32 +433,28 @@ let verify = (json) => {
 
 
 let main = () => {
-    let conf = read_conf('configure.conf');
-    let excel;
     try {
-        excel = xlsx.readFile(conf.file_name);
+        let conf = read_conf('configure.conf');
+        let excel = xlsx.readFile(conf.file_name);
+        let json;
+        for (let i = 0; i < excel.SheetNames.length; i++) {
+            if (conf.option == 1 || conf.option == 2) {
+                json = read_excel_samsungTV(excel, i);
+            }
+            else if (conf.option == 3 || conf.option == 4) {
+                json = read_excel_pluto(excel, i);
+            }
+
+            json = duplication_eliminate(json);
+            if (conf.option == 1 || conf.option == 2) {
+                json = samsung_smartTV(json);
+            }
+            json = verify(json);
+            write_json(json, conf.option);
+        }
     } catch (err) {
-        console.log('[error] configure.conf file_name');
         console.log(err);
         process.exit(1);
-    }
-    let json;
-    for (let i = 0; i < excel.SheetNames.length; i++) {
-        if(conf.option==1 || conf.option ==2)
-        {
-            json = read_excel_samsungTV(excel, i);
-        }
-        else if (conf.option ==3 || conf.option ==4)
-        {
-            json = read_excel_pluto(excel, i);
-        }
-        
-        json = duplication_eliminate(json);
-        if (conf.option == 1 || conf.option == 2) {
-            json = samsung_smartTV(json);
-        }
-        json = verify(json);
-        write_json(json, conf.option);
     }
 }
 
