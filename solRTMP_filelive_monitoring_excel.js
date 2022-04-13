@@ -160,38 +160,38 @@ let parser_pluto_ = (json, conf) => {
 }
 
 
-let current_id_finder = (schedule) => {
+let current_id_finder = (schedule, conf) => {
     try {
         let current_time = Math.floor(new Date().getTime());
 
-        if (current_time <= schedule[0].end_time) {
+        if ( (conf.start_date <= current_time) && (current_time <= schedule[0].end_time) ) {
             // the first video is streaming now
             if (schedule[0].ad_point.length == 5) {
                 for (let k = 0; k < 5; k++) {
                     if ((schedule[0].ad_point[k].start <= current_time) && (current_time <= schedule[0].ad_point[k].end)) {
-                        console.log('cocos_ad_120s_us is streaming on the ', schedule[0].id);
+                        console.log(new Date(), 'cocos_ad_120s_us is streaming on the ', schedule[0].id);
                         return "cocos_ad_120s_us";
                     }
                 }
             }
-            console.log(schedule[0].id);
+            console.log(new Date(), schedule[0].id);
             return schedule[0].id;
         }
-        if (schedule[schedule.length - 1].end_time < current_time) {
+        if ( (current_time < conf.start_date) || (schedule[schedule.length - 1].end_time < current_time) ) {
             // the end_time of the last content in the schedule is smaller than the current time
-            throw new Error('[error] the end_time of the last content in the schedule is smaller than the current time');
+            throw new Error('[error] start_date or end_time');
         }
         for (let i = 0; i < schedule.length - 1; i++) {
             if ((schedule[i].end_time < current_time) && (current_time <= schedule[i + 1].end_time)) {
                 if (schedule[i + 1].ad_point.length == 5) {
                     for (let k = 0; k < 5; k++) {
                         if ((schedule[i + 1].ad_point[k].start <= current_time) && (current_time <= schedule[i + 1].ad_point[k].end)) {
-                            console.log('cocos_ad_120s_us is streaming on the', schedule[i + 1].id);
+                            console.log(new Date(), 'cocos_ad_120s_us is streaming on the', schedule[i + 1].id);
                             return "cocos_ad_120s_us";
                         }
                     }
                 }
-                console.log(schedule[i + 1].id);
+                console.log(new Date(), schedule[i + 1].id);
                 return schedule[i + 1].id;
             }
         }
@@ -203,11 +203,11 @@ let current_id_finder = (schedule) => {
 
 
 //time = '2012-05-17 10:20:30'
-let id_finder_test = (schedule, time) => {
+let id_finder_test = (schedule, conf, time) => {
     try {
         let current_time = Math.floor(new Date(time).getTime());
 
-        if (current_time <= schedule[0].end_time) {
+        if ( (conf.start_date <= current_time) && (current_time <= schedule[0].end_time) ){
             // the first video is streaming now
             if (schedule[0].ad_point.length == 5) {
                 for (let k = 0; k < 5; k++) {
@@ -220,9 +220,9 @@ let id_finder_test = (schedule, time) => {
             console.log(schedule[0].id);
             return schedule[0].id;
         }
-        if (schedule[schedule.length - 1].end_time < current_time) {
+        if ( (current_time < conf.start_date) || (schedule[schedule.length - 1].end_time < current_time) ){
             // the end_time of the last content in the schedule is smaller than the current time
-            throw new Error('[error] the end_time of the last content in the schedule is smaller than the current time');
+            throw new Error('[error] start_date or end_time');
         }
         for (let i = 0; i < schedule.length - 1; i++) {
             if ((schedule[i].end_time < current_time) && (current_time <= schedule[i + 1].end_time)) {
@@ -254,11 +254,11 @@ let main = () => {
         for (let i = 0; i < excel.SheetNames.length; i++) {
             json = read_excel(excel, i);
             schedule = parser_pluto(json, conf);
-            //id_finder_test(schedule, '2022-04-01 00:11:22');
+            //id_finder_test(schedule, conf, '2022-05-01 00:57:58');
             setInterval(
                 () =>{
-                    current_id_finder(schedule);
-                },10000
+                    current_id_finder(schedule, conf);
+                },1000
             )
         }
     } catch (err) {
