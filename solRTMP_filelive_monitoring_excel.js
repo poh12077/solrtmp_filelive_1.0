@@ -12,7 +12,7 @@ class video_info_pluto {
 //time =　'2012-05-17 10:20:30'　
 let fetch_unix_timestamp = (time) => {
     try {
-        return Math.floor(new Date(time).getTime() / 1000);
+        return Math.floor(new Date(time).getTime());
     } catch (err) {
         console.log(err);
         process.exit(1);
@@ -47,7 +47,6 @@ let time_converter = (x) => {
         process.exit(1);
     }
 }
-
 
 let read_conf = (file_name) => {
     try {
@@ -100,7 +99,6 @@ let read_excel = (excel, i) => {
     }
 }
 
-
 let parser_pluto = (json, conf) => {
     try {
         let schedule = [];
@@ -134,7 +132,6 @@ let parser_pluto = (json, conf) => {
     }
 }
 
-
 let parser_pluto_ = (json, conf) => {
     let schedule = [];
     let end_time = conf.start_date;
@@ -163,17 +160,18 @@ let parser_pluto_ = (json, conf) => {
 }
 
 
-
-let id_finder = (schedule) => {
+let current_id_finder = (schedule) => {
     try {
-        let current_time = Math.floor(new Date().getTime() / 1000);
+        let current_time = Math.floor(new Date().getTime());
 
         if (current_time <= schedule[0].end_time) {
             // the first video is streaming now
-            for (let k = 0; k < 5; k++) {
-                if ((schedule[0].ad_point[k].start <= current_time) && (current_time <= schedule[0].ad_point[k].end)) {
-                    console.log('cocos_ad_120s_us is streaming on the ', schedule[0].id);
-                    return "cocos_ad_120s_us";
+            if (schedule[0].ad_point.length == 5) {
+                for (let k = 0; k < 5; k++) {
+                    if ((schedule[0].ad_point[k].start <= current_time) && (current_time <= schedule[0].ad_point[k].end)) {
+                        console.log('cocos_ad_120s_us is streaming on the ', schedule[0].id);
+                        return "cocos_ad_120s_us";
+                    }
                 }
             }
             console.log(schedule[0].id);
@@ -185,10 +183,55 @@ let id_finder = (schedule) => {
         }
         for (let i = 0; i < schedule.length - 1; i++) {
             if ((schedule[i].end_time < current_time) && (current_time <= schedule[i + 1].end_time)) {
+                if (schedule[i + 1].ad_point.length == 5) {
+                    for (let k = 0; k < 5; k++) {
+                        if ((schedule[i + 1].ad_point[k].start <= current_time) && (current_time <= schedule[i + 1].ad_point[k].end)) {
+                            console.log('cocos_ad_120s_us is streaming on the', schedule[i + 1].id);
+                            return "cocos_ad_120s_us";
+                        }
+                    }
+                }
+                console.log(schedule[i + 1].id);
+                return schedule[i + 1].id;
+            }
+        }
+    } catch (err) {
+        console.log(err);
+        process.exit(1);
+    }
+}
+
+
+//time = '2012-05-17 10:20:30'
+let id_finder_test = (schedule, time) => {
+    try {
+        let current_time = Math.floor(new Date(time).getTime());
+
+        if (current_time <= schedule[0].end_time) {
+            // the first video is streaming now
+            if (schedule[0].ad_point.length == 5) {
                 for (let k = 0; k < 5; k++) {
-                    if ((schedule[i+1].ad_point[k].start <= current_time) && (current_time <= schedule[i+1].ad_point[k].end)) {
-                        console.log('cocos_ad_120s_us is streaming on the', schedule[i+1].id);
+                    if ((schedule[0].ad_point[k].start <= current_time) && (current_time <= schedule[0].ad_point[k].end)) {
+                        console.log('cocos_ad_120s_us is streaming on the ', schedule[0].id);
                         return "cocos_ad_120s_us";
+                    }
+                }
+            }
+            console.log(schedule[0].id);
+            return schedule[0].id;
+        }
+        if (schedule[schedule.length - 1].end_time < current_time) {
+            // the end_time of the last content in the schedule is smaller than the current time
+            throw new Error('[error] the end_time of the last content in the schedule is smaller than the current time');
+        }
+        for (let i = 0; i < schedule.length - 1; i++) {
+            if ((schedule[i].end_time < current_time) && (current_time <= schedule[i + 1].end_time)) {
+                if (schedule[i + 1].ad_point.length == 5) {
+                    for (let k = 0; k < 5; k++) {
+                        if ((schedule[i + 1].ad_point[k].start <= current_time) && (current_time <= schedule[i + 1].ad_point[k].end)) {
+                            console.log('cocos_ad_120s_us is streaming on the', schedule[i + 1].id);
+                            return "cocos_ad_120s_us";
+                        }
                     }
                 }
                 console.log(schedule[i + 1].id);
@@ -211,11 +254,11 @@ let main = () => {
         for (let i = 0; i < excel.SheetNames.length; i++) {
             json = read_excel(excel, i);
             schedule = parser_pluto(json, conf);
-            //id_finder(schedule);
+            //id_finder_test(schedule, '2022-04-01 00:11:22');
             setInterval(
                 () =>{
-                    id_finder(schedule);
-                },1000
+                    current_id_finder(schedule);
+                },10000
             )
         }
     } catch (err) {
