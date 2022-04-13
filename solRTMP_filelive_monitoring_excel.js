@@ -171,7 +171,7 @@ let id_finder = (schedule) => {
         if (current_time <= schedule[0].end_time) {
             // the first video is streaming now
             for (let k = 0; k < 5; k++) {
-                if ((schedule[0].ad_point[k].start <= current_time) && (schedule[0].ad_point[k].end <= current_time)) {
+                if ((schedule[0].ad_point[k].start <= current_time) && (current_time <= schedule[0].ad_point[k].end)) {
                     console.log('cocos_ad_120s_us is streaming on the ', schedule[0].id);
                     return "cocos_ad_120s_us";
                 }
@@ -186,7 +186,7 @@ let id_finder = (schedule) => {
         for (let i = 0; i < schedule.length - 1; i++) {
             if ((schedule[i].end_time < current_time) && (current_time <= schedule[i + 1].end_time)) {
                 for (let k = 0; k < 5; k++) {
-                    if ((schedule[i+1].ad_point[k].start <= current_time) && (schedule[i+1].ad_point[k].end <= current_time)) {
+                    if ((schedule[i+1].ad_point[k].start <= current_time) && (current_time <= schedule[i+1].ad_point[k].end)) {
                         console.log('cocos_ad_120s_us is streaming on the', schedule[i+1].id);
                         return "cocos_ad_120s_us";
                     }
@@ -202,7 +202,6 @@ let id_finder = (schedule) => {
 }
 
 
-
 let main = () => {
     try {
         let conf = read_conf('configure.conf');
@@ -212,7 +211,12 @@ let main = () => {
         for (let i = 0; i < excel.SheetNames.length; i++) {
             json = read_excel(excel, i);
             schedule = parser_pluto(json, conf);
-            id_finder(schedule);
+            //id_finder(schedule);
+            setInterval(
+                () =>{
+                    id_finder(schedule);
+                },1000
+            )
         }
     } catch (err) {
         console.log(err);
