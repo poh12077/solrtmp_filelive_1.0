@@ -5,7 +5,7 @@ class video_info_pluto {
     constructor(id, end_time, ad_list) {
         this.id = id;
         this.end_time = end_time;
-        this.ad_list = ad_list;    
+        this.ad_point = ad_list;    
     }
 }
 
@@ -104,12 +104,10 @@ let parser_pluto = (json, conf) => {
 
     for (let i = 0; i < json.length; i++) {
         if (json[i].id !== undefined) {
-            //playtime
-            end_time += json[i]['__EMPTY'];
-            
+            end_time += json[i]['__EMPTY'];    
             //advertisement 
             for(let k=1;k<6;k++)
-            {
+            {   
                 if ( json[i]['Ad Point ' + k.toString()] !=undefined )
                 {
                     let ad ={
@@ -117,7 +115,7 @@ let parser_pluto = (json, conf) => {
                         end:''
                     }
                     end_time += conf.ad_duration.pluto;
-                    ad.start = time_converter( json[i]['Ad Point ' + k.toString()] );
+                    ad.start = time_converter( json[i]['Ad Point ' + k.toString()] ) + schedule[i-2].end_time ;
                     ad.end = ad.start + conf.ad_duration.pluto;
                     ad_list.push(ad);
                 }
@@ -146,7 +144,7 @@ let parser_pluto_ = (json, conf) => {
                 if ( json[i]['Ad Point ' + k.toString()] !=undefined )
                 {
                     end_time += conf.ad_duration.pluto;
-                    let start = time_converter( json[i]['Ad Point ' + k.toString()] );
+                    let start = time_converter( json[i]['Ad Point ' + k.toString()] ) + schedule[i-2].end_time;
                     let end = start + conf.ad_duration.pluto;
                     ad_list.push(start);
                     ad_list.push(end);
@@ -203,6 +201,7 @@ let main = () => {
     let json;
     for (let i = 0; i < excel.SheetNames.length; i++) {
         json = read_excel(excel, i);
+        //schedule = parser_pluto(json, conf);
         schedule = parser_pluto_(json, conf);
         id_finder(schedule);
     }
