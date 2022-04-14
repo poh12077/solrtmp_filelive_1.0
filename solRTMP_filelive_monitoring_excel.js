@@ -261,7 +261,19 @@ let current_id_finder = (schedule, conf) => {
 //time = '2012-05-17 10:20:30'
 let id_finder_test = (schedule, conf, time) => {
     try {
-        let current_time = Math.floor(new Date(time).getTime());
+        let current_time;
+        if(time === undefined)
+        {
+            //current time
+            current_time = Math.floor(new Date().getTime());
+        }else{
+            //input time
+            current_time = Math.floor(new Date(time).getTime());
+        }
+        if( isNaN( current_time ))
+        {
+            throw new Error('[error] input time');
+        }
         //pluto
         if (conf.option == 3 || conf.option == 4) {
             if ((conf.start_date <= current_time) && (current_time <= schedule[0].end_time)) {
@@ -334,14 +346,14 @@ let id_finder_test = (schedule, conf, time) => {
 
 let main = () => {
     try {
-        let conf = read_conf('configure.conf');
+        let conf = read_conf('configure_.conf');
         let schedule;
         let excel = xlsx.readFile(conf.file_name);
         let json;
         for (let i = 0; i < excel.SheetNames.length; i++) {
             json = read_excel(excel, conf, i);
             schedule = parser(json, conf);
-            id_finder_test(schedule, conf, '2022-04-01 02:00:01');
+            id_finder_test(schedule, conf);
             // setInterval(
             //     () => {
             //         current_id_finder(schedule, conf);
