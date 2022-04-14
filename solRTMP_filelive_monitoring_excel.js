@@ -1,5 +1,17 @@
 const xlsx = require("xlsx");
-var fs = require('fs');
+const fs = require('fs');
+
+let running_video={
+    pluto:{
+
+    },
+    samsung_northern_america:{
+
+    },
+    samsung_korea:{
+
+    }
+}
 
 class video_info_pluto {
     constructor(id, end_time, ad_list) {
@@ -23,11 +35,11 @@ let time_converter = (x) => {
     try {
         if (typeof (x) === 'string') {
             if (isNaN(Number(x))) {
-                y = x.split(':');
+                const y = x.split(':');
                 if (y.length != 3) {
                     throw new Error();
                 }
-                time = (parseInt(y[0]) * 3600 + parseInt(y[1]) * 60 + parseInt(y[2])) * 1000;
+                let time = (parseInt(y[0]) * 3600 + parseInt(y[1]) * 60 + parseInt(y[2])) * 1000;
                 return time;
             }
             else {
@@ -112,7 +124,7 @@ let read_excel = (excel, conf, i) => {
     }
 }
 
-let parser = (json, conf) => {
+let parser_excel = (json, conf) => {
     try {
         let schedule = [];
         let end_time = conf.start_date;
@@ -188,9 +200,10 @@ let parser = (json, conf) => {
 }
 
 //time = '2012-05-17 10:20:30'
-let id_finder = (schedule, conf, time) => {
+let id_finder_excel = (schedule, conf, channel, time) => {
     try {
         let current_time;
+        channel = channel.toString();
         if (time === undefined) {
             //current time
             current_time = Math.floor(new Date().getTime());
@@ -209,11 +222,13 @@ let id_finder = (schedule, conf, time) => {
                         for (let k = 0; k < 5; k++) {
                             if ((schedule[i + 1].ad_point[k].start <= current_time) && (current_time <= schedule[i + 1].ad_point[k].end)) {
                                 console.log(new Date(), 'cocos_ad_120s_us is streaming on the', schedule[i + 1].id);
+                                running_video.pluto[channel]="cocos_ad_120s_us";
                                 return "cocos_ad_120s_us";
                             }
                         }
                     }
                     console.log(new Date(), schedule[i + 1].id);
+                    running_video.pluto[channel] = schedule[i + 1].id;
                     return schedule[i + 1].id;
                 }
             }
@@ -224,11 +239,13 @@ let id_finder = (schedule, conf, time) => {
                     for (let k = 0; k < 5; k++) {
                         if ((schedule[0].ad_point[k].start <= current_time) && (current_time <= schedule[0].ad_point[k].end)) {
                             console.log(new Date(), 'cocos_ad_120s_us is streaming on the ', schedule[0].id);
+                            running_video.pluto[channel] = 'cocos_ad_120s_us';
                             return "cocos_ad_120s_us";
                         }
                     }
                 }
                 console.log(new Date(), schedule[0].id);
+                running_video.pluto[channel] = schedule[0].id;
                 return schedule[0].id;
             }
             else if ((current_time < conf.start_date) || (schedule[schedule.length - 1].end_time < current_time)) {
@@ -245,10 +262,14 @@ let id_finder = (schedule, conf, time) => {
                     for (let k = 0; k < schedule[i + 1].ad_point.length; k++) {
                         if ((schedule[i + 1].ad_point[k].start <= current_time) && (current_time <= schedule[i + 1].ad_point[k].end)) {
                             console.log(new Date(), 'cocos_ad_60s_20210528_2mbps is streaming on the', schedule[i + 1].id);
+                            if(conf.option==1) running_video.samsung_korea[channel] = 'cocos_ad_60s_20210528_2mbps';
+                            if(conf.option==2) running_video.samsung_northern_america[channel] = 'cocos_ad_60s_us';
                             return "cocos_ad_60s_20210528_2mbps";
                         }
                     }
                     console.log(new Date(), schedule[i + 1].id);
+                    if(conf.option==1) running_video.samsung_korea[channel] = schedule[i + 1].id;
+                    if(conf.option==2)running_video.samsung_northern_america[channel] = schedule[i + 1].id;
                     return schedule[i + 1].id;
                 }
             }
@@ -258,10 +279,14 @@ let id_finder = (schedule, conf, time) => {
                 for (let k = 0; k < schedule[0].ad_point.length; k++) {
                     if ((schedule[0].ad_point[k].start <= current_time) && (current_time <= schedule[0].ad_point[k].end)) {
                         console.log(new Date(), 'cocos_ad_60s_20210528_2mbps is streaming on the ', schedule[0].id);
+                        if(conf.option==1) running_video.samsung_korea[channel] = 'cocos_ad_60s_20210528_2mbps';
+                        if(conf.option==2)running_video.samsung_northern_america[channel] = 'cocos_ad_60s_us';
                         return "cocos_ad_60s_20210528_2mbps";
                     }
                 }
                 console.log(new Date(), schedule[0].id);
+                if(conf.option==1) running_video.samsung_korea[channel] = schedule[0].id;
+                if(conf.option==2)running_video.samsung_northern_america[channel] = schedule[0].id;
                 return schedule[0].id;
             }
             else if ((current_time < conf.start_date) || (schedule[schedule.length - 1].end_time < current_time)) {
@@ -277,21 +302,54 @@ let id_finder = (schedule, conf, time) => {
     }
 }
 
+//solrtmp_log == 'test_solrtmp_pluto.log'
+let parser_solrtmp_log = (solrtmp_log) => {
+    let file = fs.readFileSync(solrtmp_log, 'utf8');
+    let full_log = [];
+    full_log = file.split('\n');
+    let log = {}
 
-let main = () => {
+    class line {
+        constructor(time, video_id) {
+            this.time = time;
+            this.video_id = video_id;
+        }
+    }
+
+    let channel_list = [];
+
+    for (let i = 0; i < full_log.length; i++) {
+        let index = full_log[i].indexOf(' play=');
+        if (index != -1) {
+            let time = full_log[i].substr(0, 19);
+            let channel_id = full_log[i].substr(full_log[i].indexOf('(id=')).split('/')[0].substr(4);
+            if (!(channel_list.includes(channel_id))) {
+                channel_list.push(channel_id);
+                log[channel_id] = [];
+            }
+            let video_id = full_log[i].substr(full_log[i].indexOf('(main:')).split('/')[0].substr(6);
+
+            log[channel_id].push(new line(time, video_id));
+        }
+    }
+    return log;
+}
+
+let module_excel = () =>
+{
     try {
         let conf = read_conf('configure.conf');
-        let schedule_by_sheet = [];
+        let schedule = [];
         let excel = xlsx.readFile(conf.file_name);
         let json;
-        for (let i = 0; i < excel.SheetNames.length; i++) {
-            json = read_excel(excel, conf, i);
-            schedule_by_sheet.push(parser(json, conf));
-            //id_finder(schedule_by_sheet[i], conf);
+        for (let channel = 0; channel < excel.SheetNames.length; channel++) {
+            json = read_excel(excel, conf, channel);
+            schedule.push(parser_excel(json, conf));
+            //id_finder_excel(schedule[channel], conf);
             setInterval(
                 () => {
-                    id_finder(schedule_by_sheet[i], conf);
-                }, 10000
+                  id_finder_excel(schedule[channel], conf, channel);
+                }, 1000
             )
         }
     } catch (err) {
@@ -300,4 +358,15 @@ let main = () => {
     }
 }
 
+let main = () => {
+   
+     module_excel();
+}
+
 main();
+
+// setInterval(
+//     () => {
+//         console.log(running_video.pluto['0']);
+//     }, 100
+// )
