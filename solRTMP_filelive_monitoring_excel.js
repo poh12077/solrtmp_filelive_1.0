@@ -113,7 +113,7 @@ let read_excel = (excel, conf, i) => {
     }
 }
 
-let parser_pluto = (json, conf) => {
+let parser = (json, conf) => {
     try {
         let schedule = [];
         let end_time = conf.start_date;
@@ -138,6 +138,7 @@ let parser_pluto = (json, conf) => {
                         }
                     }
                 }
+                //advertisement samsung korea
                 else if (conf.option == 1) {
                     for (let k = 1; k > 0; k++) {
                         if (json[i]['__EMPTY'] <= conf.ad_interval.samsung_korea * k) {
@@ -151,6 +152,23 @@ let parser_pluto = (json, conf) => {
                         ad.end = ad.start + conf.ad_duration.samsung_korea;
                         m = ad.end;
                         end_time += conf.ad_duration.samsung_korea;
+                        ad_list.push(ad);
+                    }
+                }
+                //advertisement samsung north america
+                else if (conf.option == 2) {
+                    for (let k = 1; k > 0; k++) {
+                        if (json[i]['__EMPTY'] <= conf.ad_interval.samsung_northern_america * k) {
+                            break;
+                        }
+                        let ad = {
+                            start: '',
+                            end: ''
+                        }
+                        ad.start = m + conf.ad_interval.samsung_northern_america;
+                        ad.end = ad.start + conf.ad_duration.samsung_northern_america;
+                        m = ad.end;
+                        end_time += conf.ad_duration.samsung_northern_america;
                         ad_list.push(ad);
                     }
                 }
@@ -322,7 +340,7 @@ let main = () => {
         let json;
         for (let i = 0; i < excel.SheetNames.length; i++) {
             json = read_excel(excel, conf, i);
-            schedule = parser_pluto(json, conf);
+            schedule = parser(json, conf);
             id_finder_test(schedule, conf, '2022-04-01 02:00:01');
             // setInterval(
             //     () => {
