@@ -2,15 +2,16 @@ const xlsx = require("xlsx");
 //const fs = require('fs');
 const fs = require('graceful-fs');
 
-let running_video={
-    pluto:{
-
+let running_video = {
+    excel: {
+        pluto: {},
+        samsung_northern_america: {},
+        samsung_korea: {}
     },
-    samsung_northern_america:{
-
-    },
-    samsung_korea:{
-
+    solrtmp_log: {
+        pluto: {},
+        samsung_northern_america: {},
+        samsung_korea: {}
     }
 }
 
@@ -223,13 +224,13 @@ let id_finder_excel = (schedule, conf, channel, time) => {
                         for (let k = 0; k < 5; k++) {
                             if ((schedule[i + 1].ad_point[k].start <= current_time) && (current_time <= schedule[i + 1].ad_point[k].end)) {
                                 console.log(new Date(), 'cocos_ad_120s_us is streaming on the', schedule[i + 1].id);
-                                running_video.pluto[channel]="cocos_ad_120s_us";
+                                running_video.excel.pluto[channel] = "cocos_ad_120s_us";
                                 return "cocos_ad_120s_us";
                             }
                         }
                     }
                     console.log(new Date(), schedule[i + 1].id);
-                    running_video.pluto[channel] = schedule[i + 1].id;
+                    running_video.excel.pluto[channel] = schedule[i + 1].id;
                     return schedule[i + 1].id;
                 }
             }
@@ -240,13 +241,13 @@ let id_finder_excel = (schedule, conf, channel, time) => {
                     for (let k = 0; k < 5; k++) {
                         if ((schedule[0].ad_point[k].start <= current_time) && (current_time <= schedule[0].ad_point[k].end)) {
                             console.log(new Date(), 'cocos_ad_120s_us is streaming on the ', schedule[0].id);
-                            running_video.pluto[channel] = 'cocos_ad_120s_us';
+                            running_video.excel.pluto[channel] = 'cocos_ad_120s_us';
                             return "cocos_ad_120s_us";
                         }
                     }
                 }
                 console.log(new Date(), schedule[0].id);
-                running_video.pluto[channel] = schedule[0].id;
+                running_video.excel.pluto[channel] = schedule[0].id;
                 return schedule[0].id;
             }
             else if ((current_time < conf.start_date) || (schedule[schedule.length - 1].end_time < current_time)) {
@@ -263,14 +264,14 @@ let id_finder_excel = (schedule, conf, channel, time) => {
                     for (let k = 0; k < schedule[i + 1].ad_point.length; k++) {
                         if ((schedule[i + 1].ad_point[k].start <= current_time) && (current_time <= schedule[i + 1].ad_point[k].end)) {
                             console.log(new Date(), 'cocos_ad_60s_20210528_2mbps is streaming on the', schedule[i + 1].id);
-                            if(conf.option==1) running_video.samsung_korea[channel] = 'cocos_ad_60s_20210528_2mbps';
-                            if(conf.option==2) running_video.samsung_northern_america[channel] = 'cocos_ad_60s_us';
+                            if (conf.option == 1) running_video.excel.samsung_korea[channel] = 'cocos_ad_60s_20210528_2mbps';
+                            if (conf.option == 2) running_video.excel.samsung_northern_america[channel] = 'cocos_ad_60s_us';
                             return "cocos_ad_60s_20210528_2mbps";
                         }
                     }
                     console.log(new Date(), schedule[i + 1].id);
-                    if(conf.option==1) running_video.samsung_korea[channel] = schedule[i + 1].id;
-                    if(conf.option==2)running_video.samsung_northern_america[channel] = schedule[i + 1].id;
+                    if (conf.option == 1) running_video.excel.samsung_korea[channel] = schedule[i + 1].id;
+                    if (conf.option == 2) running_video.excel.samsung_northern_america[channel] = schedule[i + 1].id;
                     return schedule[i + 1].id;
                 }
             }
@@ -280,14 +281,14 @@ let id_finder_excel = (schedule, conf, channel, time) => {
                 for (let k = 0; k < schedule[0].ad_point.length; k++) {
                     if ((schedule[0].ad_point[k].start <= current_time) && (current_time <= schedule[0].ad_point[k].end)) {
                         console.log(new Date(), 'cocos_ad_60s_20210528_2mbps is streaming on the ', schedule[0].id);
-                        if(conf.option==1) running_video.samsung_korea[channel] = 'cocos_ad_60s_20210528_2mbps';
-                        if(conf.option==2)running_video.samsung_northern_america[channel] = 'cocos_ad_60s_us';
+                        if (conf.option == 1) running_video.excel.samsung_korea[channel] = 'cocos_ad_60s_20210528_2mbps';
+                        if (conf.option == 2) running_video.excel.samsung_northern_america[channel] = 'cocos_ad_60s_us';
                         return "cocos_ad_60s_20210528_2mbps";
                     }
                 }
                 console.log(new Date(), schedule[0].id);
-                if(conf.option==1) running_video.samsung_korea[channel] = schedule[0].id;
-                if(conf.option==2)running_video.samsung_northern_america[channel] = schedule[0].id;
+                if (conf.option == 1) running_video.excel.samsung_korea[channel] = schedule[0].id;
+                if (conf.option == 2) running_video.excel.samsung_northern_america[channel] = schedule[0].id;
                 return schedule[0].id;
             }
             else if ((current_time < conf.start_date) || (schedule[schedule.length - 1].end_time < current_time)) {
@@ -336,9 +337,8 @@ let parser_solrtmp_log = (solrtmp_log) => {
     return log;
 }
 
-//time = '2022-05-04 00:01:34' 
-let id_finder_solrtmp_log = (log, time) =>
-{
+//current time = '2022-05-04 00:01:34' 
+let id_finder_solrtmp_log = (log, option, time) => {
     try {
         let current_time;
         if (time === undefined) {
@@ -354,22 +354,25 @@ let id_finder_solrtmp_log = (log, time) =>
 
         for (let x in log) {
             //last line check
-            if (fetch_unix_timestamp(log[x][log[x].length-1].time)<= current_time)
-            {
-               console.log(x,log[x][log[x].length-1].video_id); 
-               //return log[x][log[x].length-1].video_id;
-               continue;
+            if (fetch_unix_timestamp(log[x][log[x].length - 1].time) <= current_time) {
+                console.log(x, log[x][log[x].length - 1].video_id);
+                //return log[x][log[x].length-1].video_id;
+                if(option==1){ running_video.solrtmp_log.pluto[x]=log[x][log[x].length - 1].video_id;}
+                if(option==2){ running_video.solrtmp_log.samsung_korea[x]=log[x][log[x].length - 1].video_id;}
+                if(option==3){ running_video.solrtmp_log.samsung_northern_america[x]=log[x][log[x].length - 1].video_id;}
+                continue;
             }
             //first line check
-            else if (current_time < fetch_unix_timestamp(log[x][0].time)) 
-            {
+            else if (current_time < fetch_unix_timestamp(log[x][0].time)) {
                 throw new Error('[error] current time is earlier than the start time of log');
             }
             //middle line check
-            for (let i = 0; i < log[x].length-1; i++) {
-                if( (fetch_unix_timestamp(log[x][i].time) <= current_time) && (current_time < fetch_unix_timestamp(log[x][i+1].time)) )
-                {
-                    console.log(x,log[x][i].video_id);
+            for (let i = 0; i < log[x].length - 1; i++) {
+                if ((fetch_unix_timestamp(log[x][i].time) <= current_time) && (current_time < fetch_unix_timestamp(log[x][i + 1].time))) {
+                    console.log(x, log[x][i].video_id);
+                    if(option==1){ running_video.solrtmp_log.pluto[x]=log[x][i].video_id;}
+                    if(option==2){ running_video.solrtmp_log.samsung_korea[x]=log[x][log[x].length - 1].video_id;}
+                    if(option==3){ running_video.solrtmp_log.samsung_northern_america[x]=log[x][log[x].length - 1].video_id;}
                     //return log[x][i].video_id;
                     continue;
                 }
@@ -381,8 +384,7 @@ let id_finder_solrtmp_log = (log, time) =>
     }
 }
 
-let module_excel = () =>
-{
+let module_excel = () => {
     try {
         let conf = read_conf('configure.conf');
         let schedule = [];
@@ -391,7 +393,7 @@ let module_excel = () =>
         for (let channel = 0; channel < excel.SheetNames.length; channel++) {
             json = read_excel(excel, conf, channel);
             schedule.push(parser_excel(json, conf));
-            id_finder_excel(schedule[channel], conf, channel, '2022-04-05 00:00:03' ); //time = '2022-04-01 00:00:01'
+            id_finder_excel(schedule[channel], conf, channel, '2022-04-01 00:05:00'); //current time = '2022-04-01 00:00:01'
             // setInterval(
             //     () => {
             //       id_finder_excel(schedule[channel], conf, channel);
@@ -404,8 +406,7 @@ let module_excel = () =>
     }
 }
 
-let file_write = (log, file_name) => 
-{
+let file_write = (log, file_name) => {
     for (let x in log) {
         for (let i = 0; i < log[x].length; i++) {
             fs.appendFileSync(file_name, x + ' ' + log[x][i].time + ' ' + log[x][i].video_id + '\n');
@@ -413,8 +414,7 @@ let file_write = (log, file_name) =>
     }
 }
 
-let print_console = (log) =>
-{
+let print_console = (log) => {
     for (let x in log) {
         for (let i = 0; i < log[x].length; i++) {
             console.log(x + ' ' + log[x][i].time + ' ' + log[x][i].video_id);
@@ -422,22 +422,23 @@ let print_console = (log) =>
     }
 }
 
-let module_solrtmp_log= () =>
-{
-    let log=parser_solrtmp_log('test_solrtmp_pluto.log');
+let module_solrtmp_log = (option) => {
+    let log = parser_solrtmp_log('test_solrtmp_samsung.log');
     //let log=parser_solrtmp_log('solrtmp_server_samsung.log');
-    
-    id_finder_solrtmp_log(log,'2022-04-05 00:16:35');
+
+    id_finder_solrtmp_log(log, option, '2022-04-05 08:55:50'); //current time = '2022-04-05 00:16:35'
 
     //print_console(log);
     //file_write(log, './workspace/test.log');
-    
+
 }
 
 let main = () => {
-   
+    //pluto ==1, samsung==2
+    let option=2;
+
     // module_excel();
-    module_solrtmp_log();
+    module_solrtmp_log(option);
 }
 
 main();
